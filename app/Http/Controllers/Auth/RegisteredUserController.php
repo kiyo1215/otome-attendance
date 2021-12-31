@@ -20,7 +20,7 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        return view('atte.register');
     }
 
     /**
@@ -49,6 +49,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        // return redirect(RouteServiceProvider::HOME);
+        return view('atte.date');
     }
 }

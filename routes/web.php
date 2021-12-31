@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AtteController;
+// use App\Http\Controllers\Auth\uthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +15,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
+// Route::get('/', function () {
+//     return view('atte.stamp');
+// });
 Route::get('/', function () {
     return view('welcome');
 });
+// Route::get('/', function () {
+//     return view('atte.date');
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+// Route::get('/login', [Attecontroller::class, 'login']);
