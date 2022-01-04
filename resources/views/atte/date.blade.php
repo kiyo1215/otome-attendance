@@ -32,13 +32,26 @@
        <th>休憩時間</th>
        <th>勤務時間</th>
      </tr>
+     @foreach($attendances as $attendance)
+       <?php
+            $start_time = strtotime("{{ $attendance->start_time }}");
+            $end_time = strtotime("{{ $attendance->end_time }}");
+            // $diff = $end_time - $start_time + strtotime("01:00:00");
+            $diff = $end_time - $start_time;
+            $diffTime = date("H:i:s", $diff);
+       ?>
      <tr>
-       <td>name</td>
-       <td>time1</td>
-       <td>time2</td>
+       <td>{{ $attendance->user->name }}</td>
+       <td>{{ $attendance->start_time }}</td>
+       <td>{{ $attendance->end_time }}</td>
        <td>time3</td>
-       <td>time4</td>
+      <td>
+        <?php
+         echo $diffTime;
+        ?>
+      </td>
      </tr>
+     @endforeach
    </table>
   </main>
   <footer>

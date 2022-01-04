@@ -57,7 +57,8 @@ h2 {
   justify-content: space-between;
 }
 
-.box {
+.start_time {
+  display: block;
   height: 150px;
   width: 47%;
   background-color: white;
@@ -65,6 +66,21 @@ h2 {
   line-height: 150px;
   font-size: 20px;
   font-weight: bold;
+}
+
+.end_time,
+.lest_start_time,
+.lest_end_time {
+  display: block;
+  height: 150px;
+  width: 47%;
+  background-color: white;
+  text-align: center;
+  line-height: 150px;
+  font-size: 20px;
+  font-weight: bold;
+  opacity: 0.1;
+  pointer-events: none;
 }
 
 footer p {

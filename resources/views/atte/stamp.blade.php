@@ -26,17 +26,61 @@
   <main>
    <h2>{{ Auth::user()->name }}さんお疲れ様です！</h2>
    <div class="date-box">
-     <div class="box">勤務開始</div>
-     <div class="box">勤務終了</div>
+     <button type="button" class="start_time" id="start_time">勤務開始</button>
+     <button type="button" class="end_time" id="end_time">勤務終了</button>
    </div>
    <div class="date-box">
-     <div class="box">休憩開始</div>
-     <div class="box">休憩終了</div>
+     <button type="button" class="lest_start_time" id="lest_start_time">休憩開始</button>
+     <button type="button" class="lest_end_time" id="lest_end_time">休憩終了</button>
    </div>
   </main>
   <footer>
     <p>Atte,inc.</p>
   </footer>
+
+<script>
+  document.getElementById('start_time').addEventListener('click',
+  function () {
+    this.style.opacity = "0.1";
+    this.style.pointerEvents = "none";
+    document.getElementById('end_time').style.opacity = "1";
+    document.getElementById('end_time').style.pointerEvents = "auto";
+    document.getElementById('lest_start_time').style.opacity = "1";
+    document.getElementById('lest_start_time').style.pointerEvents = "auto";
+  })
+
+  document.getElementById('lest_start_time').addEventListener('click',
+  function () {
+    this.style.opacity = "0.1";
+    this.style.pointerEvents = "none";
+    document.getElementById('start_time').style.pointerEvents = "none";
+    document.getElementById('lest_end_time').style.opacity = "1";
+    document.getElementById('lest_end_time').style.pointerEvents = "auto";
+    document.getElementById('end_time').style.opacity = "0.1";
+    document.getElementById('end_time').style.pointerEvents = "none";
+  })
+
+  document.getElementById('lest_end_time').addEventListener('click',
+  function () {
+    this.style.opacity = "0.1";
+    document.getElementById('start_time').style.pointerEvents = "none";
+    document.getElementById('lest_start_time').style.opacity = "1";
+    document.getElementById('lest_start_time').style.pointerEvents = "auto";
+    document.getElementById('end_time').style.opacity = "1";
+    document.getElementById('end_time').style.pointerEvents = "auto";
+  })
+
+  document.getElementById('end_time').addEventListener('click',
+  function () {
+    this.style.opacity = "0.1";
+    this.style.pointerEvents = "none";
+    document.getElementById('start_time').style.opacity = "1";
+    document.getElementById('start_time').style.pointerEvents = "auto";
+    document.getElementById('lest_start_time').style.opacity = "0.1";
+    document.getElementById('lest_start_time').style.pointerEvents = "none";
+    document.getElementById('lest_end_time').style.pointerEvents = "none";
+  })
+</script>
 </body>
 
 </html>

@@ -21,17 +21,18 @@ use App\Http\Controllers\AtteController;
 // Route::get('/', function () {
 //     return view('atte.stamp');
 // });
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('atte.date');
+// })->('date');
 // Route::get('/', function () {
 //     return view('atte.date');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
-// Route::get('/login', [Attecontroller::class, 'login']);
+Route::get('/', [Attecontroller::class, 'date'])->name('date');
+Route::get('/stamp', [Attecontroller::class, 'stamp'])->name('stamp');
