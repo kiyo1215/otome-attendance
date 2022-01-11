@@ -17,19 +17,25 @@ class AttendanceSeeder extends Seeder
         $param = [
             'user_id' => 1,
             'start_time' => '2022/01/01 10:00:00',
-            'end_time' => '2022/01/01 20:00:00'
+            'end_time' => '2022/01/01 20:00:00',
+            'lest_start_time' => '2022/01/01 15:00:00',
+            'lest_end_time' => '2022/01/01 16:00:00'
         ];
         DB::table('attendances')->insert($param);
         $param = [
             'user_id' => 2,
             'start_time' => '2022/01/01 10:00:00',
-            'end_time' => '2022/01/01 20:00:00'
+            'end_time' => '2022/01/01 20:00:00',
+            'lest_start_time' => '2022/01/01 15:00:00',
+            'lest_end_time' => '2022/01/01 16:00:00'
         ];
         DB::table('attendances')->insert($param);
         $param = [
             'user_id' => 3,
             'start_time' => '2022/01/01 10:00:00',
-            'end_time' => '2022/01/01 20:00:00'
+            'end_time' => '2022/01/01 20:00:00',
+            'lest_start_time' => '2022/01/01 15:00:00',
+            'lest_end_time' => '2022/01/01 16:00:00'
         ];
         DB::table('attendances')->insert($param);
     }

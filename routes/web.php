@@ -36,3 +36,10 @@ require __DIR__.'/auth.php';
 
 Route::get('/', [Attecontroller::class, 'date'])->name('date');
 Route::get('/stamp', [Attecontroller::class, 'stamp'])->name('stamp');
+// Route::get('/stamp/start_time/{attendance}', [Attecontroller::class, 'start_time']);
+Route::post('/stamp/start_time/{id}', [Attecontroller::class, 'edie'])->name('edit');
+Route::post('/stamp/end_time', [Attecontroller::class, 'end_time'])->name('end_time');
+Route::post('/stamp/lest_start_time', [Attecontroller::class, 'lest_start_time'])->name('lest_start_time');
+Route::post('/stamp/lest_end_time', [Attecontroller::class, 'lest_end_time'])->name('lest_end_time');
+Route::get('/edit/{id}', [Attecontroller::class, 'edit'])->name('edit');
+

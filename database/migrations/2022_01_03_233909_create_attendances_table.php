@@ -19,6 +19,8 @@ class CreateAttendancesTable extends Migration
             $table->timestamps();
             $table->time('start_time');
             $table->time('end_time');
+            $table->time('lest_start_time');
+            $table->time('lest_end_time');
         });
     }
 

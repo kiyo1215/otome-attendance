@@ -39,12 +39,22 @@
             // $diff = $end_time - $start_time + strtotime("01:00:00");
             $diff = $end_time - $start_time;
             $diffTime = date("H:i:s", $diff);
+
+            $lest_start_time = strtotime("{{ $attendance->lest_start_time }}");
+            $lest_end_time = strtotime("{{ $attendance->lest_end_time }}");
+            $lest_diff = $lest_end_time - $lest_start_time;
+            $lest_diffTime = date("H:i:s", $lest_diff);
+
        ?>
      <tr>
        <td>{{ $attendance->user->name }}</td>
        <td>{{ $attendance->start_time }}</td>
        <td>{{ $attendance->end_time }}</td>
-       <td>time3</td>
+       <td>
+        <?php
+          echo $lest_diffTime;
+          ?>
+        </td>
       <td>
         <?php
          echo $diffTime;
