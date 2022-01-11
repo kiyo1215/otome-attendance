@@ -22,23 +22,20 @@ class AtteController extends Controller
     }
     public function stamp()
     {
-        return view('atte.stamp');
-    }
-    public function edit($id)
-    {
-       $attendance = Attendance::findOrFail($id);
-        dd($attendance);
-    //    return view('atte.stamp');
+        if (Auth::check()) {
+            return view('atte.stamp');
+        }else{
+            return view('atte.login');
+            }
     }
     public function start_time(Request $request, $id)
     {
         $param = [
             'start_time' => $request->start_time
         ];
-        // dd($param);
-        // // DB::table('attendances')->where('id', $request->id)->update($param);
-        // // return view('atte.date');
-
+        dd($param);
+        DB::table('attendances')->where('id', $request->id)->update($param);
+        return redirect()->back();
         // $attendance = Attendance::findOrFail($id);
         // $attendance->start_time = $request->start_time;
         // $attendance->save();

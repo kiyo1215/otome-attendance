@@ -27,10 +27,12 @@
   <main>
    <h2>{{ Auth::user()->name }}さんお疲れ様です！</h2>
    <div class="date-box">
-    <form method="post" class="time-add" action="{{ route('edit') }}">
+    <form method="post" class="time-add" action="">
       @csrf
-      <input type="hidden" name="start_time" value="<?php echo date("H:i:s") ?>">
+      <input type="hidden" name="start_time" value="{{ \Carbon\Carbon::now() }}">
       <button type="button" class="start_time" id="start_time" onclick="location.href='/stamp/start_time/{{ Auth::user()->id }}'">勤務開始</button>
+      <p>{{ \Carbon\Carbon::now()->format("H:i:s") }}</p>
+      <?php dd(date("H:i:s")) ?>
     </form>
     <form method="post" class="time-add" action="{{ route('end_time') }}">
       @csrf
