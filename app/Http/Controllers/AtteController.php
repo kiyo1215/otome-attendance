@@ -28,38 +28,48 @@ class AtteController extends Controller
             return view('atte.login');
             }
     }
+    public function start_edit($id){
+        return view('atte.stamp');
+    }
     public function start_time(Request $request, $id)
     {
         $param = [
             'start_time' => $request->start_time
         ];
-        dd($param);
         DB::table('attendances')->where('id', $request->id)->update($param);
         return redirect()->back();
-        // $attendance = Attendance::findOrFail($id);
-        // $attendance->start_time = $request->start_time;
-        // $attendance->save();
-        // return view('atte.date');
     }
-    public function end_time(equest $request, $id)
-    {
-        $attendance = Attendance::findOrFail($id);
-        $attendance->end_time = $request->end_time;
-        $attendance->save();
-        return redurect();
+    public function end_edit($id){
+        return view('atte.stamp');
     }
-    public function lest_start_time(equest $request, $id)
+   public function end_time(Request $request, $id)
     {
-        $attendance = Attendance::findOrFail($id);
-        $attendance->lest_start_time = $request->lest_start_time;
-        $attendance->save();
-        return redurect();
+        $param = [
+            'end_time' => $request->end_time
+        ];
+        DB::table('attendances')->where('id', $request->id)->update($param);
+        return redirect()->back();
     }
-    public function lest_end_time(equest $request, $id)
+    public function lest_start_edit($id){
+        return view('atte.stamp');
+    }
+    public function lest_start_time(Request $request, $id)
     {
-        $attendance = Attendance::findOrFail($id);
-        $attendance->lest_end_time = $request->lest_end_time;
-        $attendance->save();
-        return redurect();
+        $param = [
+            'lest_start_time' => $request->lest_start_time
+        ];
+        DB::table('attendances')->where('id', $request->id)->update($param);
+        return redirect()->back();
+    }
+    public function lest_end_edit($id){
+        return view('atte.stamp');
+    }
+    public function lest_end_time(Request $request, $id)
+    {
+        $param = [
+            'lest_end_time' => $request->lest_end_time
+        ];
+        DB::table('attendances')->where('id', $request->id)->update($param);
+        return redirect()->back();
     }
 }

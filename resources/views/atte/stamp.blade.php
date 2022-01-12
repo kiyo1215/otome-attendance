@@ -27,28 +27,27 @@
   <main>
    <h2>{{ Auth::user()->name }}さんお疲れ様です！</h2>
    <div class="date-box">
-    <form method="post" class="time-add" action="">
+    <form method="post" class="time-add" action="/stamp/start_time/{{ Auth::user()->id }}">
       @csrf
-      <input type="hidden" name="start_time" value="{{ \Carbon\Carbon::now() }}">
-      <button type="button" class="start_time" id="start_time" onclick="location.href='/stamp/start_time/{{ Auth::user()->id }}'">勤務開始</button>
-      <p>{{ \Carbon\Carbon::now()->format("H:i:s") }}</p>
-      <?php dd(date("H:i:s")) ?>
+      <input type="hidden" name="start_time" value="{{ \Carbon\Carbon::now()->format("H:i:s") }}">
+      <button type="submit" class="start_time" id="start_time">勤務開始</button>
     </form>
-    <form method="post" class="time-add" action="{{ route('end_time') }}">
+    
+    <form method="post" class="time-add" action="/stamp/end_time/{{ Auth::user()->id }}">
       @csrf
-      <input type="hidden" name="end_time" value="<?php echo date("H:i:s") ?>">
+      <input type="hidden" name="end_time" value="{{ \Carbon\Carbon::now()->format("H:i:s") }}">
       <button type="submit" class="end_time" id="end_time">勤務終了</button>
     </form>
    </div>
    <div class="date-box">
-    <form method="post" class="time-add" action="{{ route('lest_start_time') }}">
+    <form method="post" class="time-add" action="/stamp/lest_start_time/{{ Auth::user()->id }}">
     @csrf
-    <input type="hidden" name="lest_start_time" value="<?php echo date("H:i:s") ?>">
+    <input type="hidden" name="lest_start_time" value="{{ \Carbon\Carbon::now()->format("H:i:s") }}">
       <button type="submit" class="lest_start_time" id="lest_start_time">休憩開始</button>
     </form>
-    <form method="post" class="time-add" action="{{ route('lest_end_time') }}">
+    <form method="post" class="time-add" action="/stamp/lest_end_time/{{ Auth::user()->id }}">
     @csrf
-    <input type="hidden" name="lest_end_time" value="<?php echo date("H:i:s") ?>">
+    <input type="hidden" name="lest_end_time" value="{{ \Carbon\Carbon::now()->format("H:i:s") }}">
       <button type="submit" class="lest_end_time" id="lest_end_time">休憩終了</button>
     </form>
    </div>
@@ -57,7 +56,7 @@
     <p>Atte,inc.</p>
   </footer>
 
-<script>
+<!-- <script>
   document.getElementById('start_time').addEventListener('click',
   function () {
     this.style.opacity = "0.1";
@@ -99,7 +98,7 @@
     document.getElementById('lest_start_time').style.pointerEvents = "none";
     document.getElementById('lest_end_time').style.pointerEvents = "none";
   })
-</script>
+</script> -->
 </body>
 
 </html>

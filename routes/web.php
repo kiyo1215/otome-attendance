@@ -34,13 +34,18 @@ use App\Http\Controllers\AtteController;
 
 require __DIR__.'/auth.php';
 
-// Route::get('/', [Attecontroller::class, 'date'])->name('date');
+Route::get('/date', [Attecontroller::class, 'date'])->name('date');
 Route::get('/', [Attecontroller::class, 'stamp'])->name('stamp');
-// Route::get('/stamp/start_time/{id}', [Attecontroller::class, '']);
-Route::get('/stamp/start_time/{id}', [Attecontroller::class, 'start_time'])->name('start_time');
-// Route::get('/stamp/start_time/{id}', [Attecontroller::class, 'edit'])->name('edit');
-Route::post('/stamp/end_time', [Attecontroller::class, 'end_time'])->name('end_time');
-Route::post('/stamp/lest_start_time', [Attecontroller::class, 'lest_start_time'])->name('lest_start_time');
-Route::post('/stamp/lest_end_time', [Attecontroller::class, 'lest_end_time'])->name('lest_end_time');
-Route::get('/edit/{id}', [Attecontroller::class, 'edit'])->name('edit');
+
+Route::get('/stamp/start_time/{id}', [Attecontroller::class, 'start_edit'])->name('start_edit');
+Route::post('/stamp/start_time/{id}', [Attecontroller::class, 'start_time'])->name('start_time');
+
+Route::get('/stamp/end_time/{id}', [Attecontroller::class, 'end_edit'])->name('end_edit');
+Route::post('/stamp/end_time/{id}', [Attecontroller::class, 'end_time'])->name('end_time');
+
+Route::get('/stamp/lest_start_time/{id}', [Attecontroller::class, 'lest_start_edit'])->name('lest_start_edit');
+Route::post('/stamp/lest_start_time/{id}', [Attecontroller::class, 'lest_start_time'])->name('lest_start_time');
+
+Route::get('/stamp/lest_end_time/{id}', [Attecontroller::class, 'lest_end_edit'])->name('start_edit');
+Route::post('/stamp/lest_end_time/{id}', [Attecontroller::class, 'lest_end_time'])->name('lest_end_time');
 

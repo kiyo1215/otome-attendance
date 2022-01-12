@@ -85,8 +85,8 @@ h2 {
   line-height: 150px;
   font-size: 20px;
   font-weight: bold;
-  opacity: 0.1;
-  pointer-events: none;
+  /* opacity: 0.1;
+  pointer-events: none; */
   border: none;
 }
 

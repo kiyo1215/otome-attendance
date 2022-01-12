@@ -39,7 +39,6 @@
             $end_time = strtotime($attendance->end_time);
             // $diff = $end_time - $start_time + strtotime("01:00:00");
             $diff = $end_time - $start_time;
-            dd($diff);
             $diffTime = date("H:i:s", $diff);
 
             $lest_start_time = strtotime("{{ $attendance->lest_start_time }}");
