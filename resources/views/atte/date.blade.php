@@ -34,28 +34,17 @@
      </tr>
      @foreach($attendances as $attendance)
        <?php
-            $start_time_carbon = \Carbon\Carbon::parse($attendance->start_time);
-            $end_time_carbon = \Carbon\Carbon::parse($attendance->end_time);
-            // $start_time = strtotime($attendance->start_time);
-            // dd($start_time);
-            // $end_time = strtotime($attendance->end_time);
-            // $diff = $end_time - $start_time + strtotime("01:00:00");
-            // dd($end_time);
-            // $diff = strtotime($end_time_carbon) - strtotime($start_time_carbon);
-            $diff = \Carbon\Carbon::parse($attendance->end_time)->diff(\Carbon\Carbon::parse($attendance->start_time));
-            // dd($diff);
-            // dd($diff / 60);
-            // $diffTime = date("H:i:s", $diff);
-            // $diffTime = date("H:i:s", $diff / 60);
-            // dd($diffTime);
+            $start_time = new DateTime($attendance->start_time);
+            $end_time = new DateTime($attendance->end_time);
+            $diff = $end_time->diff($start_time);
 
+            $lest_start_time = new DateTime($attendance->lest_start_time);
+            $lest_end_time = new DateTime($attendance->lest_end_time);
+            $lest_diff = $lest_end_time->diff($lest_start_time);
 
-
-
-            $lest_start_time = strtotime($attendance->lest_start_time);
-            $lest_end_time = strtotime( $attendance->lest_end_time);
-            $lest_diff = ($lest_end_time - $lest_start_time) - 32400;
-            $lest_diffTime = date("H:i:s", $lest_diff);
+            $work_time = new DateTime($diff->format('%H:%I:%S'));
+            $lest_time = new DateTime($lest_diff->format('%H:%I:%S'));
+            $diff_time = $work_time->diff($lest_time);
        ?>
      <tr>
        <td>{{ $attendance->user->name }}</td>
@@ -63,18 +52,12 @@
        <td>{{ $attendance->end_time }}</td>
        <td>
         <?php
-          echo $lest_diffTime;
+          echo $lest_diff->format('%H:%I:%S')
           ?>
         </td>
       <td>
         <?php
-        // $diffTime = strtotime($diffTime);
-        // // dd($diffTime);
-        // $lest_diffTime = strtotime($lest_diffTime);
-        //  $work_diffTime = ($diffTime - $lest_diffTime) - 32400;
-        //  $workTime = date("H:i:s", $work_diffTime);
-        //  echo $workTime;
-         echo date("H:i:s", $diff);
+         echo $diff_time->format('%H:%I:%S')
         ?>
       </td>
      </tr>

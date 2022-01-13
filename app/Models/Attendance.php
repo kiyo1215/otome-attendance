@@ -9,12 +9,6 @@ use App\Models\User;
 class Attendance extends Model
 {
     use HasFactory;
-    protected $dates = [
-        'start_time',
-        'end_time',
-        'lest_start_time',
-        'lest_end_time'
-    ];
      protected $fillable = [
         'user_id',
         'start_time',
