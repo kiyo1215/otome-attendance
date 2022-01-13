@@ -38,14 +38,17 @@
             // dd($start_time);
             $end_time = strtotime($attendance->end_time);
             // $diff = $end_time - $start_time + strtotime("01:00:00");
-            $diff = $end_time - $start_time;
+            // dd($end_time);
+            $diff = ($end_time - $start_time) - 32400;
+            // dd($diff);
+            // $diffTime = date("H:i:s", $diff);
             $diffTime = date("H:i:s", $diff);
 
-            $lest_start_time = strtotime("{{ $attendance->lest_start_time }}");
-            $lest_end_time = strtotime("{{ $attendance->lest_end_time }}");
-            $lest_diff = $lest_end_time - $lest_start_time;
-            $lest_diffTime = date("H:i:s", $lest_diff);
 
+            $lest_start_time = strtotime($attendance->lest_start_time);
+            $lest_end_time = strtotime( $attendance->lest_end_time);
+            $lest_diff = ($lest_end_time - $lest_start_time) - 32400;
+            $lest_diffTime = date("H:i:s", $lest_diff);
        ?>
      <tr>
        <td>{{ $attendance->user->name }}</td>
@@ -58,7 +61,12 @@
         </td>
       <td>
         <?php
-         echo $diffTime;
+        $diffTime = strtotime($diffTime);
+        // dd($diffTime);
+        $lest_diffTime = strtotime($lest_diffTime);
+         $work_diffTime = ($diffTime - $lest_diffTime) - 32400;
+         $workTime = date("H:i:s", $work_diffTime);
+         echo $workTime;
         ?>
       </td>
      </tr>
