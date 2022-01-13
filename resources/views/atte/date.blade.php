@@ -34,15 +34,22 @@
      </tr>
      @foreach($attendances as $attendance)
        <?php
-            $start_time = strtotime($attendance->start_time);
+            $start_time_carbon = \Carbon\Carbon::parse($attendance->start_time);
+            $end_time_carbon = \Carbon\Carbon::parse($attendance->end_time);
+            // $start_time = strtotime($attendance->start_time);
             // dd($start_time);
-            $end_time = strtotime($attendance->end_time);
+            // $end_time = strtotime($attendance->end_time);
             // $diff = $end_time - $start_time + strtotime("01:00:00");
             // dd($end_time);
-            $diff = ($end_time - $start_time) - 32400;
+            // $diff = strtotime($end_time_carbon) - strtotime($start_time_carbon);
+            $diff = \Carbon\Carbon::parse($attendance->end_time)->diff(\Carbon\Carbon::parse($attendance->start_time));
             // dd($diff);
+            // dd($diff / 60);
             // $diffTime = date("H:i:s", $diff);
-            $diffTime = date("H:i:s", $diff);
+            // $diffTime = date("H:i:s", $diff / 60);
+            // dd($diffTime);
+
+
 
 
             $lest_start_time = strtotime($attendance->lest_start_time);
@@ -61,12 +68,13 @@
         </td>
       <td>
         <?php
-        $diffTime = strtotime($diffTime);
-        // dd($diffTime);
-        $lest_diffTime = strtotime($lest_diffTime);
-         $work_diffTime = ($diffTime - $lest_diffTime) - 32400;
-         $workTime = date("H:i:s", $work_diffTime);
-         echo $workTime;
+        // $diffTime = strtotime($diffTime);
+        // // dd($diffTime);
+        // $lest_diffTime = strtotime($lest_diffTime);
+        //  $work_diffTime = ($diffTime - $lest_diffTime) - 32400;
+        //  $workTime = date("H:i:s", $work_diffTime);
+        //  echo $workTime;
+         echo date("H:i:s", $diff);
         ?>
       </td>
      </tr>

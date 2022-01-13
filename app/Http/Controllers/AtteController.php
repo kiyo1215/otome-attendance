@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 
 class AtteController extends Controller
@@ -18,6 +19,13 @@ class AtteController extends Controller
     public function date()
     {
         $attendances = Attendance::all();
+        foreach($attendances as $attendance){
+            $dt1 = new Carbon($attendance->start_time);
+            // dd($dt1);
+            $dt2 = new Carbon($attendance->end_time);
+            $diff = strtotime($dt2) - strtotime($dt1);
+            // dd($diff);
+        }
         return view('atte.date', compact('attendances'));
     }
     public function stamp()
