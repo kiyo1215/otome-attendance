@@ -26,10 +26,34 @@
   </header>
   <main>
    <h2>{{ Auth::user()->name }}さんお疲れ様です！</h2>
+   @if (session('start_error'))
+    <div class="session">
+        {{ session('start_error') }}
+    </div>
+    @endif
+    @if (session('start_msg'))
+    <div class="session">
+        {{ session('start_msg') }}
+    </div>
+    @endif
+    @if (session('end_error'))
+    <div class="session">
+        {{ session('end_error') }}
+    </div>
+    @endif
+    @if (session('end_msg'))
+    <div class="session">
+        {{ session('end_msg') }}
+    </div>
+    @endif
    <div class="date-box">
-    <form method="post" class="time-add" action="/stamp/start_time/{{ Auth::user()->id }}">
+    <form method="post" class="time-add" action="/stamp/start_time">
       @csrf
+      <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
       <input type="hidden" name="start_time" value="{{ \Carbon\Carbon::now()->format("H:i:s") }}">
+      <input type="hidden" name="end_time" value=" ">
+      <input type="hidden" name="lest_start_time" value=" ">
+      <input type="hidden" name="lest_end_time" value=" ">
       <button type="submit" class="start_time" id="start_time">勤務開始</button>
     </form>
     

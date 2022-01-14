@@ -25,9 +25,9 @@ class AttendanceSeeder extends Seeder
         $param = [
             'user_id' => 2,
             'start_time' => '10:00:00',
-            'end_time' => '20:00:00',
-            'lest_start_time' => '15:00:00',
-            'lest_end_time' => '16:00:00'
+            'end_time' => '',
+            'lest_start_time' => '',
+            'lest_end_time' => ''
         ];
         DB::table('attendances')->insert($param);
         $param = [

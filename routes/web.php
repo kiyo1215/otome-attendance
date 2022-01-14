@@ -37,8 +37,8 @@ require __DIR__.'/auth.php';
 Route::get('/date', [Attecontroller::class, 'date'])->name('date');
 Route::get('/', [Attecontroller::class, 'stamp'])->name('stamp');
 
-Route::get('/stamp/start_time/{id}', [Attecontroller::class, 'start_edit'])->name('start_edit');
-Route::post('/stamp/start_time/{id}', [Attecontroller::class, 'start_time'])->name('start_time');
+Route::get('/stamp/start_time', [Attecontroller::class, 'start_edit'])->name('start_edit');
+Route::post('/stamp/start_time', [Attecontroller::class, 'start_time'])->name('start_time');
 
 Route::get('/stamp/end_time/{id}', [Attecontroller::class, 'end_edit'])->name('end_edit');
 Route::post('/stamp/end_time/{id}', [Attecontroller::class, 'end_time'])->name('end_time');

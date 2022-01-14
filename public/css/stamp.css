@@ -96,3 +96,8 @@ footer p {
   text-align: center;
   line-height: 5vh;
 }
+.session {
+  font-size: 16px;
+  color: red;
+  text-align: center;
+}
