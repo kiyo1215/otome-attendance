@@ -50,8 +50,11 @@
     <form method="post" class="time-add" action="/stamp/start_time">
       @csrf
       <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+      <input type="hidden" name="rest_id" value="">
       <input type="hidden" name="start_time" value="{{ \Carbon\Carbon::now()->format("H:i:s") }}">
       <input type="hidden" name="end_time" value=" ">
+      <input type="hidden" name="rest_start_time" value="00:00:00">
+      <input type="hidden" name="rest_end_time" value="00:00:00">
       <button type="submit" class="start_time" id="start_time">勤務開始</button>
     </form>
     
@@ -78,15 +81,15 @@
     </div>
     @endif -->
    <div class="date-box">
-    <form method="post" class="time-add" action="/stamp/lest_start_time/{{ Auth::user()->id }}">
+    <form method="post" class="time-add" action="/stamp/rest_start_time/{{ Auth::user()->id }}">
     @csrf
-    <input type="hidden" name="lest_start_time" value="{{ \Carbon\Carbon::now()->format("H:i:s") }}">
-      <button type="submit" class="lest_start_time" id="lest_start_time">休憩開始</button>
+    <input type="hidden" name="rest_start_time" value="{{ \Carbon\Carbon::now()->format("H:i:s") }}">
+      <button type="submit" class="lest_start_time">休憩開始</button>
     </form>
-    <form method="post" class="time-add" action="/stamp/lest_end_time/{{ Auth::user()->id }}">
+    <form method="post" class="time-add" action="/stamp/rest_end_time/{{ Auth::user()->id }}">
     @csrf
     <input type="hidden" name="lest_end_time" value="{{ \Carbon\Carbon::now()->format("H:i:s") }}">
-      <button type="submit" class="lest_end_time" id="lest_end_time">休憩終了</button>
+      <button type="submit" class="lest_end_time" id="rest_end_time">休憩終了</button>
     </form>
    </div>
   </main>

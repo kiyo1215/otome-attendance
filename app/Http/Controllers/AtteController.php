@@ -26,7 +26,8 @@ class AtteController extends Controller
     public function stamp()
     {
         if (Auth::check()) {
-            return view('atte.stamp');
+            $attendances = Attendance::latest()->get();
+            return view('atte.stamp', compact('attendances'));
         }else{
             return view('atte.login');
             }
@@ -55,8 +56,14 @@ class AtteController extends Controller
         // 勤務開始を押したら新しくデータが作られる
         Attendance::create([
             'user_id' => $request->user_id,
+            'rest_id' => $request->rest_id,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
+        ]);
+        Rest::create([
+            'user_id' => $request->user_id,
+            'rest_start_time' => $request->rest_start_time,
+            'rest_end_time' => $request->rest_end_time,
         ]);
         \Session::flash('start_msg', '勤務を開始しました');
         return redirect()->back();
@@ -84,16 +91,17 @@ class AtteController extends Controller
         \Session::flash('end_msg', 'お疲れ様でした');
         return redirect()->back();
     }
-    public function lest_start_edit($id){
+    public function rest_start_edit($id){
         return view('atte.stamp');
     }
-    public function lest_start_time(Request $request, $id)
+    public function rest_start_time(Request $request, $id)
     {
         $user = Auth::user();
         $param = [
-            'rest_start_time' => $request->lest_start_time
+            'rest_start_time' => $request->rest_start_time,
+            'rest_end_time' => $request->rest_end_time
         ];
-        $rest_start_time = Attendance::where('user_id', $user->id)->latest()->first()->update($param);
+        $rest_start_time = Rest::where('user_id', $user->id)->latest()->first()->update($param);
         \Session::flash('lest_start', '休憩を開始しました');
         return redirect()->back();
     }

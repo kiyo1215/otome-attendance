@@ -42,11 +42,10 @@
        <td>{{ $attendance->user->name }}</td>
        <td>{{ $attendance->start_time }}</td>
        <td>{{ $attendance->end_time }}</td>
-       @foreach($rests as $rest)
         <?php
-            $rest_start_time = new DateTime($rest->rest_start_time);
+            $rest_start_time = new DateTime($attendance->rest->rest_start_time);
             // dd($rest_start_time);
-            $rest_end_time = new DateTime($rest->rest_end_time);
+            $rest_end_time = new DateTime($attendance->rest->rest_end_time);
             $rest_diff = $rest_end_time->diff($rest_start_time);
 
             $work_time = new DateTime($diff->format('%H:%I:%S'));
@@ -58,7 +57,6 @@
           echo $rest_diff->format('%H:%I:%S')
           ?>
         </td>
-      @endforeach
       <td>
         <?php
          echo $diff_time->format('%H:%I:%S')
