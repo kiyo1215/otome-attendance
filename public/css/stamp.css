@@ -62,7 +62,10 @@ h2 {
   width: 47%;
 }
 
-.start_time {
+.start_time,
+.end_time,
+.lest_start_time,
+.lest_end_time {
   display: block;
   height: 100%;
   width: 100%;
@@ -74,20 +77,11 @@ h2 {
   border: none;
 }
 
-.end_time,
-.lest_start_time,
-.lest_end_time {
-  display: block;
-  height: 150px;
-  width: 100%;
-  background-color: white;
-  text-align: center;
-  line-height: 150px;
-  font-size: 20px;
-  font-weight: bold;
-  /* opacity: 0.1;
-  pointer-events: none; */
-  border: none;
+.start_time:focus,
+.end_time:focus,
+.lest_start_time:focus,
+.lest_end_time:focus {
+  background-color: gray;
 }
 
 footer p {
@@ -96,8 +90,9 @@ footer p {
   text-align: center;
   line-height: 5vh;
 }
+
 .session {
-  font-size: 16px;
+  font-size: 20px;
   color: red;
   text-align: center;
 }

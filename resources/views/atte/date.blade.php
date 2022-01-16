@@ -14,8 +14,8 @@
   <header>
     <h1>Atte</h1>
     <ul>
-      <li><a href="#">ホーム</a></li>
-      <li><a href="#">日付一覧</a></li>
+      <li><a href="{{ route('stamp') }}">ホーム</a></li>
+      <li><a href="{{ route('date') }}">日付一覧</a></li>
       <li>
        <form method="post" action="{{ route('logout') }}">
         @csrf
@@ -37,24 +37,28 @@
             $start_time = new DateTime($attendance->start_time);
             $end_time = new DateTime($attendance->end_time);
             $diff = $end_time->diff($start_time);
-
-            $lest_start_time = new DateTime($attendance->lest_start_time);
-            $lest_end_time = new DateTime($attendance->lest_end_time);
-            $lest_diff = $lest_end_time->diff($lest_start_time);
-
-            $work_time = new DateTime($diff->format('%H:%I:%S'));
-            $lest_time = new DateTime($lest_diff->format('%H:%I:%S'));
-            $diff_time = $work_time->diff($lest_time);
        ?>
      <tr>
        <td>{{ $attendance->user->name }}</td>
        <td>{{ $attendance->start_time }}</td>
        <td>{{ $attendance->end_time }}</td>
-       <td>
+       @foreach($rests as $rest)
         <?php
-          echo $lest_diff->format('%H:%I:%S')
+            $rest_start_time = new DateTime($rest->rest_start_time);
+            // dd($rest_start_time);
+            $rest_end_time = new DateTime($rest->rest_end_time);
+            $rest_diff = $rest_end_time->diff($rest_start_time);
+
+            $work_time = new DateTime($diff->format('%H:%I:%S'));
+            $rest_time = new DateTime($rest_diff->format('%H:%I:%S'));
+            $diff_time = $work_time->diff($rest_time);
+          ?>
+        <td>
+        <?php
+          echo $rest_diff->format('%H:%I:%S')
           ?>
         </td>
+      @endforeach
       <td>
         <?php
          echo $diff_time->format('%H:%I:%S')

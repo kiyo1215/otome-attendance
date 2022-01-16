@@ -5,23 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
-use App\Models\Rest;
+use App\Models\Attendance;
 
-class Attendance extends Model
+class Rest extends Model
 {
     use HasFactory;
      protected $fillable = [
         'user_id',
-        'rest_id',
-        'start_time',
-        'end_time'
+        // 'attendance_id',
+        'rest_start_time',
+        'rest_end_time',
+        'rest_all_time'
     ];
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-    public function rest()
-    {
-        return $this->belongsTo(Rest::class);
     }
 }

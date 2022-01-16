@@ -43,9 +43,9 @@ Route::post('/stamp/start_time', [Attecontroller::class, 'start_time'])->name('s
 Route::get('/stamp/end_time/{id}', [Attecontroller::class, 'end_edit'])->name('end_edit');
 Route::post('/stamp/end_time/{id}', [Attecontroller::class, 'end_time'])->name('end_time');
 
-Route::get('/stamp/lest_start_time/{id}', [Attecontroller::class, 'lest_start_edit'])->name('lest_start_edit');
-Route::post('/stamp/lest_start_time/{id}', [Attecontroller::class, 'lest_start_time'])->name('lest_start_time');
+Route::get('/stamp/rest_start_time/{id}', [Attecontroller::class, 'rest_start_edit'])->name('rest_start_edit');
+Route::post('/stamp/rest_start_time/{id}', [Attecontroller::class, 'rest_start_time'])->name('rest_start_time');
 
-Route::get('/stamp/lest_end_time/{id}', [Attecontroller::class, 'lest_end_edit'])->name('start_edit');
-Route::post('/stamp/lest_end_time/{id}', [Attecontroller::class, 'lest_end_time'])->name('lest_end_time');
+Route::get('/stamp/rest_end_time/{id}', [Attecontroller::class, 'rest_end_edit'])->name('rest_end_edit');
+Route::post('/stamp/rest_end_time/{id}', [Attecontroller::class, 'rest_end_time'])->name('rest_end_time');
 

@@ -16,11 +16,10 @@ class CreateAttendancesTable extends Migration
        Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('rest_id')->constrained();
             $table->timestamps();
             $table->time('start_time');
             $table->time('end_time')->nullable();
-            $table->time('lest_start_time')->nullable();
-            $table->time('lest_end_time')->nullable();
         });
     }
 
@@ -32,5 +31,7 @@ class CreateAttendancesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('attendances');
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('rests');
     }
 }
