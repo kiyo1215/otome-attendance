@@ -24,6 +24,7 @@
     </ul>
   </header>
   <main>
+  {{ $items->links() }}
    <table>
      <tr>
        <th>名前</th>
@@ -32,20 +33,19 @@
        <th>休憩時間</th>
        <th>勤務時間</th>
      </tr>
-     @foreach($attendances as $attendance)
+     @foreach($rests as $rest)
        <?php
-            $start_time = new DateTime($attendance->start_time);
-            $end_time = new DateTime($attendance->end_time);
+            $start_time = new DateTime($rest->attendance->start_time);
+            $end_time = new DateTime($rest->attendance->end_time);
             $diff = $end_time->diff($start_time);
        ?>
      <tr>
-       <td>{{ $attendance->user->name }}</td>
-       <td>{{ $attendance->start_time }}</td>
-       <td>{{ $attendance->end_time }}</td>
+       <td>{{ $rest->user->name }}</td>
+       <td>{{ $rest->attendance->start_time }}</td>
+       <td>{{ $rest->attendance->end_time }}</td>
         <?php
-            $rest_start_time = new DateTime($attendance->rest->rest_start_time);
-            // dd($rest_start_time);
-            $rest_end_time = new DateTime($attendance->rest->rest_end_time);
+            $rest_start_time = new DateTime($rest->rest_start_time);
+            $rest_end_time = new DateTime($rest->rest_end_time);
             $rest_diff = $rest_end_time->diff($rest_start_time);
 
             $work_time = new DateTime($diff->format('%H:%I:%S'));

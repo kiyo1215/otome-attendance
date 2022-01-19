@@ -18,15 +18,6 @@ use App\Http\Controllers\AtteController;
 // Route::get('/', function () {
 //     return view('auth.login');
 // });
-// Route::get('/', function () {
-//     return view('atte.stamp');
-// });
-// Route::get('/', function () {
-//     return view('atte.date');
-// })->('date');
-// Route::get('/', function () {
-//     return view('atte.date');
-// });
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -34,8 +25,8 @@ use App\Http\Controllers\AtteController;
 
 require __DIR__.'/auth.php';
 
-Route::get('/date', [Attecontroller::class, 'date'])->name('date');
 Route::get('/', [Attecontroller::class, 'stamp'])->name('stamp');
+Route::get('/date', [Attecontroller::class, 'date'])->name('date');
 
 Route::get('/stamp/start_time', [Attecontroller::class, 'start_edit'])->name('start_edit');
 Route::post('/stamp/start_time', [Attecontroller::class, 'start_time'])->name('start_time');

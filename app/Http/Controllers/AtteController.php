@@ -21,13 +21,13 @@ class AtteController extends Controller
     {
         $attendances = Attendance::latest()->get();
         $rests = Rest::latest()->get();
-        return view('atte.date', compact('attendances', 'rests'));
+        $items = Attendance::simplePaginate(5);
+        return view('atte.date', compact('attendances', 'rests', 'items'));
     }
     public function stamp()
     {
         if (Auth::check()) {
-            $attendances = Attendance::latest()->get();
-            return view('atte.stamp', compact('attendances'));
+            return view('atte.stamp');
         }else{
             return view('atte.login');
             }
@@ -56,14 +56,14 @@ class AtteController extends Controller
         // 勤務開始を押したら新しくデータが作られる
         Attendance::create([
             'user_id' => $request->user_id,
-            'rest_id' => $request->rest_id,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
         ]);
+        $attendance = Attendance::where('user_id', Auth::id())->where('date', $date)->first();
         Rest::create([
-            'user_id' => $request->user_id,
-            'rest_start_time' => $request->rest_start_time,
-            'rest_end_time' => $request->rest_end_time,
+            'user_id' => Auth::id(),
+            'attendance_id' => $attendance->id,
+            'rest_start_time' => $start_time,
         ]);
         \Session::flash('start_msg', '勤務を開始しました');
         return redirect()->back();

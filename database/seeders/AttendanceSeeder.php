@@ -16,14 +16,12 @@ class AttendanceSeeder extends Seeder
     {
         $param = [
             'user_id' => 1,
-            'rest_id' => 1,
             'start_time' => '10:00:00',
             'end_time' => '20:00:00',
         ];
         DB::table('attendances')->insert($param);
         $param = [
             'user_id' => 2,
-            'rest_id' => 2,
             'start_time' => '10:00:00',
             'end_time' => '20:00:00',
             
@@ -31,7 +29,6 @@ class AttendanceSeeder extends Seeder
         DB::table('attendances')->insert($param);
         $param = [
             'user_id' => 3,
-            'rest_id' => 3,
             'start_time' => '10:00:00',
             'end_time' => '20:00:00',
         ];

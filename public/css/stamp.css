@@ -64,8 +64,8 @@ h2 {
 
 .start_time,
 .end_time,
-.lest_start_time,
-.lest_end_time {
+.rest_start_time,
+.rest_end_time {
   display: block;
   height: 100%;
   width: 100%;
@@ -79,8 +79,8 @@ h2 {
 
 .start_time:focus,
 .end_time:focus,
-.lest_start_time:focus,
-.lest_end_time:focus {
+.rest_start_time:focus,
+.rest_end_time:focus {
   background-color: gray;
 }
 
