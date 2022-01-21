@@ -14,7 +14,7 @@
   <header>
     <h1>Atte</h1>
     <ul>
-      <li><a href="{{ route('stamp') }}">ホーム</a></li>
+      <li><a href="{{ route('index') }}">ホーム</a></li>
       <li><a href="{{ route('date') }}">日付一覧</a></li>
       <li>
         <form method="post" action="{{ route('logout') }}">
@@ -64,20 +64,20 @@
       <button type="submit" class="end_time" id="end_time">勤務終了</button>
     </form>
    </div>
-   @if (session('lest_start'))
+   @if (session('rest_start'))
     <div class="session">
-        {{ session('lest_start') }}
+        {{ session('rest_start') }}
     </div>
     @endif
-   @if (session('lest_end'))
+   @if (session('rest_end'))
     <div class="session">
-        {{ session('lest_end') }}
+        {{ session('rest_end') }}
     </div>
     @endif
     
-    <!-- @if (session('lest_end_error'))
+    <!-- @if (session('rest_end_error'))
     <div class="session">
-        {{ session('lest_end_error') }}
+        {{ session('rest_end_error') }}
     </div>
     @endif -->
    <div class="date-box">

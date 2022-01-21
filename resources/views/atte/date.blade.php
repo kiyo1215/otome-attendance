@@ -14,7 +14,7 @@
   <header>
     <h1>Atte</h1>
     <ul>
-      <li><a href="{{ route('stamp') }}">ホーム</a></li>
+      <li><a href="{{ route('index') }}">ホーム</a></li>
       <li><a href="{{ route('date') }}">日付一覧</a></li>
       <li>
        <form method="post" action="{{ route('logout') }}">
@@ -28,6 +28,7 @@
    <table>
      <tr>
        <th>名前</th>
+       <th>日付</th>
        <th>勤務開始</th>
        <th>勤務終了</th>
        <th>休憩時間</th>
@@ -41,6 +42,7 @@
        ?>
      <tr>
        <td>{{ $rest->user->name }}</td>
+       <td>{{ $rest->attendance->date}}
        <td>{{ $rest->attendance->start_time }}</td>
        <td>{{ $rest->attendance->end_time }}</td>
         <?php

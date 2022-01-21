@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AtteController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\RestController;
 // use App\Http\Controllers\Auth\uthenticatedSessionController;
 
 /*
@@ -25,18 +26,18 @@ use App\Http\Controllers\AtteController;
 
 require __DIR__.'/auth.php';
 
-Route::get('/', [Attecontroller::class, 'stamp'])->name('stamp');
-Route::get('/date', [Attecontroller::class, 'date'])->name('date');
+Route::get('/', [AttendanceController::class, 'index'])->name('index');
+Route::get('/attendance', [AttendanceController::class, 'date'])->name('date');
 
-Route::get('/stamp/start_time', [Attecontroller::class, 'start_edit'])->name('start_edit');
-Route::post('/stamp/start_time', [Attecontroller::class, 'start_time'])->name('start_time');
+Route::get('/attendance/start_time', [AttendanceController::class, 'start_edit'])->name('start_edit');
+Route::post('/attendance/start_time', [AttendanceController::class, 'start_time'])->name('start_time');
 
-Route::get('/stamp/end_time/{id}', [Attecontroller::class, 'end_edit'])->name('end_edit');
-Route::post('/stamp/end_time/{id}', [Attecontroller::class, 'end_time'])->name('end_time');
+Route::get('/attendance/end_time/{id}', [AttendanceController::class, 'end_edit'])->name('end_edit');
+Route::post('/attendance/end_time/{id}', [AttendanceController::class, 'end_time'])->name('end_time');
 
-Route::get('/stamp/rest_start_time/{id}', [Attecontroller::class, 'rest_start_edit'])->name('rest_start_edit');
-Route::post('/stamp/rest_start_time/{id}', [Attecontroller::class, 'rest_start_time'])->name('rest_start_time');
+Route::get('/rest/start_time/{id}', [Restcontroller::class, 'start_edit'])->name('start_edit');
+Route::post('/rest/start_time/{id}', [Restcontroller::class, 'start_time'])->name('start_time');
 
-Route::get('/stamp/rest_end_time/{id}', [Attecontroller::class, 'rest_end_edit'])->name('rest_end_edit');
-Route::post('/stamp/rest_end_time/{id}', [Attecontroller::class, 'rest_end_time'])->name('rest_end_time');
+Route::get('/rest/end_time/{id}', [Restcontroller::class, 'end_edit'])->name('end_edit');
+Route::post('/rest/end_time/{id}', [Restcontroller::class, 'end_time'])->name('end_time');
 

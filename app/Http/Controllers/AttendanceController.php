@@ -11,11 +11,19 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 
-class AtteController extends Controller
+class AttendanceController extends Controller
 {
     public function login()
     {
         return view('atte.login');
+    }
+    public function index()
+    {
+        if (Auth::check()) {
+            return view('atte.stamp');
+        }else{
+            return view('atte.login');
+            }
     }
     public function date()
     {
@@ -23,14 +31,6 @@ class AtteController extends Controller
         $rests = Rest::latest()->get();
         $items = Attendance::simplePaginate(5);
         return view('atte.date', compact('attendances', 'rests', 'items'));
-    }
-    public function stamp()
-    {
-        if (Auth::check()) {
-            return view('atte.stamp');
-        }else{
-            return view('atte.login');
-            }
     }
     public function start_edit($id){
         return view('atte.stamp');
@@ -59,12 +59,7 @@ class AtteController extends Controller
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
         ]);
-        $attendance = Attendance::where('user_id', Auth::id())->where('date', $date)->first();
-        Rest::create([
-            'user_id' => Auth::id(),
-            'attendance_id' => $attendance->id,
-            'rest_start_time' => $start_time,
-        ]);
+        
         \Session::flash('start_msg', '勤務を開始しました');
         return redirect()->back();
     }
@@ -75,7 +70,7 @@ class AtteController extends Controller
     {
         $user = Auth::user();
         // 退勤したあとは退勤できない
-        // if('$attendance->end_time' !== 'null') {
+        // if('$attendance->end_time' !== null) {
         //     \Session::flash('end_error', '既に退勤の打刻がされています');
         //     return redirect()->back();
         // }
@@ -91,35 +86,5 @@ class AtteController extends Controller
         \Session::flash('end_msg', 'お疲れ様でした');
         return redirect()->back();
     }
-    public function rest_start_edit($id){
-        return view('atte.stamp');
-    }
-    public function rest_start_time(Request $request, $id)
-    {
-        $user = Auth::user();
-        $param = [
-            'rest_start_time' => $request->rest_start_time,
-            'rest_end_time' => $request->rest_end_time
-        ];
-        $rest_start_time = Rest::where('user_id', $user->id)->latest()->first()->update($param);
-        \Session::flash('lest_start', '休憩を開始しました');
-        return redirect()->back();
-    }
-    public function rest_end_edit($id){
-        return view('atte.stamp');
-    }
-    public function rest_end_time(Request $request, $id)
-    {
-        $user = Auth::user();
-        // if(!empty($attendance->lest_end_time)) {
-        //     \Session::flash('lest_end_error', '既に休憩終了の打刻がされています');
-        //     return redirect()->back();
-        // }
-        $param = [
-            'rest_end_time' => $request->lest_end_time
-        ];
-        $rest_end_time = Attendance::where('user_id', $user->id)->latest()->first()->update($param);
-        \Session::flash('lest_end', '休憩を終了しました');
-        return redirect()->back();
-    }
+    
 }
