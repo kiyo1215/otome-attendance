@@ -29,13 +29,13 @@ class AttendanceController extends Controller
     {
         $attendances = Attendance::latest()->get();
         $rests = Rest::latest()->get();
-        $items = Attendance::simplePaginate(5);
+        $items = Attendance::Paginate(5);
         return view('atte.date', compact('attendances', 'rests', 'items'));
     }
     public function start_edit($id){
         return view('atte.stamp');
     }
-    public function start_time(Request $request)
+    public function start_time(Request $request,$id)
     {
         $user = Auth::user();
 
@@ -56,8 +56,9 @@ class AttendanceController extends Controller
         // 勤務開始を押したら新しくデータが作られる
         Attendance::create([
             'user_id' => $request->user_id,
+            'date' => $request->date,
             'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
+            'end_time' => $request->end_time
         ]);
         
         \Session::flash('start_msg', '勤務を開始しました');
@@ -86,5 +87,4 @@ class AttendanceController extends Controller
         \Session::flash('end_msg', 'お疲れ様でした');
         return redirect()->back();
     }
-    
 }

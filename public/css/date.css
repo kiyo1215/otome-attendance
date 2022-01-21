@@ -43,9 +43,18 @@ main {
   background-color: #eee;
   padding: 30px 100px 0;
 }
-
-table {
+.info {
+  display: flex;
   width: 100%;
+}
+.attendance {
+  width: 64%;
+}
+.rest {
+  width: 16%;
+}
+.work {
+  width: 16%;
 }
 
 tr {
@@ -55,7 +64,7 @@ tr {
 
 th {
   padding-left: 30px;
-  width: 16%;
+  /* width: 16%; */
   line-height: 60px;
   text-align: left;
 }

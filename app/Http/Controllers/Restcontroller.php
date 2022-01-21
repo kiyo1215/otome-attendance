@@ -25,11 +25,6 @@ class Restcontroller extends Controller
             'attendance_id' => $attendance->id,
             'rest_start_time' => $start_time,
         ]);
-        // $param = [
-        //     'rest_start_time' => $request->rest_start_time,
-        //     'rest_end_time' => $request->rest_end_time
-        // ];
-        // $rest_start_time = Rest::where('user_id', $user->id)->latest()->first()->update($param);
         \Session::flash('rest_start', '休憩を開始しました');
         return redirect()->back();
     }

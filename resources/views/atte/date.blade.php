@@ -25,48 +25,69 @@
   </header>
   <main>
   {{ $items->links() }}
-   <table>
+  <div class="info">
+   <table class="attendance">
      <tr>
        <th>名前</th>
        <th>日付</th>
        <th>勤務開始</th>
        <th>勤務終了</th>
-       <th>休憩時間</th>
-       <th>勤務時間</th>
      </tr>
-     @foreach($rests as $rest)
-       <?php
-            $start_time = new DateTime($rest->attendance->start_time);
-            $end_time = new DateTime($rest->attendance->end_time);
-            $diff = $end_time->diff($start_time);
-       ?>
+     @foreach($attendances as $attendance)
      <tr>
-       <td>{{ $rest->user->name }}</td>
-       <td>{{ $rest->attendance->date}}
-       <td>{{ $rest->attendance->start_time }}</td>
-       <td>{{ $rest->attendance->end_time }}</td>
-        <?php
-            $rest_start_time = new DateTime($rest->rest_start_time);
-            $rest_end_time = new DateTime($rest->rest_end_time);
-            $rest_diff = $rest_end_time->diff($rest_start_time);
+       <td>{{ $attendance->user->name }}</td>
+       <td>{{ $attendance->date}}
+       <td>{{ $attendance->start_time }}</td>
+       <td>{{ $attendance->end_time }}</td>
+     </tr>
+    @endforeach
+    </table>
 
-            $work_time = new DateTime($diff->format('%H:%I:%S'));
-            $rest_time = new DateTime($rest_diff->format('%H:%I:%S'));
-            $diff_time = $work_time->diff($rest_time);
-          ?>
-        <td>
+    <table class="rest">
+      <tr>
+      <th>休憩時間</th>
+      </tr>
+    @foreach($rests as $rest)
         <?php
+            $rest_start_time = new DateTime($rest->start_time);
+            $rest_end_time = new DateTime($rest->end_time);
+            $rest_diff = $rest_end_time->diff($rest_start_time);
+            
+            $rest_time = new DateTime($rest_diff->format('%H:%I:%S'));
+          ?>
+    <tr>
+     <td>
+      <?php
           echo $rest_diff->format('%H:%I:%S')
           ?>
-        </td>
+     </td>
+    </tr>
+    @endforeach
+    </table>
+
+    <table class="work">
+      <tr>
+        <th>勤務時間</th>
+      </tr>
+      @foreach($attendances as $attendance)
+      <?php
+            $start_time = new DateTime($attendance->start_time);
+            $end_time = new DateTime($attendance->end_time);
+            $diff = $end_time->diff($start_time);
+
+            $work_time = new DateTime($diff->format('%H:%I:%S'));
+            $diff_time = $work_time->diff($rest_time);
+       ?>
+    <tr>
       <td>
         <?php
          echo $diff_time->format('%H:%I:%S')
         ?>
       </td>
-     </tr>
-     @endforeach
+    </tr>
+    @endforeach
    </table>
+   </div>
   </main>
   <footer>
     <p>Atte,inc.</p>

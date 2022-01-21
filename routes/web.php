@@ -29,8 +29,8 @@ require __DIR__.'/auth.php';
 Route::get('/', [AttendanceController::class, 'index'])->name('index');
 Route::get('/attendance', [AttendanceController::class, 'date'])->name('date');
 
-Route::get('/attendance/start_time', [AttendanceController::class, 'start_edit'])->name('start_edit');
-Route::post('/attendance/start_time', [AttendanceController::class, 'start_time'])->name('start_time');
+Route::get('/attendance/start_time/{id}', [AttendanceController::class, 'start_edit'])->name('start_edit');
+Route::post('/attendance/start_time/{id}', [AttendanceController::class, 'start_time'])->name('start_time');
 
 Route::get('/attendance/end_time/{id}', [AttendanceController::class, 'end_edit'])->name('end_edit');
 Route::post('/attendance/end_time/{id}', [AttendanceController::class, 'end_time'])->name('end_time');
