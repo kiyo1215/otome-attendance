@@ -81,15 +81,11 @@
    <div class="date-box">
     <form method="post" class="time-add" action="/rest/start_time/{{ Auth::user()->id }}">
     @csrf
-    <!-- <input type="hidden" name="user_id" value="">
-    <input type="hidden" name="attendance_id" value="$attendance->id"> -->
-    <input type="hidden" name="start_time" value="{{ \Carbon\Carbon::now()->format("H:i:s") }}">
       <button type="submit" class="rest_start_time">休憩開始</button>
     </form>
     
     <form method="post" class="time-add" action="/rest/end_time/{{ Auth::user()->id }}">
     @csrf
-    <input type="hidden" name="end_time" value="{{ \Carbon\Carbon::now()->format("H:i:s") }}">
       <button type="submit" class="rest_end_time">休憩終了</button>
     </form>
    </div>

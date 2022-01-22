@@ -20,11 +20,11 @@ class Restcontroller extends Controller
     {
         $user = Auth::user();
         $attendance = Attendance::where('user_id', Auth::id())->where('date', Carbon::today())->first();
-        // $start_time = Attendance::where('user_id', Auth::id())->where('date', Carbon::today())->first();
+        $now = Carbon::now()->format("H:i:s");
         Rest::create([
             'user_id' => Auth::id(),
             'attendance_id' => $attendance->id,
-            'start_time' => $request->start_time,
+            'start_time' => $now
         ]);
         \Session::flash('rest_start', '休憩を開始しました');
         return redirect()->back();
@@ -35,12 +35,13 @@ class Restcontroller extends Controller
     public function end_time(Request $request, $id)
     {
         $user = Auth::user();
-        // if(!empty($attendance->lest_end_time)) {
-        //     \Session::flash('lest_end_error', '既に休憩終了の打刻がされています');
+        $now = Carbon::now()->format("H:i:s");
+        // if(!empty($attendance->rest_end_time)) {
+        //     \Session::flash('rest_end_error', '既に休憩終了の打刻がされています');
         //     return redirect()->back();
         // }
         $param = [
-            'end_time' => $request->end_time
+            'end_time' => $now
         ];
         $rest_end_time = Rest::where('user_id', $user->id)->latest()->first()->update($param);
         \Session::flash('rest_end', '休憩を終了しました');
