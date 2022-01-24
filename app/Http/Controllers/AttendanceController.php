@@ -30,7 +30,14 @@ class AttendanceController extends Controller
         $attendances = Attendance::latest()->get();
         $rests = Rest::latest()->get();
         $items = Attendance::Paginate(5);
-        return view('atte.date', compact('attendances', 'rests', 'items'));
+        $all_rests = DB::table('rests')
+                ->select('attendance_id')
+                ->selectRaw('SUM(end_time - start_time) AS all_time')
+                ->groupBy('attendance_id')
+                ->latest('attendance_id')
+                ->get();
+        // dd($all_rests);
+        return view('atte.date', compact('attendances', 'rests', 'items', 'all_rests'));
     }
     public function start_edit($id){
         return view('atte.stamp');

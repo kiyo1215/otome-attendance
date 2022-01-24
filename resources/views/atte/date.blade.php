@@ -47,19 +47,10 @@
       <tr>
       <th>休憩時間</th>
       </tr>
-    @foreach($rests as $rest)
-        <?php
-            $rest_start_time = new DateTime($rest->start_time);
-            $rest_end_time = new DateTime($rest->end_time);
-            $rest_diff = $rest_end_time->diff($rest_start_time);
-            
-            $rest_time = new DateTime($rest_diff->format('%H:%I:%S'));
-          ?>
+    @foreach($all_rests as $all_rest)
     <tr>
      <td>
-      <?php
-          echo $rest_diff->format('%H:%I:%S')
-          ?>
+      {{$all_rest->all_time}}
      </td>
     </tr>
     @endforeach
@@ -76,12 +67,11 @@
             $diff = $end_time->diff($start_time);
 
             $work_time = new DateTime($diff->format('%H:%I:%S'));
-            $diff_time = $work_time->diff($rest_time);
        ?>
     <tr>
       <td>
         <?php
-         echo $diff_time->format('%H:%I:%S')
+         echo $work_time->format('%H:%I:%S')
         ?>
       </td>
     </tr>
