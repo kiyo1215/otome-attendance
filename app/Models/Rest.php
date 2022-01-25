@@ -14,8 +14,7 @@ class Rest extends Model
         'user_id',
         'attendance_id',
         'start_time',
-        'end_time',
-        'all_time'
+        'end_time'
     ];
     public function user()
     {

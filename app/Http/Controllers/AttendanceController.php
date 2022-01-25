@@ -15,10 +15,15 @@ class AttendanceController extends Controller
 {
     public function login()
     {
+
         return view('atte.login');
     }
     public function index()
     {
+        $request->validate([
+            'email' => ['required'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
         if (Auth::check()) {
             return view('atte.stamp');
         }else{
@@ -36,7 +41,6 @@ class AttendanceController extends Controller
                 ->groupBy('attendance_id')
                 ->latest('attendance_id')
                 ->get();
-        // dd($all_rests);
         return view('atte.date', compact('attendances', 'rests', 'items', 'all_rests'));
     }
     public function start_edit($id){

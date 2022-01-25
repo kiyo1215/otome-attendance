@@ -16,15 +16,27 @@
   </header>
   <main>
     <h2>会員登録</h2>
-    @foreach ($errors->all() as $error)
-      <li>{{$error}}</li>
-    @endforeach
     <div class="login-form">
       <form method="POST" action="{{ route('register') }}">
       @csrf
-        <p><input type="name" name="name" placeholder="名前"></p>
-        <p><input type="email" name="email" placeholder="メールアドレス"></p>
-        <p><input type="password" name="password" placeholder="パスワード"></p>
+      @if ($errors->has('name'))
+        <div class="text-danger">
+          {{ $errors->first('name') }}
+        </div>
+      @endif
+        <p><input type="name" name="name" placeholder="名前" value="{{old('name')}}"></p>
+        @if ($errors->has('email'))
+        <div class="text-danger">
+          {{ $errors->first('email') }}
+        </div>
+      @endif
+        <p><input type="email" name="email" placeholder="メールアドレス" value="{{old('email')}}"></p>
+        @if ($errors->has('password'))
+        <div class="text-danger">
+          {{ $errors->first('password') }}
+        </div>
+      @endif
+        <p><input type="password" name="password" placeholder="パスワード(8文字以上)"></p>
         <p><input type="password" name="password_confirmation" placeholder="確認用パスワード"></p>
         <button type="submit">会員登録</button>
       </form>

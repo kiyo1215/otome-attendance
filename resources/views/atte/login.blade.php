@@ -18,7 +18,17 @@
     <div class="login-form">
       <form method="POST" action="{{ route('login') }}">
       @csrf
+      @if ($errors->has('email'))
+        <div class="text-danger">
+          {{ $errors->first('email') }}
+        </div>
+      @endif
         <p><input type="email" name="email" placeholder="メールアドレス"></p>
+        @if ($errors->has('password'))
+        <div class="text-danger">
+          {{ $errors->first('password') }}
+        </div>
+      @endif
         <p><input type="password" name="password" placeholder="パスワード"></p>
         <button type="submit">ログイン</button>
       </form>

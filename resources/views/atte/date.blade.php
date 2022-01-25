@@ -50,7 +50,10 @@
     @foreach($all_rests as $all_rest)
     <tr>
      <td>
-      {{$all_rest->all_time}}
+     <?php
+        $rest = str_pad($all_rest->all_time, 6, 0, STR_PAD_LEFT);
+        echo wordwrap($rest, 2, ':', true);
+     ?>
      </td>
     </tr>
     @endforeach
@@ -66,12 +69,12 @@
             $end_time = new DateTime($attendance->end_time);
             $diff = $end_time->diff($start_time);
 
-            $work_time = new DateTime($diff->format('%H:%I:%S'));
+            $work_time = new DateTime($diff->format('%H:%i:%s'));
        ?>
     <tr>
       <td>
         <?php
-         echo $work_time->format('%H:%I:%S')
+         echo $work_time->format('H:i:s')
         ?>
       </td>
     </tr>
