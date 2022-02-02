@@ -23,14 +23,14 @@ class AttendanceController extends Controller
             $end_time = $attendance->end_time;
         }
         //自分の本日の休憩があるかのチェック、attendance_idで絞り込み(リレーションで取得)
-        $rests = Rest::where('user_id', Auth::id())->where('date', Carbon::today())->where('rest', $rest->attendance->id)->first();
+        $rest = Rest::where('attendance_id', )->where('user_id', Auth::id())->where('date', Carbon::today())->first();
         //休憩がある場合は、スタートタイムとエンドタイムのチェック
         if(!empty($rest)){
             $start_time = $rest->start_time;
             $end_time = $rest->end_time;
         };
         //それらの情報を画面に受け渡す
-        return view('atte.stamp', compact('attendances','rests'));
+        return view('atte.stamp', compact('attendance','rest'));
     }
 
     public function date()
