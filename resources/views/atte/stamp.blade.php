@@ -26,39 +26,26 @@
   </header>
   <main>
    <h2>{{ Auth::user()->name }}さんお疲れ様です！</h2>
-   @if (session('start_error'))
-    <div class="session">
-        {{ session('start_error') }}
-    </div>
-    @endif
-    @if (session('start_msg'))
-    <div class="session">
-        {{ session('start_msg') }}
-    </div>
-    @endif
-    @if (session('end_msg'))
-    <div class="session">
-        {{ session('end_msg') }}
-    </div>
-    @endif
-    @if (session('end_error'))
-    <div class="session">
-        {{ session('end_error') }}
-    </div>
-    @endif
+   <!-- メッセージを１個に -->
+   @foreach ($errors->any() as $error)
+      <li>{{$error}}</li>
+    @endforeach
+
    <div class="date-box">
-    <form method="post" class="time-add" action="/attendance/start_time/{{Auth::user()->id }}">
+   <!-- actionを変える -->
+    <form method="post" class="time-add" action="/attendance/start">
       @csrf
-      <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-      <input type="hidden" name="date" value="{{ \Carbon\Carbon::today()->format("Y-m-d") }}">
-      <input type="hidden" name="start_time" value="{{ \Carbon\Carbon::now()->format("H:i:s") }}">
-      <input type="hidden" name="end_time" value=" ">
+    <!-- controllerにstart_timeとdateをうつす -->
+    <input type="date" name="date" value="\Carbon\Carbon::today()->format("Y/m/d")">
+    <input type="time" name="start_time" value="\Carbon\Carbon::now()->format("H:i:s")">
       <button type="submit" class="start_time" id="start_time">勤務開始</button>
     </form>
     
-    <form method="post" class="time-add" action="/attendance/end_time/{{ Auth::user()->id }}">
+    <!-- actionを変える -->
+    <form method="post" class="time-add" action="/attendance/end">
       @csrf
-      <input type="hidden" name="end_time" value="{{ \Carbon\Carbon::now()->format("H:i:s") }}">
+    <!-- controllerにend_timeをうつす -->
+    <input type="time" name="end_time" value="\Carbon\Carbon::now()->format("H:i:s")">
       <button type="submit" class="end_time" id="end_time">勤務終了</button>
     </form>
    </div>
@@ -73,18 +60,17 @@
     </div>
     @endif
     
-    <!-- @if (session('rest_end_error'))
-    <div class="session">
-        {{ session('rest_end_error') }}
-    </div>
-    @endif -->
+    @foreach ($errors->all() as $error)
+      <li>{{$error}}</li>
+    @endforeach
+
    <div class="date-box">
-    <form method="post" class="time-add" action="/rest/start_time/{{ Auth::user()->id }}">
+    <form method="post" class="time-add" action="/rest/start">
     @csrf
       <button type="submit" class="rest_start_time">休憩開始</button>
     </form>
     
-    <form method="post" class="time-add" action="/rest/end_time/{{ Auth::user()->id }}">
+    <form method="post" class="time-add" action="/rest/end">
     @csrf
       <button type="submit" class="rest_end_time">休憩終了</button>
     </form>

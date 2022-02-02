@@ -10,16 +10,19 @@ use App\Models\Rest;
 class Attendance extends Model
 {
     use HasFactory;
-     protected $fillable = [
+
+    protected $fillable = [
         'user_id',
         'date',
         'start_time',
         'end_time'
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+    
     public function rest()
     {
         return $this->belongsTo(Rest::class);
