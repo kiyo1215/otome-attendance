@@ -27,53 +27,49 @@
   <main>
    <h2>{{ Auth::user()->name }}さんお疲れ様です！</h2>
    <!-- メッセージを１個に -->
-   @foreach ($errors->any() as $error)
-      <li>{{$error}}</li>
-    @endforeach
 
    <div class="date-box">
    <!-- actionを変える -->
+   @if(!$atte_start_time)
     <form method="post" class="time-add" action="/attendance/start">
       @csrf
-    <!-- controllerにstart_timeとdateをうつす -->
-    <input type="date" name="date" value="\Carbon\Carbon::today()->format("Y/m/d")">
-    <input type="time" name="start_time" value="\Carbon\Carbon::now()->format("H:i:s")">
-      <button type="submit" class="start_time" id="start_time">勤務開始</button>
+      <button type="submit" class="start_time">勤務開始</button>
     </form>
-    
+   @else
+   <!-- 押せないボタンを作る -->
+   <button type="button" class="none-button">勤務開始</button>
+   @endif
     <!-- actionを変える -->
+    @if($atte_start_time && !$atte_end_time)
     <form method="post" class="time-add" action="/attendance/end">
       @csrf
-    <!-- controllerにend_timeをうつす -->
-    <input type="time" name="end_time" value="\Carbon\Carbon::now()->format("H:i:s")">
-      <button type="submit" class="end_time" id="end_time">勤務終了</button>
+      <button type="submit" class="end_time">勤務終了</button>
     </form>
+    @else
+    <!-- 押せないボタンを作る -->
+    <button type="button" class="none-button">勤務終了</button>
+    @endif
    </div>
-   @if (session('rest_start'))
-    <div class="session">
-        {{ session('rest_start') }}
-    </div>
-    @endif
-   @if (session('rest_end'))
-    <div class="session">
-        {{ session('rest_end') }}
-    </div>
-    @endif
-    
-    @foreach ($errors->all() as $error)
-      <li>{{$error}}</li>
-    @endforeach
 
    <div class="date-box">
+   @if($atte_start_time && !$atte_end_time && !$rest_start_time || $rest_end_time)
     <form method="post" class="time-add" action="/rest/start">
     @csrf
       <button type="submit" class="rest_start_time">休憩開始</button>
     </form>
-    
+   @else
+    <!-- 押せないボタンを作る -->
+    <button type="button" class="none-button">休憩開始</button>
+   @endif
+   @if($atte_start_time && !$atte_end_time && $rest_start_time)
     <form method="post" class="time-add" action="/rest/end">
     @csrf
       <button type="submit" class="rest_end_time">休憩終了</button>
     </form>
+    @else
+    <!-- 押せないボタンを作る -->
+    <button type="button" class="none-button">休憩終了</button>
+   @endif
    </div>
   </main>
   <footer>
