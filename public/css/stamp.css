@@ -89,6 +89,7 @@ h2 {
   font-weight: bold;
   border: none;
   pointer-events: none;
+  opacity: 0.1;
 }
 
 button:active {

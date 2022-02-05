@@ -63,8 +63,8 @@ class AttendanceController extends Controller
         // 勤務開始を押したら新しくデータが作られる
         Attendance::create([
             'user_id' => Auth::id(),
-            'date' => $request->date,
-            'start_time' => $request->start_time,
+            'date' => Carbon::now()->format('Y-m-d'),
+            'start_time' => Carbon::now()->format('H:i:s'),
         ]);
         return back()->with('start_msg', '勤務を開始しました');
     }
