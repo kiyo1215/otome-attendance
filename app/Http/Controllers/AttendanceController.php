@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use App\Models\Attendance;
 use App\Models\Rest;
@@ -13,8 +14,11 @@ use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
-    public function index()
+    public function index(LoginRequest $request)
     {
+        $request->authenticate();
+        $request->session()->regenerate();
+
         $atte_start_time = null;
         $atte_end_time = null;
         $rest_start_time = null;

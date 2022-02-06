@@ -31,6 +31,7 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
         $request->session()->regenerate();
+        
         $atte_start_time = null;
         $atte_end_time = null;
         $rest_start_time = null;
