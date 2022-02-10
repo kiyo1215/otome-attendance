@@ -24,7 +24,7 @@
     </ul>
   </header>
   <main>
-  {{ $items->links() }}
+  {{ $attendances->links() }}
   <div class="info">
    <table class="attendance">
      <tr>
@@ -34,12 +34,12 @@
        <th>勤務終了</th>
      </tr>
      @foreach($attendances as $attendance)
-     <tr>
-       <td>{{ $attendance->user->name }}</td>
-       <td>{{ $attendance->date}}
-       <td>{{ $attendance->start_time }}</td>
-       <td>{{ $attendance->end_time }}</td>
-     </tr>
+        <tr>
+          <td>{{ $attendance->user->name }}</td>
+          <td>{{ $attendance->date}}
+          <td>{{ $attendance->start_time }}</td>
+          <td>{{ $attendance->end_time }}</td>
+        </tr>
     @endforeach
     </table>
 
@@ -47,28 +47,28 @@
       <tr>
       <th>休憩時間</th>
       </tr>
-    @foreach($all_rests as $all_rest)
-    <tr>
-     <td>
-     <?php
-        $rest = str_pad($all_rest->all_time, 6, 0, STR_PAD_LEFT);
-        echo wordwrap($rest, 2, ':', true);
-     ?>
-     </td>
-    </tr>
-    @endforeach
+      @foreach($all_rests as $all_rest)
+      <tr>
+      <td>
+      <?php
+          $rest = str_pad($all_rest->all_time, 6, 0, STR_PAD_LEFT);
+          echo wordwrap($rest, 2, ':', true);
+      ?>
+      </td>
+      </tr>
+      @endforeach
     </table>
 
     <table class="work">
       <tr>
         <th>勤務時間</th>
       </tr>
-      @foreach($attendances as $attendance)
+      @foreach($rests as $rest)
       <?php
-            $start_time = new DateTime($attendance->start_time);
-            $end_time = new DateTime($attendance->end_time);
+            $start_time = new DateTime($rest->attendance->start_time);
+            $end_time = new DateTime($rest->attendance->end_time);
             $diff = $end_time->diff($start_time);
-
+            
             $work_time = new DateTime($diff->format('%H:%i:%s'));
        ?>
     <tr>

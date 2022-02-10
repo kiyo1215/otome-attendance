@@ -44,16 +44,15 @@ class AttendanceController extends Controller
 
     public function date()
     {
-        $attendances = Attendance::latest()->get();
+        $attendances = Attendance::latest()->Paginate(5);
         $rests = Rest::latest()->get();
-        $items = Attendance::Paginate(5);
         $all_rests = DB::table('rests')
                 ->select('attendance_id')
                 ->selectRaw('SUM(end_time - start_time) AS all_time')
                 ->groupBy('attendance_id')
                 ->latest('attendance_id')
                 ->get();
-        return view('atte.date', compact('attendances', 'rests', 'items', 'all_rests'));
+        return view('atte.date', compact('attendances', 'rests', 'all_rests'));
     }
 
     public function start()
@@ -70,10 +69,26 @@ class AttendanceController extends Controller
 
     public function end()
     {
-        $param = [
-            'end_time' => Carbon::now()->format('H:i:s')
-        ];
-        Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
+        $attendance = Attendance::where('user_id', Auth::id())->where('date', Carbon::today())->first();
+        $rest = Rest::where('attendance_id', $attendance->id)->first();
+        // dd($rest);
+        if(empty($rest)){
+            $param = [
+                'end_time' => Carbon::now()->format('H:i:s')
+            ];
+            Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
+            Rest::create([
+                'user_id' => Auth::id(),
+                'attendance_id' => $attendance->id,
+                'start_time' => '00:00:00',
+                'end_time' => '00:00:00',
+            ]);
+        } else {
+            $param = [
+                'end_time' => Carbon::now()->format('H:i:s'),
+            ];
+            Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
+        }
 
         return back()->with('end_msg', 'お疲れ様でした');
     }
