@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
-
 class AttendanceController extends Controller
 {
     public function index(Request $request)
@@ -21,26 +20,26 @@ class AttendanceController extends Controller
 
         //自分の本日の勤怠があるかのチェック、dateとuser_idで絞り込み
         $attendance = Attendance::where('user_id', Auth::id())->where('date', Carbon::today())->first();
-        if(empty($attendance)){
-           return view('atte.stamp', compact('atte_start_time', 'atte_end_time','rest_start_time', 'rest_end_time'));
+        if (empty($attendance)) {
+            return view('atte.stamp', compact('atte_start_time', 'atte_end_time', 'rest_start_time', 'rest_end_time'));
         }
         //勤怠がある場合は、スタートタイムとエンドタイムのチェック
-        if(!empty($attendance)){
+        if (!empty($attendance)) {
             $atte_start_time = $attendance->start_time;
             $atte_end_time = $attendance->end_time;
         }
         //自分の本日の休憩があるかのチェック、attendance_idで絞り込み(リレーションで取得)
         $rest = Rest::where('attendance_id', $attendance->id)->latest()->first();
-        if(empty($rest)){
-            return view('atte.stamp', compact('atte_start_time', 'atte_end_time','rest_start_time', 'rest_end_time'));
+        if (empty($rest)) {
+            return view('atte.stamp', compact('atte_start_time', 'atte_end_time', 'rest_start_time', 'rest_end_time'));
         }
         //休憩がある場合は、スタートタイムとエンドタイムのチェック
-        if(!empty($rest)){
+        if (!empty($rest)) {
             $rest_start_time = $rest->start_time;
             $rest_end_time = $rest->end_time;
         };
         //それらの情報を画面に受け渡す
-        return view('atte.stamp', compact('atte_start_time', 'atte_end_time','rest_start_time', 'rest_end_time'));
+        return view('atte.stamp', compact('atte_start_time', 'atte_end_time', 'rest_start_time', 'rest_end_time'));
     }
 
     public function date()
@@ -57,7 +56,7 @@ class AttendanceController extends Controller
         return view('atte.date', compact('attendances', 'rests', 'items', 'all_rests'));
     }
 
-    public function start(Request $request)
+    public function start()
     {
         // 勤務開始を押したら新しくデータが作られる
         Attendance::create([
@@ -65,15 +64,17 @@ class AttendanceController extends Controller
             'date' => Carbon::now()->format('Y-m-d'),
             'start_time' => Carbon::now()->format('H:i:s'),
         ]);
+
         return back()->with('start_msg', '勤務を開始しました');
     }
 
-   public function end(Request $request)
+    public function end()
     {
         $param = [
             'end_time' => Carbon::now()->format('H:i:s')
         ];
         Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
+
         return back()->with('end_msg', 'お疲れ様でした');
     }
 }
