@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Attendance;
 use App\Models\Rest;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
-class Restcontroller extends Controller
+class RestController extends Controller
 {
     public function start(Request $request)
     {
