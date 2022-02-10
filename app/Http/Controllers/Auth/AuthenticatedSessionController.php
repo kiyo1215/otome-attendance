@@ -31,14 +31,8 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
         $request->session()->regenerate();
-        
-        $atte_start_time = null;
-        $atte_end_time = null;
-        $rest_start_time = null;
-        $rest_end_time = null;
-        
-        // return redirect()->intended(RouteServiceProvider::HOME);
-        return view('atte.stamp', compact('atte_start_time', 'atte_end_time','rest_start_time', 'rest_end_time'));
+
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**
