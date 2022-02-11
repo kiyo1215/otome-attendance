@@ -44,15 +44,31 @@ class AttendanceController extends Controller
 
     public function date()
     {
-        $attendances = Attendance::latest()->Paginate(5);
-        $rests = Rest::latest()->get();
+        $date = Carbon::today()->format('Y-m-d');
+        
+        $rests = Rest::latest()->Paginate(5);
         $all_rests = DB::table('rests')
                 ->select('attendance_id')
                 ->selectRaw('SUM(end_time - start_time) AS all_time')
                 ->groupBy('attendance_id')
                 ->latest('attendance_id')
                 ->get();
-        return view('atte.date', compact('attendances', 'rests', 'all_rests'));
+        return view('atte.date', compact('date', 'rests', 'all_rests'));
+    }
+    public function seach(Request $request)
+    {
+        Auth::check();
+        $date = Carbon::today()->format("Y-m-d");
+        $today = $request->input('today');
+        $day = $request->input('date');
+
+        if ($day == "next") {
+            $date = date("Y-m-d", strtotime($today . "+1 day"));
+        } else if ($day == "back") {
+            $date = date("Y-m-d", strtotime($today . "-1 day"));
+        }
+
+        return back(compact('date'));
     }
 
     public function start()

@@ -24,7 +24,21 @@
     </ul>
   </header>
   <main>
-  {{ $attendances->links() }}
+  <div class="date-seach">
+    <form action="/attendance" method="post">
+      @csrf
+      <input type="hidden" name="today" value={{ $date }}>
+      <input type="hidden" name="date" value="back">
+      <input type="submit" value="<">
+    </form>
+    <p>{{ $date }}</p>
+    <form action="/attendance" method="post">
+      @csrf
+      <input type="hidden" name="today" value={{ $date }}>
+      <input type="hidden" name="date" value="next">
+      <input type="submit" value=">">
+    </form>
+  </div>
   <div class="info">
    <table class="attendance">
      <tr>
@@ -33,12 +47,12 @@
        <th>勤務開始</th>
        <th>勤務終了</th>
      </tr>
-     @foreach($attendances as $attendance)
+     @foreach($rests as $rest)
         <tr>
-          <td>{{ $attendance->user->name }}</td>
-          <td>{{ $attendance->date}}
-          <td>{{ $attendance->start_time }}</td>
-          <td>{{ $attendance->end_time }}</td>
+          <td>{{ $rest->attendance->user->name }}</td>
+          <td>{{ $rest->attendance->date}}
+          <td>{{ $rest->attendance->start_time }}</td>
+          <td>{{ $rest->attendance->end_time }}</td>
         </tr>
     @endforeach
     </table>
@@ -51,8 +65,12 @@
       <tr>
       <td>
       <?php
-          $rest = str_pad($all_rest->all_time, 6, 0, STR_PAD_LEFT);
-          echo wordwrap($rest, 2, ':', true);
+          // dd($all_rest);
+          // $aaa = $all_rest->all_time;
+          // dd($aaa);
+          $rest_time = str_pad($all_rest->all_time, 6, 0, STR_PAD_LEFT);
+          // dd($rest_time);
+          echo wordwrap($rest_time, 2, ':', true);
       ?>
       </td>
       </tr>
@@ -65,22 +83,29 @@
       </tr>
       @foreach($rests as $rest)
       <?php
+            // dd($attendance->start_time);
             $start_time = new DateTime($rest->attendance->start_time);
             $end_time = new DateTime($rest->attendance->end_time);
-            $diff = $end_time->diff($start_time);
-            
-            $work_time = new DateTime($diff->format('%H:%i:%s'));
+            $work_time = $end_time->diff($start_time);
+            // dd($rest_time);
+            $rest_time2 = new DateTime($rest_time);
+            // dd($rest_time2);
+            // $aaa = $work_time->diff($rest_time3);
+            // dd($aaa);
+
+            $diff_time = new DateTime($work_time->format('%H:%i:%s'));
        ?>
     <tr>
       <td>
         <?php
-         echo $work_time->format('H:i:s')
+         echo $diff_time->format('H:i:s')
         ?>
       </td>
     </tr>
     @endforeach
-   </table>
+    </table>
    </div>
+   {{ $rests->links() }}
   </main>
   <footer>
     <p>Atte,inc.</p>
