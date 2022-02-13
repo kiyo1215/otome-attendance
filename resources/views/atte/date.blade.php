@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <title>My Site</title>
   <link rel="stylesheet" href="{{asset('css/reset.css')}}">
+  <link rel="stylesheet" href="{{asset('css/paginate.css')}}">
   <link rel="stylesheet" href="{{asset('css/date.css')}}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv=" X-UA-Compatible" content="ie=edge">
@@ -47,12 +48,12 @@
        <th>勤務開始</th>
        <th>勤務終了</th>
      </tr>
-     @foreach($rests as $rest)
+     @foreach($attendances as $attendance)
         <tr>
-          <td>{{ $rest->attendance->user->name }}</td>
-          <td>{{ $rest->attendance->date}}
-          <td>{{ $rest->attendance->start_time }}</td>
-          <td>{{ $rest->attendance->end_time }}</td>
+          <td>{{ $attendance->user->name }}</td>
+          <td>{{ $attendance->date}}
+          <td>{{ $attendance->start_time }}</td>
+          <td>{{ $attendance->end_time }}</td>
         </tr>
     @endforeach
     </table>
@@ -65,11 +66,7 @@
       <tr>
       <td>
       <?php
-          // dd($all_rest);
-          // $aaa = $all_rest->all_time;
-          // dd($aaa);
           $rest_time = str_pad($all_rest->all_time, 6, 0, STR_PAD_LEFT);
-          // dd($rest_time);
           echo wordwrap($rest_time, 2, ':', true);
       ?>
       </td>
@@ -81,17 +78,13 @@
       <tr>
         <th>勤務時間</th>
       </tr>
-      @foreach($rests as $rest)
+      @foreach($attendances as $attendance)
       <?php
-            // dd($attendance->start_time);
-            $start_time = new DateTime($rest->attendance->start_time);
-            $end_time = new DateTime($rest->attendance->end_time);
+            $start_time = new DateTime($attendance->start_time);
+            $end_time = new DateTime($attendance->end_time);
             $work_time = $end_time->diff($start_time);
-            // dd($rest_time);
             $rest_time2 = new DateTime($rest_time);
-            // dd($rest_time2);
-            // $aaa = $work_time->diff($rest_time3);
-            // dd($aaa);
+            
 
             $diff_time = new DateTime($work_time->format('%H:%i:%s'));
        ?>
@@ -105,7 +98,7 @@
     @endforeach
     </table>
    </div>
-   {{ $rests->links() }}
+   {{ $attendances->links() }}
   </main>
   <footer>
     <p>Atte,inc.</p>
