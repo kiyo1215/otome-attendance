@@ -43,21 +43,48 @@ main {
   background-color: #eee;
   padding: 30px 100px 0;
 }
-.date-seach {
-  display: flex;
+
+main>p {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
 }
+
+.day {
+  display: flex;
+  height: 30px;
+  width: 99%;
+  /* background-color: aqua; */
+  justify-content: center;
+}
+
+.day p {
+  margin: 0 20px;
+  background-color: #eee;
+  font-size: 20px;
+}
+
+.day button {
+  background-color: #eee;
+  font-size: 20px;
+  height: 20px;
+}
+
 .info {
   display: flex;
   width: 100%;
 }
+
 .attendance {
-  width: 64%;
+  width: 65%;
 }
+
 .rest {
-  width: 16%;
+  width: 17%;
 }
+
 .work {
-  width: 16%;
+  width: 17%;
 }
 
 tr {
@@ -80,6 +107,7 @@ td {
 footer {
   height: 5vh;
 }
+
 footer p {
   font-size: 12px;
   font-weight: bold;

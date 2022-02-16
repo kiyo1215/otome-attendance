@@ -7,7 +7,7 @@ use App\Http\Controllers\RestController;
 Route::middleware('auth')->group(function(){
     Route::get('/', [AttendanceController::class, 'index'])->name('index');
     Route::get('/attendance', [AttendanceController::class, 'date'])->name('date');
-    Route::post('/attendance', [AttendanceController::class, 'seach'])->name('seach');
+    Route::post('/attendance', [AttendanceController::class, 'search'])->name('search');
     Route::post('/attendance/start', [AttendanceController::class, 'start'])->name('start');
     Route::post('/attendance/end', [AttendanceController::class, 'end'])->name('end');
     Route::post('/rest/start', [Restcontroller::class, 'start'])->name('start');

@@ -45,7 +45,7 @@ class AttendanceController extends Controller
     public function date()
     {
         $date = Carbon::today()->format('Y-m-d');
-        
+        $attendances = DB::table('attendances')->whereDate('date', '$date')->Paginate(5);
         $attendances = Attendance::latest()->Paginate(5);
         $all_rests = DB::table('rests')
                 ->select('attendance_id')
@@ -53,22 +53,26 @@ class AttendanceController extends Controller
                 ->groupBy('attendance_id')
                 ->latest('attendance_id')
                 ->Paginate(5);
-        // dd($all_rests);
+
         return view('atte.date', compact('date', 'attendances', 'all_rests'));
     }
-    public function seach(Request $request)
+    public function search()
     {
-        $date = Carbon::today()->format("Y-m-d");
-        $today = $request->input('today');
-        $day = $request->input('date');
-
-        if ($day == "next") {
-            $date = date("Y-m-d", strtotime($today . "+1 day"));
-        } else if ($day == "back") {
-            $date = date("Y-m-d", strtotime($today . "-1 day"));
+        $date = Carbon::today()->format('Y-m-d');
+        $all_rests = DB::table('rests')
+                ->select('attendance_id')
+                ->selectRaw('SUM(end_time - start_time) AS all_time')
+                ->groupBy('attendance_id')
+                ->latest('attendance_id')
+                ->Paginate(5);
+        if('date' === 'back'){
+            $date = new Carbon('-1 day');
+        }elseif('date' === 'next'){
+            $date = new Carbon('+1 day');
         }
-
-        return back(compact('date'));
+        $attendances = DB::table('attendances')->whereDate('date', '$date')->Paginate(5);
+        // dd(new Carbon('-1 day'));
+        return view('atte.date', compact('date', 'attendances', 'all_rests'));
     }
 
     public function start()
@@ -87,7 +91,7 @@ class AttendanceController extends Controller
     {
         $attendance = Attendance::where('user_id', Auth::id())->where('date', Carbon::today())->first();
         $rest = Rest::where('attendance_id', $attendance->id)->first();
-        // dd($rest);
+        
         if(empty($rest)){
             $param = [
                 'end_time' => Carbon::now()->format('H:i:s')

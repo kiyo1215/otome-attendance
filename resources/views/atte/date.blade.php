@@ -25,21 +25,21 @@
     </ul>
   </header>
   <main>
-  <div class="date-seach">
-    <form action="/attendance" method="post">
+  
+  <div class="day">
+    <form method="post" action="/attendance">
       @csrf
-      <input type="hidden" name="today" value={{ $date }}>
       <input type="hidden" name="date" value="back">
-      <input type="submit" value="<">
+      <button type="submit"><<button>
     </form>
-    <p>{{ $date }}</p>
-    <form action="/attendance" method="post">
+      <p>{{$date}}</p>
+    <form method="post" action="/attendance">
       @csrf
-      <input type="hidden" name="today" value={{ $date }}>
       <input type="hidden" name="date" value="next">
-      <input type="submit" value=">">
+      <button type="submit">><button>
     </form>
   </div>
+
   <div class="info">
    <table class="attendance">
      <tr>
@@ -66,6 +66,7 @@
       <tr>
       <td>
       <?php
+      // dd($all_rest);
           $rest_time = str_pad($all_rest->all_time, 6, 0, STR_PAD_LEFT);
           echo wordwrap($rest_time, 2, ':', true);
       ?>
@@ -83,15 +84,11 @@
             $start_time = new DateTime($attendance->start_time);
             $end_time = new DateTime($attendance->end_time);
             $work_time = $end_time->diff($start_time);
-            $rest_time2 = new DateTime($rest_time);
-            
-
-            $diff_time = new DateTime($work_time->format('%H:%i:%s'));
        ?>
     <tr>
       <td>
         <?php
-         echo $diff_time->format('H:i:s')
+         echo $work_time->format('%H:%I:%S')
         ?>
       </td>
     </tr>
