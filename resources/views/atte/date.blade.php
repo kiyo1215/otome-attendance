@@ -27,13 +27,13 @@
   <main>
   
   <div class="day">
-    <form method="post" action="/attendance">
+    <form method="post" action="{{ route('search') }}">
       @csrf
       <input type="hidden" name="date" value="back">
       <button type="submit"><<button>
     </form>
       <p>{{$date}}</p>
-    <form method="post" action="/attendance">
+    <form method="post" action="{{ route('search') }}">
       @csrf
       <input type="hidden" name="date" value="next">
       <button type="submit">><button>
@@ -47,6 +47,8 @@
        <th>日付</th>
        <th>勤務開始</th>
        <th>勤務終了</th>
+       <th>休憩時間</th>
+       <th>勤務時間</th>
      </tr>
      @foreach($attendances as $attendance)
         <tr>
@@ -54,46 +56,46 @@
           <td>{{ $attendance->date}}
           <td>{{ $attendance->start_time }}</td>
           <td>{{ $attendance->end_time }}</td>
+          <td>
+            @php
+            $sum = 0;
+             foreach($attendance->rests as $index => $rest){
+
+                $start_time = new DateTime($rest->start_time);
+                $end_time = new DateTime($rest->end_time);
+
+                $interval = $start_time->diff($end_time);
+                $sum = $sum + $interval->s;
+                
+                if($index === count($attendance->rests) - 1){
+                  
+                  $hours = floor($sum / 3600);
+                  $minutes = floor(($sum / 60) % 60);
+                  $seconds = $sum % 60;
+
+                  $rest_time = (sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds));
+                  echo $rest_time;
+                }
+             }
+                
+            @endphp
+          </td>
+          <td>
+          @php
+            $start_time = new DateTime($attendance->start_time);
+            $end_time = new DateTime($attendance->end_time);
+            
+            $interval = $start_time->diff($end_time);
+
+            echo $interval->format('%H:%I:%S');
+          @endphp
+          </td>
         </tr>
     @endforeach
     </table>
 
-    <table class="rest">
-      <tr>
-      <th>休憩時間</th>
-      </tr>
-      @foreach($all_rests as $all_rest)
-      <tr>
-      <td>
-      <?php
-      // dd($all_rest);
-          $rest_time = str_pad($all_rest->all_time, 6, 0, STR_PAD_LEFT);
-          echo wordwrap($rest_time, 2, ':', true);
-      ?>
-      </td>
-      </tr>
-      @endforeach
-    </table>
 
-    <table class="work">
-      <tr>
-        <th>勤務時間</th>
-      </tr>
-      @foreach($attendances as $attendance)
-      <?php
-            $start_time = new DateTime($attendance->start_time);
-            $end_time = new DateTime($attendance->end_time);
-            $work_time = $end_time->diff($start_time);
-       ?>
-    <tr>
-      <td>
-        <?php
-         echo $work_time->format('%H:%I:%S')
-        ?>
-      </td>
-    </tr>
-    @endforeach
-    </table>
+    
    </div>
    {{ $attendances->links() }}
   </main>

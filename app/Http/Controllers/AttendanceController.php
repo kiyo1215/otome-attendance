@@ -44,35 +44,22 @@ class AttendanceController extends Controller
 
     public function date()
     {
-        $date = Carbon::today()->format('Y-m-d');
-        $attendances = DB::table('attendances')->whereDate('date', '$date')->Paginate(5);
-        $attendances = Attendance::latest()->Paginate(5);
-        $all_rests = DB::table('rests')
-                ->select('attendance_id')
-                ->selectRaw('SUM(end_time - start_time) AS all_time')
-                ->groupBy('attendance_id')
-                ->latest('attendance_id')
-                ->Paginate(5);
-
-        return view('atte.date', compact('date', 'attendances', 'all_rests'));
+        $date = Carbon::now()->format('Y-m-d');
+        $attendances = Attendance::whereDate('date', $date)->paginate(5);
+        
+        return view('atte.date', compact('date', 'attendances'));
     }
-    public function search()
+    public function search(Request $request)
     {
-        $date = Carbon::today()->format('Y-m-d');
-        $all_rests = DB::table('rests')
-                ->select('attendance_id')
-                ->selectRaw('SUM(end_time - start_time) AS all_time')
-                ->groupBy('attendance_id')
-                ->latest('attendance_id')
-                ->Paginate(5);
-        if('date' === 'back'){
-            $date = new Carbon('-1 day');
-        }elseif('date' === 'next'){
-            $date = new Carbon('+1 day');
+        $date = Carbon::parse()->format('Y-m-d');
+        if($request->date === 'back'){
+            $date = Carbon::parse('-1 day')->format('Y-m-d');
+        }elseif($request->date === 'next'){
+            $date = Carbon::parse('+1 day')->format('Y-m-d');
         }
-        $attendances = DB::table('attendances')->whereDate('date', '$date')->Paginate(5);
-        // dd(new Carbon('-1 day'));
-        return view('atte.date', compact('date', 'attendances', 'all_rests'));
+        $attendances = DB::table('attendances')->whereDate('date', $date)->Paginate(5);
+
+        return view('atte.date', compact('date', 'attendances'));
     }
 
     public function start()
@@ -84,7 +71,7 @@ class AttendanceController extends Controller
             'start_time' => Carbon::now()->format('H:i:s'),
         ]);
 
-        return back()->with('start_msg', '勤務を開始しました');
+        return back()->with('massage', '勤務を開始しました');
     }
 
     public function end()
@@ -110,6 +97,6 @@ class AttendanceController extends Controller
             Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
         }
 
-        return back()->with('end_msg', 'お疲れ様でした');
+        return back()->with('massage', 'お疲れ様でした');
     }
 }

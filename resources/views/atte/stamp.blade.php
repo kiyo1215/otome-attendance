@@ -31,7 +31,11 @@
 
     <main>
         <h2>{{ Auth::user()->name }}さんお疲れ様です！</h2>
-
+        @if(session('message'))
+          <div class="session">
+            {{session('massage')}}
+          </div>
+        @endif
         <div class="date-box">
             @if(!$atte_start_time)
                 <form method="post" class="time-add" action="/attendance/start">

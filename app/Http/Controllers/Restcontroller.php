@@ -18,7 +18,7 @@ class RestController extends Controller
             'attendance_id' => $attendance->id,
             'start_time' => Carbon::now()->format("H:i:s")
         ]);
-        return back()->with('rest_start', '休憩を開始しました');
+        return back()->with('massage', '休憩を開始しました');
     }
     public function end(Request $request)
     {
@@ -27,6 +27,6 @@ class RestController extends Controller
         ];
         $attendance = Attendance::where('user_id', Auth::id())->where('date', Carbon::today())->first();
         $rest_end_time = Rest::where('attendance_id', $attendance->id)->latest()->first()->update($param);
-        return back()->with('rest_end', '休憩を終了しました');
+        return back()->with('massage', '休憩を終了しました');
     }
 }
