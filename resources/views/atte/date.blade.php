@@ -65,7 +65,7 @@
                 $end_time = new DateTime($rest->end_time);
 
                 $interval = $start_time->diff($end_time);
-                $sum = $sum + $interval->s;
+                $sum = $sum + ($interval->h * 3600) + ($interval->i * 60) + $interval->s;
                 
                 if($index === count($attendance->rests) - 1){
                   
@@ -81,14 +81,22 @@
             @endphp
           </td>
           <td>
-          @php
-            $start_time = new DateTime($attendance->start_time);
-            $end_time = new DateTime($attendance->end_time);
-            
-            $interval = $start_time->diff($end_time);
+            @php
+              $rest_second = ($hours * 3600) + ($minutes * 60) + $seconds;
+              
+              $start_time = new DateTime($attendance->start_time);
+              $end_time = new DateTime($attendance->end_time);
+              
+              $interval = $start_time->diff($end_time);
+              $work_second = ($interval->h * 3600) + ($interval->i * 60) + $interval->s;
+              $work_time = $work_second - $rest_second;
+              
+              $work_hours = floor($work_time / 3600);
+              $work_minutes = floor(($work_time / 60) % 60);
+              $work_seconds = $work_time % 60;
 
-            echo $interval->format('%H:%I:%S');
-          @endphp
+              echo (sprintf("%02d:%02d:%02d", $work_hours, $work_minutes, $work_seconds));
+            @endphp
           </td>
         </tr>
     @endforeach
