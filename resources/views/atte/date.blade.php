@@ -30,12 +30,14 @@
     <form method="post" action="{{ route('search') }}">
       @csrf
       <input type="hidden" name="date" value="back">
+      <input type="hidden" name="day" value="{{$today}}">
       <button type="submit"><<button>
     </form>
-      <p>{{$date}}</p>
+      <p>{{$today}}</p>
     <form method="post" action="{{ route('search') }}">
       @csrf
       <input type="hidden" name="date" value="next">
+      <input type="hidden" name="day" value="{{$today}}">
       <button type="submit">><button>
     </form>
   </div>
@@ -77,7 +79,6 @@
                   echo $rest_time;
                 }
              }
-                
             @endphp
           </td>
           <td>
@@ -86,9 +87,10 @@
               
               $start_time = new DateTime($attendance->start_time);
               $end_time = new DateTime($attendance->end_time);
-              
               $interval = $start_time->diff($end_time);
+
               $work_second = ($interval->h * 3600) + ($interval->i * 60) + $interval->s;
+              
               $work_time = $work_second - $rest_second;
               
               $work_hours = floor($work_time / 3600);

@@ -44,22 +44,22 @@ class AttendanceController extends Controller
 
     public function date()
     {
-        $date = Carbon::now()->format('Y-m-d');
-        $attendances = Attendance::whereDate('date', $date)->paginate(5);
+        $today = Carbon::now()->format('Y-m-d');
+        $attendances = Attendance::whereDate('date', $today)->paginate(5);
         
-        return view('atte.date', compact('date', 'attendances'));
+        return view('atte.date', compact('today', 'attendances'));
     }
     public function search(Request $request)
     {
-        $date = Carbon::parse()->format('Y-m-d');
+        $date = new Carbon($request->day);
         if($request->date === 'back'){
-            $date = Carbon::parse('-1 day')->format('Y-m-d');
+            $today = $date->subDay()->format('Y-m-d');
         }elseif($request->date === 'next'){
-            $date = Carbon::parse('+1 day')->format('Y-m-d');
+            $today = $date->addDay()->format('Y-m-d');
         }
-        $attendances = DB::table('attendances')->whereDate('date', $date)->Paginate(5);
+        $attendances = Attendance::whereDate('date', $today)->Paginate(5);
 
-        return view('atte.date', compact('date', 'attendances'));
+        return view('atte.date', compact('today', 'attendances'));
     }
 
     public function start()
