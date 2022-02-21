@@ -27,13 +27,26 @@
   <main>
   
   <div class="day">
+  <!-- どっちもログアウトされる -->
+    {{--<form method="post" action="{{ route('search') }}">
+      @csrf
+      <input type="submit" name="dayBefore" value="<">
+
+    <p>{{$today}}</p>
+
+      <input type="submit" name="nextDay" value=">">
+    </form> --}}
+
+<!-- ＜がログアウトされる -->
     <form method="post" action="{{ route('search') }}">
       @csrf
       <input type="hidden" name="date" value="back">
       <input type="hidden" name="day" value="{{$today}}">
       <button type="submit"><<button>
     </form>
-      <p>{{$today}}</p>
+
+    <p>{{$today}}</p>
+
     <form method="post" action="{{ route('search') }}">
       @csrf
       <input type="hidden" name="date" value="next">
