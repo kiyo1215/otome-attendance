@@ -45,29 +45,19 @@ class AttendanceController extends Controller
     public function date()
     {
         $today = Carbon::now()->format('Y-m-d');
-        $attendances = Attendance::whereDate('date', $today)->paginate(5);
+        $attendances = Attendance::whereDate('date', $today)->latest()->paginate(5);
         
         return view('atte.date', compact('today', 'attendances'));
     }
     public function search(Request $request)
     {
-        //どっちのボタンもログアウトされる
-        // $today = Carbon::now()->format('Y-m-d');
-        // if ($request->has('dayBefore')) {
-        //     $today = $today->subDay()->format('Y-m-d');
-        // } elseif ($request->has('nextDay')) {
-        //     $today = $today->addDay()->format('Y-m-d');
-        // } 
-        // $attendances = Attendance::whereDate('date', $today)->Paginate(5);
-
-        //＜がログアウトされる
         $date = new Carbon($request->day);
         if($request->date === 'back'){
             $today = $date->subDay()->format('Y-m-d');
         }elseif($request->date === 'next'){
             $today = $date->addDay()->format('Y-m-d');
         }
-        $attendances = Attendance::whereDate('date', $today)->Paginate(5);
+        $attendances = Attendance::whereDate('date', $today)->latest()->Paginate(5);
 
 
         return view('atte.date', compact('today', 'attendances'));
@@ -82,7 +72,7 @@ class AttendanceController extends Controller
             'start_time' => Carbon::now()->format('H:i:s'),
         ]);
 
-        return back()->with('massage', '勤務を開始しました');
+        return back()->with('message', '勤務を開始しました');
     }
 
     public function end()
@@ -108,6 +98,6 @@ class AttendanceController extends Controller
             Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
         }
 
-        return back()->with('massage', 'お疲れ様でした');
+        return back()->with('message', 'お疲れ様でした');
     }
 }

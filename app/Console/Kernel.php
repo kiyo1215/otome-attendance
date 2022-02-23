@@ -5,6 +5,9 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Console\Commands\auto_time;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Models\Attendance;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class Kernel extends ConsoleKernel
 {
@@ -19,10 +22,13 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
         $user = Auth::user();
-        $param = [
-            'end_time' => Carbon::now()
-            ];
-        $end_time = Attendance::where('user_id', $user->id)->latest()->first()->update($param);
+        if(empty(Attendance::select('end_time'))){
+            $param = [
+                'end_time' => Carbon::now()
+                ];
+            Attendance::where('user_id', $user->id)->latest()->first()->update($param);
+            };
+            
         })->daily('23:50');
     }
 

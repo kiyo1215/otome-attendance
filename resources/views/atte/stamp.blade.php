@@ -33,7 +33,7 @@
         <h2>{{ Auth::user()->name }}さんお疲れ様です！</h2>
         @if(session('message'))
           <div class="session">
-            {{session('massage')}}
+            {{session('message')}}
           </div>
         @endif
         <div class="date-box">

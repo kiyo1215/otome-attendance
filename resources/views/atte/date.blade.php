@@ -21,22 +21,13 @@
        <form method="post" action="{{ route('logout') }}">
         @csrf
         <button type="submit">ログアウト</button>
+      　</form>
       </li>
     </ul>
   </header>
   <main>
   
   <div class="day">
-  <!-- どっちもログアウトされる -->
-    {{--<form method="post" action="{{ route('search') }}">
-      @csrf
-      <input type="submit" name="dayBefore" value="<">
-
-    <p>{{$today}}</p>
-
-      <input type="submit" name="nextDay" value=">">
-    </form> --}}
-
 <!-- ＜がログアウトされる -->
     <form method="post" action="{{ route('search') }}">
       @csrf
