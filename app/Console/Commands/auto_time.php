@@ -46,9 +46,11 @@ class auto_time extends Command
     public function handle()
     {
         $user = Auth::user();
-        $param = [
-            'end_time' => Carbon::now()
-        ];
-        $end_time = Attendance::where('user_id', $user->id)->latest()->first()->update($param);
+        if (empty(Attendance::select('end_time'))) {
+            $param = [
+                'end_time' => Carbon::now()
+            ];
+            Attendance::where('user_id', $user->id)->latest()->first()->update($param);
+        };
     }
 }

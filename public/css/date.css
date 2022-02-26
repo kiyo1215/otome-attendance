@@ -29,7 +29,7 @@ header a {
   font-weight: bold;
 }
 
-button {
+.logout {
   background-color: white;
   border: none;
   font-size: 16px;
@@ -50,41 +50,21 @@ main>p {
   font-weight: bold;
 }
 
-.day {
+form {
   display: flex;
-  height: 30px;
-  width: 99%;
-  /* background-color: aqua; */
-  justify-content: center;
 }
-
-.day p {
-  margin: 0 20px;
-  background-color: #eee;
-  font-size: 20px;
-}
-
-.day button {
-  background-color: #eee;
-  font-size: 20px;
-  height: 20px;
+.day {
+  margin: 0 50px;
 }
 
 .info {
   display: flex;
   width: 100%;
+  margin-top: 30px;
 }
 
 .attendance {
-  width: 65%;
-}
-
-.rest {
-  width: 17%;
-}
-
-.work {
-  width: 17%;
+  width: 100%;
 }
 
 tr {
@@ -94,7 +74,7 @@ tr {
 
 th {
   padding-left: 30px;
-  /* width: 16%; */
+  width: 16%;
   line-height: 60px;
   text-align: left;
 }

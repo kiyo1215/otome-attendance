@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\Rest;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -44,23 +44,44 @@ class AttendanceController extends Controller
 
     public function date()
     {
-        $today = Carbon::now()->format('Y-m-d');
-        $attendances = Attendance::whereDate('date', $today)->latest()->paginate(5);
-        
-        return view('atte.date', compact('today', 'attendances'));
+        $users = User::all();
+        $attendances = Attendance::latest()->paginate(7);
+        return view('atte.date', compact('users', 'attendances'));
     }
     public function search(Request $request)
     {
-        $date = new Carbon($request->day);
-        if($request->date === 'back'){
-            $today = $date->subDay()->format('Y-m-d');
-        }elseif($request->date === 'next'){
-            $today = $date->addDay()->format('Y-m-d');
+        $users = User::all();
+        $today = new Carbon('today');
+
+        if($request->user_id !== null && $request->date_start === null && $request->date_end === null){
+            $attendances = Attendance::where('user_id', $request->user_id)->latest()->paginate(7);
         }
-        $attendances = Attendance::whereDate('date', $today)->latest()->Paginate(5);
+        if($request->user_id === null && $request->date_start !== null && $request->date_end === null){
+            $attendances = Attendance::wherebetween('date', [$request->date_start, $today])->latest()->paginate(7);
+        }
+        if ($request->user_id !== null && $request->date_start !== null && $request->date_end !== null) {
+            $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $request->date_end])->latest()->paginate(7);
+        }
+        if ($request->user_id !== null && $request->date_start !== null && $request->date_end === null) {
+            $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $today])->latest()->paginate(7);
+        }
+        if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null) {
+            $attendances = Attendance::wherebetween('date', [$request->date_start, $request->date_end])->latest()->paginate(7);
+        }
+        if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null) {
+            $attendances = Attendance::wherebetween('date', [$request->date_start, $request->date_end])->latest()->paginate(7);
+        }
+        if ($request->user_id === null && $request->date_start === null && $request->date_end === null) {
+            $attendances = Attendance::latest()->paginate(7);
+        }
+        if ($request->user_id !== null && $request->date_start === null && $request->date_end !== null) {
+            $attendances = Attendance::where('user_id', $request->user_id)->where('date', '<=', $request->date_end)->latest()->paginate(7);
+        }
+        if ($request->user_id === null && $request->date_start === null && $request->date_end !== null) {
+            $attendances = Attendance::where('date', '<=', $request->date_end)->latest()->paginate(7);
+        }
 
-
-        return view('atte.date', compact('today', 'attendances'));
+        return view('atte.date', compact('attendances', 'users'));
     }
 
     public function start()

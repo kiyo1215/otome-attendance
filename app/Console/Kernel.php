@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
             Attendance::where('user_id', $user->id)->latest()->first()->update($param);
             };
             
-        })->daily('23:50');
+        })->daily('18:59');
     }
 
     /**
