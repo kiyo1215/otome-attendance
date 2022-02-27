@@ -15,12 +15,6 @@
         <h1>Atte</h1>
         <ul>
             <li>
-                <a href="{{ route('index') }}">ホーム</a>
-            </li>
-            <li>
-                <a href="{{ route('date') }}">日付一覧</a>
-            </li>
-            <li>
                 <form method="post" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="logout">ログアウト</button>

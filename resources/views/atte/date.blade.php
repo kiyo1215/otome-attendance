@@ -13,7 +13,7 @@
 
 <body>
   <header>
-    <h1>Otome-Attendance</h1>
+    <h1>Otome Attendance</h1>
     <ul>
       <li><a href="{{ route('index') }}">ホーム</a></li>
       <li><a href="{{ route('date') }}">日付一覧</a></li>
@@ -29,16 +29,17 @@
   <main>
     <div class="search">
       <form method="post" action="{{ route('search')}}">
-      @csrf
+        @csrf
         <div>名前
           <select name="user_id">
-            <option value="" selected></option>
+            <option value="">全員</option>
             @foreach($users as $user)
             <option value="{{ $user->id }}">{{ $user->name }}</option>
             @endforeach
           </select>
         </div>
-        <div class="day">日付<input type="date" name="date_start">〜<input type="date" name="date_end"></div>
+        <div class="day">日付<input type="date" name="date_start">
+          〜<input type="date" name="date_end"></div>
         <button type="submit">検索</button>
       </form>
     </div>
@@ -60,46 +61,46 @@
           <td>{{ $attendance->end_time }}</td>
           <td>
             @php
-              $sum = 0;
-              foreach($attendance->rests as $index => $rest){
-              $start_time = new DateTime($rest->start_time);
-              $end_time = new DateTime($rest->end_time);
-              $interval = $start_time->diff($end_time);
-              $sum = $sum + ($interval->h * 3600) + ($interval->i * 60) + $interval->s;
+            $sum = 0;
+            foreach($attendance->rests as $index => $rest){
+            $start_time = new DateTime($rest->start_time);
+            $end_time = new DateTime($rest->end_time);
+            $interval = $start_time->diff($end_time);
+            $sum = $sum + ($interval->h * 3600) + ($interval->i * 60) + $interval->s;
 
-              if($index === count($attendance->rests) - 1){
+            if($index === count($attendance->rests) - 1){
 
-              $hours = floor($sum / 3600);
-              $minutes = floor(($sum / 60) % 60);
-              $seconds = $sum % 60;
-              $rest_time = (sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds));
-              echo $rest_time;
-              }
-              }
+            $hours = floor($sum / 3600);
+            $minutes = floor(($sum / 60) % 60);
+            $seconds = $sum % 60;
+            $rest_time = (sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds));
+            echo $rest_time;
+            }
+            }
             @endphp
           </td>
           <td>
             @php
-              $rest_second = ($hours * 3600) + ($minutes * 60) + $seconds;
+            $rest_second = ($hours * 3600) + ($minutes * 60) + $seconds;
 
-              $start_time = new DateTime($attendance->start_time);
-              $end_time = new DateTime($attendance->end_time);
-              $interval = $start_time->diff($end_time);
-              $work_second = ($interval->h * 3600) + ($interval->i * 60) + $interval->s;
+            $start_time = new DateTime($attendance->start_time);
+            $end_time = new DateTime($attendance->end_time);
+            $interval = $start_time->diff($end_time);
+            $work_second = ($interval->h * 3600) + ($interval->i * 60) + $interval->s;
 
-              $work_time = $work_second - $rest_second;
+            $work_time = $work_second - $rest_second;
 
-              $work_hours = floor($work_time / 3600);
-              $work_minutes = floor(($work_time / 60) % 60);
-              $work_seconds = $work_time % 60;
-              echo (sprintf("%02d:%02d:%02d", $work_hours, $work_minutes, $work_seconds));
+            $work_hours = floor($work_time / 3600);
+            $work_minutes = floor(($work_time / 60) % 60);
+            $work_seconds = $work_time % 60;
+            echo (sprintf("%02d:%02d:%02d", $work_hours, $work_minutes, $work_seconds));
             @endphp
           </td>
         </tr>
         @endforeach
       </table>
     </div>
-      {{ $attendances->links() }}
+    {{ $attendances->links() }}
   </main>
   <footer>
     <p>Atte,inc.</p>
