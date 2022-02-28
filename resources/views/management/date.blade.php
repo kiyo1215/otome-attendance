@@ -13,10 +13,11 @@
 
 <body>
   <header>
-    <h1>Otome Attendance</h1>
+    <h1>Otome Attendance Management</h1>
     <ul>
-      <li><a href="{{ route('index') }}">ホーム</a></li>
-      <li><a href="{{ route('date') }}">日付一覧</a></li>
+      <li><a href="{{ route('showAtte') }}">勤務時間編集</a></li>
+      <li><a href="{{ route('showRest') }}">休憩時間編集</a></li>
+      <li><a href="{{ route('showReward') }}">給与</a></li>
       <li>
         <form method="post" action="{{ route('logout') }}">
           @csrf

@@ -42,54 +42,13 @@ class AttendanceController extends Controller
         return view('atte.stamp', compact('atte_start_time', 'atte_end_time', 'rest_start_time', 'rest_end_time'));
     }
 
-    public function date()
-    {
-        $users = User::all();
-        $attendances = Attendance::latest()->paginate(7);
-        return view('atte.date', compact('users', 'attendances'));
-    }
-    public function search(Request $request)
-    {
-        $users = User::all();
-        $today = new Carbon('today');
-
-        if($request->user_id !== null && $request->date_start === null && $request->date_end === null){
-            $attendances = Attendance::where('user_id', $request->user_id)->latest()->paginate(7);
-        }
-        if($request->user_id === null && $request->date_start !== null && $request->date_end === null){
-            $attendances = Attendance::wherebetween('date', [$request->date_start, $today])->latest()->paginate(7);
-        }
-        if ($request->user_id !== null && $request->date_start !== null && $request->date_end !== null) {
-            $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $request->date_end])->latest()->paginate(7);
-        }
-        if ($request->user_id !== null && $request->date_start !== null && $request->date_end === null) {
-            $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $today])->latest()->paginate(7);
-        }
-        if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null) {
-            $attendances = Attendance::wherebetween('date', [$request->date_start, $request->date_end])->latest()->paginate(7);
-        }
-        if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null) {
-            $attendances = Attendance::wherebetween('date', [$request->date_start, $request->date_end])->latest()->paginate(7);
-        }
-        if ($request->user_id === null && $request->date_start === null && $request->date_end === null) {
-            $attendances = Attendance::latest()->paginate(7);
-        }
-        if ($request->user_id !== null && $request->date_start === null && $request->date_end !== null) {
-            $attendances = Attendance::where('user_id', $request->user_id)->where('date', '<=', $request->date_end)->latest()->paginate(7);
-        }
-        if ($request->user_id === null && $request->date_start === null && $request->date_end !== null) {
-            $attendances = Attendance::where('date', '<=', $request->date_end)->latest()->paginate(7);
-        }
-
-        return view('atte.date', compact('attendances', 'users'));
-    }
-
     public function start()
     {
         // 勤務開始を押したら新しくデータが作られる
         Attendance::create([
             'user_id' => Auth::id(),
             'date' => Carbon::now()->format('Y-m-d'),
+            'week' => Carbon::now()->isoFormat('ddd'),
             'start_time' => Carbon::now()->format('H:i:s'),
         ]);
 
@@ -119,6 +78,6 @@ class AttendanceController extends Controller
             Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
         }
 
-        return back()->with('message', 'お疲れ様でした');
+        return back()->with('message', '今日もありがとう、大好きだよ');
     }
 }

@@ -33,5 +33,11 @@ class RestTableSeeder extends Seeder
             'end_time' => '16:00:00',
         ];
         DB::table('rests')->insert($param);
+        $param = [
+            'attendance_id' => 1,
+            'start_time' => '00:00:00',
+            'end_time' => '00:00:00',
+        ];
+        DB::table('rests')->insert($param);
     }
 }

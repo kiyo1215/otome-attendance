@@ -18,18 +18,21 @@ class UsersTableSeeder extends Seeder
         $param = [
             'name' => 'test太郎',
             'number' => '1234',
+            'belong' =>'乙女ハウス',
             'password' => Hash::make('1234')
         ];
         DB::table('users')->insert($param);
         $param = [
             'name' => 'test次郎',
             'number' => '5678',
+            'belong' => 'あんじゅえーる',
             'password' => Hash::make('5678')
         ];
         DB::table('users')->insert($param);
         $param = [
             'name' => 'test三郎',
             'number' => '9012',
+            'belong' => 'ふぁみーゆ',
             'password' => Hash::make('9012')
         ];
         DB::table('users')->insert($param);

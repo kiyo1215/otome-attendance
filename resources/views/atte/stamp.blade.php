@@ -31,43 +31,25 @@
           </div>
         @endif
         <div class="date-box">
-            @if(!$atte_start_time)
                 <form method="post" class="time-add" action="/attendance/start">
                     @csrf
                     <button type="submit" class="start_time">勤務開始</button>
                 </form>
-            @else
-                <button type="button" class="none-button">勤務開始</button>
-            @endif
-
-            @if($atte_start_time && !$atte_end_time)
                 <form method="post" class="time-add" action="/attendance/end">
                     @csrf
                     <button type="submit" class="end_time">勤務終了</button>
                 </form>
-            @else
-                <button type="button" class="none-button">勤務終了</button>
-            @endif
         </div>
 
         <div class="date-box">
-            @if(($atte_start_time && !$atte_end_time && !$rest_start_time) || ($atte_start_time && !$atte_end_time && $rest_end_time))
                 <form method="post" class="time-add" action="/rest/start">
                     @csrf
                     <button type="submit" class="rest_start_time">休憩開始</button>
                 </form>
-            @else
-                <button type="button" class="none-button">休憩開始</button>
-            @endif
-
-            @if($atte_start_time && !$atte_end_time && $rest_start_time && !$rest_end_time)
                 <form method="post" class="time-add" action="/rest/end">
                     @csrf
                     <button type="submit" class="rest_end_time">休憩終了</button>
                 </form>
-            @else
-                <button type="button" class="none-button">休憩終了</button>
-            @endif
         </div>
     </main>
 
