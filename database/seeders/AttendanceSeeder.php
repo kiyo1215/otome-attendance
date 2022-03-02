@@ -47,5 +47,13 @@ class AttendanceSeeder extends Seeder
             'end_time' => '24:00:00',
         ];
         DB::table('attendances')->insert($param);
+        $param = [
+            'user_id' => 2,
+            'date' => '2022/02/26',
+            'week' => '土',
+            'start_time' => '15:00:00',
+            'end_time' => '24:00:00',
+        ];
+        DB::table('attendances')->insert($param);
     }
 }

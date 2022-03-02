@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function(){
     Route::post('/change/atte', [ManagementController::class, 'changeAtte'])->name('changeAtte');
     Route::post('/change/rest', [ManagementController::class, 'changeRest'])->name('changeRest');
     Route::get('/reward', [ManagementController::class, 'showReward'])->name('showReward');
+    Route::get('/reward/csv', [ManagementController::class, 'showCsv'])->name('showCsv');
+    Route::post('/reward/csv', [ManagementController::class, 'csv'])->name('csv');
 });
 
 require __DIR__.'/auth.php';

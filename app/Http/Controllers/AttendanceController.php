@@ -50,6 +50,7 @@ class AttendanceController extends Controller
             'date' => Carbon::now()->format('Y-m-d'),
             'week' => Carbon::now()->isoFormat('ddd'),
             'start_time' => Carbon::now()->format('H:i:s'),
+            'end_time' => Carbon::now()->format('H:i:s'),
         ]);
 
         return back()->with('message', '勤務を開始しました');

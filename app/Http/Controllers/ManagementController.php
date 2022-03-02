@@ -24,35 +24,57 @@ class ManagementController extends Controller
         $users = User::all();
         $today = new Carbon('today');
 
+        if($request->belong === null){
         if ($request->user_id !== null && $request->date_start === null && $request->date_end === null) {
-            $attendances = Attendance::where('user_id', $request->user_id)->latest()->paginate(7);
+            $attendances = Attendance::where('user_id', $request->user_id)->latest()->paginate(6);
         }
         if ($request->user_id === null && $request->date_start !== null && $request->date_end === null) {
-            $attendances = Attendance::wherebetween('date', [$request->date_start, $today])->latest()->paginate(7);
+            $attendances = Attendance::wherebetween('date', [$request->date_start, $today])->latest()->paginate(6);
         }
         if ($request->user_id !== null && $request->date_start !== null && $request->date_end !== null) {
-            $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $request->date_end])->latest()->paginate(7);
+            $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $request->date_end])->latest()->paginate(6);
         }
         if ($request->user_id !== null && $request->date_start !== null && $request->date_end === null) {
-            $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $today])->latest()->paginate(7);
+            $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $today])->latest()->paginate(6);
         }
         if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null) {
-            $attendances = Attendance::wherebetween('date', [$request->date_start, $request->date_end])->latest()->paginate(7);
-        }
-        if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null) {
-            $attendances = Attendance::wherebetween('date', [$request->date_start, $request->date_end])->latest()->paginate(7);
+            $attendances = Attendance::wherebetween('date', [$request->date_start, $request->date_end])->latest()->paginate(6);
         }
         if ($request->user_id === null && $request->date_start === null && $request->date_end === null) {
-            $attendances = Attendance::latest()->paginate(7);
+            $attendances = Attendance::latest()->paginate(6);
         }
         if ($request->user_id !== null && $request->date_start === null && $request->date_end !== null) {
-            $attendances = Attendance::where('user_id', $request->user_id)->where('date', '<=', $request->date_end)->latest()->paginate(7);
+            $attendances = Attendance::where('user_id', $request->user_id)->where('date', '<=', $request->date_end)->latest()->paginate(6);
         }
         if ($request->user_id === null && $request->date_start === null && $request->date_end !== null) {
-            $attendances = Attendance::where('date', '<=', $request->date_end)->latest()->paginate(7);
+            $attendances = Attendance::where('date', '<=', $request->date_end)->latest()->paginate(6);
         }
+    }
 
-        return view('atte.date', compact('attendances', 'users'));
+        if($request->belong !== null){
+        if ($request->user_id === null && $request->date_start !== null && $request->date_end === null) {
+            $attendances = Attendance::whereHas('user', function ($query) use ($request) {
+                    $query->where('belong', $request->belong);
+                })->wherebetween('date', [$request->date_start, $today])->latest()->paginate(6);
+        }
+        if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null) {
+            $attendances = Attendance::whereHas('user', function ($query) use ($request) {
+                    $query->where('belong', $request->belong);
+                })->wherebetween('date', [$request->date_start, $request->date_end])->latest()->paginate(6);
+        }
+        if ($request->user_id === null && $request->date_start === null && $request->date_end === null) {
+            $attendances = Attendance::whereHas('user', function($query) use ($request){
+                $query->where('belong', $request->belong);
+                })->latest()->paginate(6);
+        }
+        if ($request->user_id === null && $request->date_start === null && $request->date_end !== null) {
+            $attendances = Attendance::whereHas('user', function ($query) use ($request) {
+                    $query->where('belong', $request->belong);
+                })->where('date', '<=', $request->date_end)->latest()->paginate(6);
+        }
+    }
+
+        return view('management.reward', compact('attendances', 'users'));
     }
     public function showAtte()
     {
@@ -92,7 +114,71 @@ class ManagementController extends Controller
     public function showReward()
     {
         $users = User::all();
-        $attendances = Attendance::latest()->paginate(7);
+        $attendances = Attendance::latest()->paginate(6);
         return view('management.reward', compact('users', 'attendances'));
+    }
+    public function showCsv(){
+        $users = User::all();
+        return view('management.csv', compact('users'));
+    }
+    public function csv(Request $request)
+    {
+        $today = new Carbon('today');
+        if($request->belong === null){
+            if ($request->user_id !== null && $request->date_start === null && $request->date_end === null) {
+                $attendances = Attendance::where('user_id', $request->user_id)->first();
+            }
+            if ($request->user_id === null && $request->date_start !== null && $request->date_end === null) {
+                $attendances = Attendance::wherebetween('date', [$request->date_start, $today])->first();
+            }
+            if ($request->user_id !== null && $request->date_start !== null && $request->date_end !== null) {
+                $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $request->date_end])->first();
+            }
+            if ($request->user_id !== null && $request->date_start !== null && $request->date_end === null) {
+                $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $today])->latest()->first();
+            }
+            if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null) {
+                $attendances = Attendance::wherebetween('date', [$request->date_start, $request->date_end])->latest()->first();
+            }
+            if ($request->user_id === null && $request->date_start === null && $request->date_end === null) {
+                $attendances = Attendance::latest()->first();
+            }
+            if ($request->user_id !== null && $request->date_start === null && $request->date_end !== null) {
+                $attendances = Attendance::where('user_id', $request->user_id)->where('date', '<=', $request->date_end)->latest()->first();
+            }
+            if ($request->user_id === null && $request->date_start === null && $request->date_end !== null) {
+                $attendances = Attendance::where('date', '<=', $request->date_end)->latest()->first();
+            }
+        }
+        $callback = function () use ($attendances) {
+            $stream = fopen('php://output', 'w');
+
+            // 文字化け回避
+            stream_filter_prepend($stream, 'convert.iconv.utf-8/cp932//TRANSLIT');
+
+            // ヘッダー行を追加
+            fputcsv($stream, ['名前', '所属', '日付', '曜日', '勤務開始時間', '勤務終了時間']);
+
+            foreach($attendances->cursor() as $attendance){
+                fputcsv($stream, [
+                    $attendance->user->name,
+                    $attendance->user->belong,
+                    $attendance->date,
+                    $attendance->week,
+                    $attendance->start_time,
+                    $attendance->end_time,
+                ]);
+            }
+
+            fclose($stream);
+        };
+
+        $filename = sprintf('otome-%s.csv', date('Ymd'));
+
+        $header = [
+            'Content-Type' => 'application/octet-stream',
+        ];
+
+        return response()->streamDownload($callback, $filename, $header);
     }
 }
