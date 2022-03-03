@@ -83,7 +83,6 @@
           <td>
             @php
             $rest_second = ($hours * 3600) + ($minutes * 60) + $seconds;
-
             $start_time = new DateTime($attendance->start_time);
             $end_time = new DateTime($attendance->end_time);
             $interval = $start_time->diff($end_time);

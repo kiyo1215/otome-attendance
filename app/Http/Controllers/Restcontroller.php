@@ -10,17 +10,16 @@ use Carbon\Carbon;
 
 class RestController extends Controller
 {
-    public function start(Request $request)
+    public function start()
     {
         $attendance = Attendance::where('user_id', Auth::id())->where('date', Carbon::today())->first();
         Rest::create([
-            'user_id' => Auth::id(),
             'attendance_id' => $attendance->id,
             'start_time' => Carbon::now()->format("H:i:s")
         ]);
         return back()->with('message', '休憩を開始しました');
     }
-    public function end(Request $request)
+    public function end()
     {
         $param = [
             'end_time' => Carbon::now()->format("H:i:s")

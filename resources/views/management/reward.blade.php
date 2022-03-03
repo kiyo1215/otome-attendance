@@ -45,10 +45,12 @@
             <option value="あんじゅえーる">あんじゅえーる</option>
             <option value="ふぁみーゆ">ふぁみーゆ</option>
           </select>
-          <div class="day">日付<input type="date" name="date_start">
-            〜<input type="date" name="date_end"></div>
-          <button type="submit">検索</button>
+        </div>
+        <div class="day">日付<input type="date" name="date_start">
+          〜<input type="date" name="date_end"></div>
+        <button type="submit">検索</button>
       </form>
+    </div>
     </div>
     <div class="info">
       <table class="attendance">
@@ -74,7 +76,21 @@
           <!-- 全日　〜19時 -->
           <td class="time">
             @php
-            if($start_second < 68400){ $time1=68400 - $start_second; $time1_hours=floor($time1 / 3600); $time1_minutes=floor(($time1 / 60) % 60); $time1_seconds=$time1 % 60; echo (sprintf("%02d:%02d:%02d", $time1_hours, $time1_minutes, $time1_seconds)); } @endphp </td>
+            if($start_second < 68400 && $end_second <= 68400){
+              $time0 = $end_second - $start_second;
+              $time0_hours=floor($time0 / 3600); 
+              $time0_minutes=floor(($time0 / 60) % 60); 
+              $time0_seconds=$time0 % 60; 
+              echo (sprintf("%02d:%02d:%02d", $time0_hours, $time0_minutes, $time0_seconds)); 
+            }
+            if($start_second < 68400 && $end_second > 68400){ 
+              $time1=68400 - $start_second; 
+              $time1_hours=floor($time1 / 3600); 
+              $time1_minutes=floor(($time1 / 60) % 60); 
+              $time1_seconds=$time1 % 60; 
+              echo (sprintf("%02d:%02d:%02d", $time1_hours, $time1_minutes, $time1_seconds)); 
+              } 
+            @endphp </td>
               <!-- 平日19〜22時 -->
           <td>
             @php

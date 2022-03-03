@@ -52,7 +52,7 @@ class AttendanceController extends Controller
             'start_time' => Carbon::now()->format('H:i:s'),
             'end_time' => Carbon::now()->format('H:i:s'),
         ]);
-
+        
         return back()->with('message', '勤務を開始しました');
     }
 

@@ -16,7 +16,7 @@ class ManagementController extends Controller
     public function date()
     {
         $users = User::all();
-        $attendances = Attendance::latest()->paginate(7);
+        $attendances = Attendance::latest()->paginate(6);
         return view('management.date', compact('users', 'attendances'));
     }
     public function search(Request $request)
@@ -123,62 +123,97 @@ class ManagementController extends Controller
     }
     public function csv(Request $request)
     {
-        $today = new Carbon('today');
-        if($request->belong === null){
-            if ($request->user_id !== null && $request->date_start === null && $request->date_end === null) {
-                $attendances = Attendance::where('user_id', $request->user_id)->first();
-            }
-            if ($request->user_id === null && $request->date_start !== null && $request->date_end === null) {
-                $attendances = Attendance::wherebetween('date', [$request->date_start, $today])->first();
-            }
-            if ($request->user_id !== null && $request->date_start !== null && $request->date_end !== null) {
-                $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $request->date_end])->first();
-            }
-            if ($request->user_id !== null && $request->date_start !== null && $request->date_end === null) {
-                $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $today])->latest()->first();
-            }
-            if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null) {
-                $attendances = Attendance::wherebetween('date', [$request->date_start, $request->date_end])->latest()->first();
-            }
-            if ($request->user_id === null && $request->date_start === null && $request->date_end === null) {
-                $attendances = Attendance::latest()->first();
-            }
-            if ($request->user_id !== null && $request->date_start === null && $request->date_end !== null) {
-                $attendances = Attendance::where('user_id', $request->user_id)->where('date', '<=', $request->date_end)->latest()->first();
-            }
-            if ($request->user_id === null && $request->date_start === null && $request->date_end !== null) {
-                $attendances = Attendance::where('date', '<=', $request->date_end)->latest()->first();
-            }
-        }
-        $callback = function () use ($attendances) {
-            $stream = fopen('php://output', 'w');
-
-            // 文字化け回避
-            stream_filter_prepend($stream, 'convert.iconv.utf-8/cp932//TRANSLIT');
-
-            // ヘッダー行を追加
-            fputcsv($stream, ['名前', '所属', '日付', '曜日', '勤務開始時間', '勤務終了時間']);
-
-            foreach($attendances->cursor() as $attendance){
-                fputcsv($stream, [
-                    $attendance->user->name,
-                    $attendance->user->belong,
-                    $attendance->date,
-                    $attendance->week,
-                    $attendance->start_time,
-                    $attendance->end_time,
-                ]);
-            }
-
-            fclose($stream);
-        };
-
-        $filename = sprintf('otome-%s.csv', date('Ymd'));
-
-        $header = [
-            'Content-Type' => 'application/octet-stream',
+        $headers = [ //ヘッダー情報
+            'Content-type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename=csvexport.csv',
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0',
         ];
 
-        return response()->streamDownload($callback, $filename, $header);
+        $callback = function () use ($request) {
+            $createCsvFile = fopen('php://output', 'w'); //ファイル作成
+            $today = new Carbon('today');
+            $columns = [ //1行目の情報
+                    '名前',
+                    '所属',
+                    '日付',
+                    '曜日',
+                    '勤務開始時間',
+                    '勤務終了時間',
+                ];
+            mb_convert_variables('SJIS-win', 'UTF-8', $columns); //文字化け対策
+
+            fputcsv($createCsvFile, $columns); //1行目の情報を追記
+
+            if ($request->belong === null) {
+                if ($request->user_id !== null && $request->date_start === null && $request->date_end === null) {
+                    $attendances = Attendance::where('user_id', $request->user_id)->latest()->get();
+                }
+                if ($request->user_id === null && $request->date_start !== null && $request->date_end === null) {
+                    $attendances = Attendance::wherebetween('date', [$request->date_start, $today])->latest()->get();
+                }
+                if ($request->user_id !== null && $request->date_start !== null && $request->date_end !== null) {
+                    $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $request->date_end])->latest()->get();
+                }
+                if ($request->user_id !== null && $request->date_start !== null && $request->date_end === null) {
+                    $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $today])->latest()->get();
+                }
+                if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null) {
+                    $attendances = Attendance::wherebetween('date', [$request->date_start, $request->date_end])->latest()->get();
+                }
+                if ($request->user_id === null && $request->date_start === null && $request->date_end === null) {
+                    $attendances = Attendance::latest()->get();
+                }
+                if ($request->user_id !== null && $request->date_start === null && $request->date_end !== null) {
+                    $attendances = Attendance::where('user_id', $request->user_id)->where('date', '<=', $request->date_end)->latest()->get();
+                }
+                if ($request->user_id === null && $request->date_start === null && $request->date_end !== null) {
+                    $attendances = Attendance::where('date', '<=', $request->date_end)->latest()->get();
+                }
+            }  //データベースからデータ取得
+            if ($request->belong !== null) {
+                if ($request->user_id === null && $request->date_start !== null && $request->date_end === null
+                ) {
+                    $attendances = Attendance::whereHas('user', function ($query) use ($request) {
+                        $query->where('belong', $request->belong);
+                    })->wherebetween('date', [$request->date_start, $today])->latest()->get();
+                }
+                if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null
+                ) {
+                    $attendances = Attendance::whereHas('user', function ($query) use ($request) {
+                        $query->where('belong', $request->belong);
+                    })->wherebetween('date', [$request->date_start, $request->date_end])->latest()->get();
+                }
+                if ($request->user_id === null && $request->date_start === null && $request->date_end === null
+                ) {
+                    $attendances = Attendance::whereHas('user', function ($query) use ($request) {
+                        $query->where('belong', $request->belong);
+                    })->latest()->get();
+                }
+                if ($request->user_id === null && $request->date_start === null && $request->date_end !== null
+                ) {
+                    $attendances = Attendance::whereHas('user', function ($query) use ($request) {
+                        $query->where('belong', $request->belong);
+                    })->where('date', '<=', $request->date_end)->latest()->get();
+                }
+            }
+
+            foreach ($attendances as $row) {  //データを1行ずつ回す
+                $csv = [
+                    $row->user->name,  //オブジェクトなので -> で取得
+                    $row->user->belong,  //オブジェクトなので -> で取得
+                    $row->date,
+                    $row->week,
+                    $row->start_time,
+                    $row->end_time,
+                ];
+            mb_convert_variables('SJIS-win', 'UTF-8', $csv); //文字化け対策
+
+            fputcsv($createCsvFile, $csv); //ファイルに追記する
+    }
+        fclose($createCsvFile); //ファイル閉じる
+};
+        return response()->stream($callback, 200, $headers); //ここで実行
     }
 }
