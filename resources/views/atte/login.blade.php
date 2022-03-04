@@ -36,9 +36,6 @@
 
                 <button type="submit">ログイン</button>
             </form>
-
-            <p>アカウントをお持ちでない方はこちら</p>
-            <a href="{{ route('register') }}">会員登録</a>
         </div>
     </main>
 

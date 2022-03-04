@@ -13,10 +13,11 @@
 
 <body>
   <header>
-    <h1>Otome Attendance</h1>
+    <h1>Otome Attendance Management</h1>
     <ul>
-      <li><a href="{{ route('index') }}">ホーム</a></li>
-      <li><a href="{{ route('date') }}">日付一覧</a></li>
+      <li><a href="{{ route('management') }}">トップ</a></li>
+      <li><a href="{{ route('show_atte') }}">勤務時間編集</a></li>
+      <li><a href="{{ route('show_reward') }}">勤務時間集計</a></li>
       <li>
         <form method="post" action="{{ route('logout') }}">
           @csrf
@@ -28,7 +29,7 @@
   </header>
   <main>
     <div class="search">
-      <form method="post" action="{{ route('search')}}">
+      <form method="post" action="{{ route('search_rest')}}">
         @csrf
         <div>名前
           <select name="user_id">
@@ -38,9 +39,16 @@
             @endforeach
           </select>
         </div>
-        <div class="day">日付<input type="date" name="date_start">
-          〜<input type="date" name="date_end"></div>
-        <button type="submit">検索</button>
+        <div class="belong">所属
+        <select name="belong">
+            <option value="">所属</option>
+            <option value="乙女ハウス">乙女ハウス</option>
+            <option value="あんじゅえーる">あんじゅえーる</option>
+            <option value="ふぁみーゆ">ふぁみーゆ</option>
+        </select></div>
+        <div class="day">日付<input type="date" name="date_start"><span>
+          〜</span><input type="date" name="date_end"></div>
+        <button type="submit" class="search-button">検索</button>
       </form>
     </div>
     <div class="info">
@@ -53,11 +61,12 @@
           <th></th>
         </tr>
         @foreach($rests as $rest)
-        <form method="post" action="{{ route('changeRest') }}">
+        <form method="post" action="{{ route('change_rest') }}">
           @csrf
           <tr>
             <td>{{ $rest->attendance->user->name }}</td>
             <input type="hidden" name="id" value="{{ $rest->id }}">
+            <td>{{$rest->attendance->date}}</td>
             <td><input type="text" name="rest_start_time" value="{{ $rest->start_time }}"></td>
             <td><input type="text" name="rest_end_time" value="{{ $rest->end_time }}"></td>
             <td><button type="submit">編集</button></td>

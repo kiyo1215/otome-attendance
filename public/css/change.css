@@ -49,13 +49,24 @@ main>p {
   font-size: 20px;
   font-weight: bold;
 }
+.belong {
+  margin-left: 30px;
+}
+.day {
+  margin: 0 30px;
+}
+
+.day span {
+  margin: 0 15px;
+}
+
+.search-button {
+  background-color: #06f;
+  color: white;
+}
 
 form {
   display: flex;
-}
-input {
-  width: 80%;
-  /* height: 80%; */
 }
 
 .info {
@@ -83,6 +94,17 @@ th {
 td {
   padding-left: 30px;
   line-height: 60px;
+}
+
+td input {
+  width: 80%;
+  height: 50px
+}
+
+td button {
+  line-height: 30px;
+  background-color: #06f;
+  color: white;
 }
 
 footer {

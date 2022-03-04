@@ -79,9 +79,11 @@ th {
   line-height: 30px;
   text-align: left;
 }
+
 .name {
   width: 18%;
 }
+
 .belong {
   margin-left: 40px;
 }
@@ -99,6 +101,12 @@ td {
   font-size: 20px;
   color: black;
   text-decoration: none;
+}
+
+.download {
+  background-color: #06f;
+  border-color: #06f;
+  color: white;
 }
 
 footer {

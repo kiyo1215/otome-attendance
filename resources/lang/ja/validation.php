@@ -112,7 +112,7 @@ return [
     'prohibits'            => 'attributeは:otherの入力を禁じています。',
     'same'                 => ':attributeと:otherには同じ値を指定してください。',
     'size'                 => [
-        'numeric' => ':attributeは:sizeを指定してください。',
+        'numeric' => ':attributeは:size文字の数字を指定してください。',
         'file'    => ':attributeのファイルは、:sizeキロバイトでなくてはなりません。',
         'string'  => ':attributeは:size文字で指定してください。',
         'array'   => ':attributeは:size個指定してください。',
@@ -155,7 +155,8 @@ return [
 
     'attributes' => [
         'name' => '名前',
-        'email' => 'メールアドレス',
+        'belong' => '所属',
+        'number' => 'キャストID',
         'password'=> 'パスワード'
     ],
 

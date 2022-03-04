@@ -15,8 +15,9 @@
   <header>
     <h1>Otome Attendance Management</h1>
     <ul>
-      <li><a href="{{ route('showAtte') }}">勤務時間編集</a></li>
-      <li><a href="{{ route('showRest') }}">休憩時間編集</a></li>
+      <li><a href="{{ route('management') }}">トップ</a></li>
+      <li><a href="{{ route('show_atte') }}">勤務時間編集</a></li>
+      <li><a href="{{ route('show_rest') }}">休憩時間編集</a></li>
       <li>
         <form method="post" action="{{ route('logout') }}">
           @csrf
@@ -76,50 +77,52 @@
           <!-- 全日　〜19時 -->
           <td class="time">
             @php
-            if($start_second < 68400 && $end_second <= 68400){
-              $time0 = $end_second - $start_second;
-              $time0_hours=floor($time0 / 3600); 
-              $time0_minutes=floor(($time0 / 60) % 60); 
-              $time0_seconds=$time0 % 60; 
-              echo (sprintf("%02d:%02d:%02d", $time0_hours, $time0_minutes, $time0_seconds)); 
-            }
-            if($start_second < 68400 && $end_second > 68400){ 
-              $time1=68400 - $start_second; 
-              $time1_hours=floor($time1 / 3600); 
-              $time1_minutes=floor(($time1 / 60) % 60); 
-              $time1_seconds=$time1 % 60; 
-              echo (sprintf("%02d:%02d:%02d", $time1_hours, $time1_minutes, $time1_seconds)); 
-              } 
-            @endphp </td>
-              <!-- 平日19〜22時 -->
+            if($start_second < 68400 && $end_second <= 68400 && $end_second > 43200){ 
+              $time0= $end_second - $start_second; 
+              $time0_hours = floor($time0 / 3600); 
+              $time0_minutes = floor(($time0 / 60) % 60); 
+              $time0_seconds = $time0 % 60; 
+              echo (sprintf("%02d:%02d:%02d", $time0_hours, $time0_minutes, $time0_seconds)); } 
+              
+              if(3600 <= $start_second && $start_second < 68400 && ($end_second > 68400 || $end_second < 43200)){
+              $time1 = 68400 - $start_second;
+              $time1_hours = floor($time1 / 3600);
+              $time1_minutes = floor(($time1 / 60) % 60);
+              $time1_seconds = $time1 % 60;
+              echo (sprintf("%02d:%02d:%02d", $time1_hours, $time1_minutes, $time1_seconds));
+              }
+              @endphp </td>
+          <!-- 平日19〜22時 -->
           <td>
             @php
             if($attendance->week !== '金' && $attendance->week !== '土'){
-            if($start_second < 68400 && ($end_second> 79200 || $end_second < 28800)){ echo (sprintf("%02d:%02d:%02d", 03, 00, 00)); } if($start_second> 68400 && $start_second <= 79200 && $end_second> 79200){
-                  $time2 = 79200 - $start_second;
-                  $time2_hours = floor($time2 / 3600);
-                  $time2_minutes = floor(($time2 / 60) % 60);
-                  $time2_seconds = $time2 % 60;
-                  echo (sprintf("%02d:%02d:%02d", $time2_hours, $time2_minutes, $time2_seconds));
-                  }
+            if($start_second < 68400 && ($end_second> 79200 || $end_second < 28800)){ 
+              echo (sprintf("%02d:%02d:%02d", 03, 00, 00)); } 
+              if($start_second> 68400 && $start_second <= 79200 && $end_second> 79200){
+                $time2 = 79200 - $start_second;
+                $time2_hours = floor($time2 / 3600);
+                $time2_minutes = floor(($time2 / 60) % 60);
+                $time2_seconds = $time2 % 60;
+                echo (sprintf("%02d:%02d:%02d", $time2_hours, $time2_minutes, $time2_seconds));
+                }
 
-                  if($start_second > 68400 && $end_second <= 79200 && $end_second> 28800){
-                    $time3 = $end_second - $start_second;
-                    $time3_hours = floor($time3 / 3600);
-                    $time3_minutes = floor(($time3 / 60) % 60);
-                    $time3_seconds = $time3 % 60;
-                    echo (sprintf("%02d:%02d:%02d", $time3_hours, $time3_minutes, $time3_seconds));
-                    }
+            if($start_second > 68400 && $end_second <= 79200 && $end_second> 28800){
+              $time3 = $end_second - $start_second;
+              $time3_hours = floor($time3 / 3600);
+              $time3_minutes = floor(($time3 / 60) % 60);
+              $time3_seconds = $time3 % 60;
+              echo (sprintf("%02d:%02d:%02d", $time3_hours, $time3_minutes, $time3_seconds));
+              }
 
-                    if($start_second < 68400 && $end_second <=79200 && $end_second> 68400){
-                      $time4 = $end_second - 68400;
-                      $time4_hours = floor($time4 / 3600);
-                      $time4_minutes = floor(($time4 / 60) % 60);
-                      $time4_seconds = $time4 % 60;
-                      echo (sprintf("%02d:%02d:%02d", $time4_hours, $time4_minutes, $time4_seconds));
-                      }
-                      }
-                      @endphp
+            if($start_second < 68400 && $end_second <=79200 && $end_second> 68400){
+              $time4 = $end_second - 68400;
+              $time4_hours = floor($time4 / 3600);
+              $time4_minutes = floor(($time4 / 60) % 60);
+              $time4_seconds = $time4 % 60;
+              echo (sprintf("%02d:%02d:%02d", $time4_hours, $time4_minutes, $time4_seconds));
+              }
+              }
+            @endphp
           </td>
           <!-- 平日22時〜 -->
           <td>
@@ -132,15 +135,42 @@
               $time5_seconds = $time5 % 60;
               echo (sprintf("%02d:%02d:%02d", $time5_hours, $time5_minutes, $time5_seconds));
               }
-              if($start_second <= 79200 && $end_second < 28800){ $time6=7200 + $end_second; $time6_hours=floor($time6 / 3600); $time6_minutes=floor(($time6 / 60) % 60); $time6_seconds=$time6 % 60; echo (sprintf("%02d:%02d:%02d", $time6_hours, $time6_minutes, $time6_seconds)); } if($start_second <=79200 && $end_second>= 28800 && $end_second < 43200){ echo (sprintf("%02d:%02d:%02d", 10, 00, 00)); } if(($start_second> 79200 && $end_second <= 86400 && $end_second> 79200) || ($start_second <= 28800 && $end_second <=28800)){ $time7=$end_second - $start_second; $time7_hours=floor($time7 / 3600); $time7_minutes=floor(($time7 / 60) % 60); $time7_seconds=$time7 % 60; echo (sprintf("%02d:%02d:%02d", $time7_hours, $time7_minutes, $time7_seconds)); } if($start_second> 79200 && $end_second < 28800){ $time8=86400 + $end_second - $start_second; $time8_hours=floor($time8 / 3600); $time8_minutes=floor(($time8 / 60) % 60); $time8_seconds=$time8 % 60; echo (sprintf("%02d:%02d:%02d", $time8_hours, $time8_minutes, $time8_seconds)); } if($start_second> 79200 && $end_second > 28800 && $end_second < 43200){ $time9=108000 - $start_second; $time9_hours=floor($time9 / 3600); $time9_minutes=floor(($time9 / 60) % 60); $time9_seconds=$time9 % 60; echo (sprintf("%02d:%02d:%02d", $time9_hours, $time9_minutes, $time9_seconds)); } if($start_second <=28800 && $end_second>= 28800){
-                          $time10 = 28800 - $start_second;
-                          $time10_hours = floor($time10 / 3600);
-                          $time10_minutes = floor(($time10 / 60) % 60);
-                          $time10_seconds = $time10 % 60;
-                          echo (sprintf("%02d:%02d:%02d", $time10_hours, $time10_minutes, $time10_seconds));
-                          }
-                          }
-                          @endphp
+              if($start_second <= 79200 && $end_second < 28800){ 
+                $time6=7200 + $end_second; $time6_hours=floor($time6 / 3600); 
+                $time6_minutes=floor(($time6 / 60) % 60); 
+                $time6_seconds=$time6 % 60; 
+                echo (sprintf("%02d:%02d:%02d", $time6_hours, $time6_minutes, $time6_seconds)); 
+                } 
+              if($start_second <=79200 && $end_second>= 28800 && $end_second < 43200){ 
+                echo (sprintf("%02d:%02d:%02d", 10, 00, 00)); } 
+              if(($start_second> 79200 && $end_second <= 86400 && $end_second> 79200) |($start_second <= 28800 && $end_second <=28800)){ 
+                $time7=$end_second - $start_second; $time7_hours=floor($time7 / 3600);
+                $time7_minutes=floor(($time7 / 60) % 60); 
+                $time7_seconds=$time7 % 60; 
+                echo (sprintf("%02d:%02d:%02d", $time7_hours, $time7_minutes, $time7_seconds)); 
+                } 
+              if($start_second> 79200 && $end_second < 28800){ 
+               $time8=86400 + $end_second - $start_second; 
+               $time8_hours=floor($time8 / 3600); 
+               $time8_minutes=floor(($time8 / 60) % 60); 
+               $time8_seconds=$time8 % 60; 
+               echo (sprintf("%02d:%02d:%02d", $time8_hours, $time8_minutes, $time8_seconds)); 
+               }
+              if($start_second> 79200 && $end_second > 28800 && $end_second < 43200){ 
+                $time9=108000 - $start_second; 
+                $time9_hours=floor($time9 / 3600); 
+                $time9_minutes=floor(($time9 / 60) % 60); 
+                $time9_seconds=$time9 % 60; echo (sprintf("%02d:%02d:%02d", $time9_hours, $time9_minutes, $time9_seconds)); 
+                } 
+              if($start_second <=28800 && $end_second>= 28800){
+                $time10 = 28800 - $start_second;
+                $time10_hours = floor($time10 / 3600);
+                $time10_minutes = floor(($time10 / 60) % 60);
+                $time10_seconds = $time10 % 60;
+                echo (sprintf("%02d:%02d:%02d", $time10_hours, $time10_minutes, $time10_seconds));
+                }
+                }
+            @endphp
           </td>
           <td>
             @php
@@ -174,39 +204,61 @@
           <td>
             @php
             if($attendance->week === '金' || $attendance->week === '土'){
-            if($start_second <= 79200 && $end_second <=86400 && $end_second> 79200){
-              $time5 = 86400 - $start_second;
+            if($start_second <= 79200 && $end_second <= 86400 && $end_second > 79200){
+              $time5 = $end_second - 79200;
               $time5_hours = floor($time5 / 3600);
               $time5_minutes = floor(($time5 / 60) % 60);
               $time5_seconds = $time5 % 60;
               echo (sprintf("%02d:%02d:%02d", $time5_hours, $time5_minutes, $time5_seconds));
               }
-              if($start_second <= 79200 && $end_second < 28800){ $time6=7200 + $end_second; $time6_hours=floor($time6 / 3600); $time6_minutes=floor(($time6 / 60) % 60); $time6_seconds=$time6 % 60; echo (sprintf("%02d:%02d:%02d", $time6_hours, $time6_minutes, $time6_seconds)); } if($start_second <=79200 && $end_second>= 28800){
+              if($start_second <= 79200 && $end_second < 28800){ 
+                $time6 = 7200 + $end_second; 
+                $time6_hours=floor($time6 / 3600); 
+                $time6_minutes=floor(($time6 / 60) % 60); 
+                $time6_seconds=$time6 % 60; 
+                echo (sprintf("%02d:%02d:%02d", $time6_hours, $time6_minutes, $time6_seconds)); 
+                } 
+              if($start_second <= 79200 && $end_second >= 28800 && $end_second < 43200){
                 echo (sprintf("%02d:%02d:%02d", 10, 00, 00));
                 }
 
-                if(($start_second > 79200 && $end_second <= 86400 && $end_second> 79200) || ($start_second <= 28800 && $end_second <=28800)){ $time7=$end_second - $start_second; $time7_hours=floor($time7 / 3600); $time7_minutes=floor(($time7 / 60) % 60); $time7_seconds=$time7 % 60; echo (sprintf("%02d:%02d:%02d", $time7_hours, $time7_minutes, $time7_seconds)); } if($start_second> 79200 && $end_second < 28800){ $time8=86400 + $end_second - $start_second; $time8_hours=floor($time8 / 3600); $time8_minutes=floor(($time8 / 60) % 60); $time8_seconds=$time8 % 60; echo (sprintf("%02d:%02d:%02d", $time8_hours, $time8_minutes, $time8_seconds)); } if($start_second> 79200 && $end_second > 28800){
-                      $time9 = 108000 - $start_second;
-                      $time9_hours = floor($time9 / 3600);
-                      $time9_minutes = floor(($time9 / 60) % 60);
-                      $time9_seconds = $time9 % 60;
-                      echo (sprintf("%02d:%02d:%02d", $time9_hours, $time9_minutes, $time9_seconds));
-                      }
-                      if($start_second <= 28800 && $end_second>= 28800){
-                        $time10 = 28800 - $start_second;
-                        $time10_hours = floor($time10 / 3600);
-                        $time10_minutes = floor(($time10 / 60) % 60);
-                        $time10_seconds = $time10 % 60;
-                        echo (sprintf("%02d:%02d:%02d", $time10_hours, $time10_minutes, $time10_seconds));
-                        }
-                        }
-                        @endphp
+              if(($start_second > 79200 && $end_second <= 86400 && $end_second > 79200) || ($start_second <= 28800 && $end_second <=28800))
+              { 
+                $time7=$end_second - $start_second; 
+                $time7_hours=floor($time7 / 3600); 
+                $time7_minutes=floor(($time7 / 60) % 60); 
+                $time7_seconds=$time7 % 60; 
+                echo (sprintf("%02d:%02d:%02d", $time7_hours, $time7_minutes, $time7_seconds));
+                } 
+              if($start_second > 79200 && $end_second < 28800){ 
+                $time8=86400 + $end_second - $start_second; 
+                $time8_hours=floor($time8 / 3600); 
+                $time8_minutes=floor(($time8 / 60) % 60); 
+                $time8_seconds=$time8 % 60; 
+                echo (sprintf("%02d:%02d:%02d", $time8_hours, $time8_minutes, $time8_seconds));
+                } 
+              if($start_second> 79200 && $end_second > 28800){
+                $time9 = 108000 - $start_second;
+                $time9_hours = floor($time9 / 3600);
+                $time9_minutes = floor(($time9 / 60) % 60);
+                $time9_seconds = $time9 % 60;
+                echo (sprintf("%02d:%02d:%02d", $time9_hours, $time9_minutes, $time9_seconds));
+                }
+              if($start_second <= 28800 && $end_second >= 28800){
+                $time10 = 28800 - $start_second;
+                $time10_hours = floor($time10 / 3600);
+                $time10_minutes = floor(($time10 / 60) % 60);
+                $time10_seconds = $time10 % 60;
+                echo (sprintf("%02d:%02d:%02d", $time10_hours, $time10_minutes, $time10_seconds));
+                }
+                }
+              @endphp
           </td>
         </tr>
         @endforeach
       </table>
     </div>
-    <a href="{{ route('showCsv')}}" class="csv">CSVダウンロード</a>
+    <a href="{{ route('show_csv')}}" class="csv">CSVダウンロード</a>
     {{ $attendances->links() }}
   </main>
   <footer>

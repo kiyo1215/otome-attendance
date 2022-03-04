@@ -47,17 +47,56 @@ main {
 main ul {
   text-align: center;
 }
+
 main li {
   list-style: none;
 }
-main a{
+
+main a {
   display: block;
   font-size: 40px;
   margin-bottom: 60px;
   color: black;
+  text-decoration: none;
 }
-form {
+
+.register form {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.register input {
+margin-bottom: 20px;
+}
+.register select {
+  margin-bottom: 20px;
+  width: 185px;
+  height: 30px;
+}
+
+.register button,
+.guraduation button {
+  background-color: #06f;
+  border-color: #06f;
+  color: white;
+}
+.guraduation {
   display: flex;
+  flex-wrap: wrap;
+}
+.guraduation form {
+  display: flex;
+}
+.error {
+  color: red;
+  text-align: center;
+  font-size: 20px;
+  list-style: none;
+}
+.session {
+  color: red;
+  text-align: center;
+  font-size: 20px;
 }
 
 

@@ -12,10 +12,10 @@
 
 <body>
     <header>
-        <h1>Atte</h1>
+        <h1>Otome Attendance Management</h1>
     </header>
     <main>
-        <h2>会員登録</h2>
+        <h2>キャスト登録</h2>
         <div class="login-form">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
@@ -27,24 +27,14 @@
                 @endif
 
                 <div>
-                    <input type="email" name="email" placeholder="メールアドレス" value="{{ old('email') }}">
+                    <input type="email" name="number" placeholder="キャストID">
                 </div>
-                @if ($errors->has('email'))
-                    <div class="text-danger">{{ $errors->first('email') }}</div>
-                @endif
 
                 <div>
-                    <input type="password" name="password" placeholder="パスワード(8文字以上)">
-                </div>
-                @if ($errors->has('password'))
-                    <div class="text-danger">{{ $errors->first('password') }}</div>
-                @endif
-
-                <div>
-                    <input type="password" name="password_confirmation" placeholder="確認用パスワード">
+                    <input type="password" name="password" placeholder="パスワード(4文字)">
                 </div>
 
-                <button type="submit">会員登録</button>
+                <button type="submit">キャスト登録</button>
             </form>
 
             <p>アカウントをお持ちの方はこちらから</p>

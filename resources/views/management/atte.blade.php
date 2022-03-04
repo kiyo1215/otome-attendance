@@ -13,10 +13,11 @@
 
 <body>
   <header>
-    <h1>Otome Attendance</h1>
+    <h1>Otome Attendance Manegement</h1>
     <ul>
-      <li><a href="{{ route('index') }}">ホーム</a></li>
-      <li><a href="{{ route('date') }}">日付一覧</a></li>
+      <li><a href="{{ route('management') }}">トップ</a></li>
+      <li><a href="{{ route('show_rest') }}">休憩時間編集</a></li>
+      <li><a href="{{ route('show_reward') }}">勤務時間集計</a></li>
       <li>
         <form method="post" action="{{ route('logout') }}">
           @csrf
@@ -28,7 +29,7 @@
   </header>
   <main>
     <div class="search">
-      <form method="post" action="{{ route('search')}}">
+      <form method="post" action="{{ route('atte_search')}}">
         @csrf
         <div>名前
           <select name="user_id">
@@ -38,9 +39,9 @@
             @endforeach
           </select>
         </div>
-        <div class="day">日付<input type="date" name="date_start">
-          〜<input type="date" name="date_end"></div>
-        <button type="submit">検索</button>
+        <div class="day">日付<input type="date" name="date_start"><span>
+            〜</span><input type="date" name="date_end"></div>
+        <button type="submit" class="search-button">検索</button>
       </form>
     </div>
     <div class="info">
@@ -53,17 +54,17 @@
           <th></th>
         </tr>
         @foreach($attendances as $attendance)
-          <form method="post" action="{{ route('changeAtte') }}">
-            @csrf
-            <tr>
-              <td>{{ $attendance->user->name }}</td>
-              <input type="hidden" name="id" value="{{ $attendance->id }}">
-              <td><input type="date" name="date" value="{{ $attendance->date }}"></td>
-              <td><input type="text" name="atte_start_time" value="{{ $attendance->start_time }}"></td>
-              <td><input type="text" name="atte_end_time" value="{{ $attendance->end_time }}"></td>
-              <td><button type="submit">編集</button></td>
-            </tr>
-          </form>
+        <form method="post" action="{{ route('change_atte') }}">
+          @csrf
+          <tr>
+            <td>{{ $attendance->user->name }}</td>
+            <input type="hidden" name="id" value="{{ $attendance->id }}">
+            <td><input type="date" name="date" value="{{ $attendance->date }}"></td>
+            <td><input type="text" name="atte_start_time" value="{{ $attendance->start_time }}"></td>
+            <td><input type="text" name="atte_end_time" value="{{ $attendance->end_time }}"></td>
+            <td><button type="submit">編集</button></td>
+          </tr>
+        </form>
         @endforeach
       </table>
     </div>
