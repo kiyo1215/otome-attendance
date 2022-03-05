@@ -24,8 +24,14 @@ class RestController extends Controller
         $param = [
             'end_time' => Carbon::now()->format("H:i:s")
         ];
-        $attendance = Attendance::where('user_id', Auth::id())->where('date', Carbon::today())->first();
-        $rest_end_time = Rest::where('attendance_id', $attendance->id)->latest()->first()->update($param);
+        $daybefore = new Carbon('yesterday');
+        $now = Carbon::now()->format('H:i:s');
+        $today = Carbon::today()->format('Y-m-d');
+        if ($now >= '00:00:00' && $now <= '11:00:00') {
+            $attendance = Attendance::where('user_id', Auth::id())->where('date', $daybefore->format('Y-m-d'))->first();
+        }
+        $attendance = Attendance::where('user_id', Auth::id())->where('date', $today)->first();
+        Rest::where('attendance_id', $attendance->id)->latest()->first()->update($param);
         return back()->with('message', '休憩を終了しました');
     }
 }
