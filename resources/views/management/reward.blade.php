@@ -94,9 +94,10 @@
           <td>
             @php
             if($attendance->week !== '金' && $attendance->week !== '土'){
-            if($start_second < 68400 && ($end_second> 79200 || $end_second < 28800)){ 
-              echo (sprintf("%02d:%02d:%02d", 03, 00, 00)); } 
-              if($start_second> 68400 && $start_second <= 79200 && $end_second> 79200){
+            if($start_second < 68400 && $start_second > 36000 && ($end_second > 79200 || $end_second < 28800)){ 
+              echo (sprintf("%02d:%02d:%02d", 03, 00, 00)); 
+              } 
+              if($start_second > 68400 && $start_second <= 79200 && $end_second> 79200){
                 $time2 = 79200 - $start_second;
                 $time2_hours = floor($time2 / 3600);
                 $time2_minutes = floor(($time2 / 60) % 60);
