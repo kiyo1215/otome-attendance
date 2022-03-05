@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>My Site</title>
+  <title>Otome Attendance Manegement</title>
   <link rel="stylesheet" href="{{asset('css/reset.css')}}">
   <link rel="stylesheet" href="{{asset('css/paginate.css')}}">
   <link rel="stylesheet" href="{{asset('css/home.css')}}">

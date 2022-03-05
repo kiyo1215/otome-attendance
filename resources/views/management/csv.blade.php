@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>My Site</title>
+  <title>Otome Attendance Manegement</title>
   <link rel="stylesheet" href="{{asset('css/reset.css')}}">
   <link rel="stylesheet" href="{{asset('css/paginate.css')}}">
   <link rel="stylesheet" href="{{asset('css/reward.css')}}">
@@ -16,8 +16,6 @@
     <h1>Otome Attendance Management</h1>
     <ul>
       <li><a href="{{ route('management') }}">トップへ</a></li>
-      <li><a href="{{ route('show_atte') }}">勤務時間編集</a></li>
-      <li><a href="{{ route('show_rest') }}">休憩時間編集</a></li>
       <li>
         <form method="post" action="{{ route('logout') }}">
           @csrf
@@ -29,7 +27,7 @@
   </header>
   <main>
     <div class="search">
-      <h2>勤務時間CSV</h2>
+      <h2 style="font-size: 30px;">勤務時間CSV</h2>
       <form method="post" action="{{ route('atte_csv')}}">
         @csrf
         <div>名前
@@ -53,7 +51,7 @@
         <button type="submit" class="download">CSVダウンロード</button>
       </form>
     </div>
-    <h2>休憩時間CSV</h2>
+    <h2 style="font-size: 30px;">休憩時間CSV</h2>
     <form method="post" action="{{ route('rest_csv')}}">
       @csrf
       <div>名前
@@ -79,7 +77,7 @@
     </div>
   </main>
   <footer>
-    <p>Atte,inc.</p>
+  
   </footer>
 </body>
 

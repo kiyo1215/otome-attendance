@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>My Site</title>
+  <title>Otome Attendance Manegement</title>
   <link rel="stylesheet" href="{{asset('css/reset.css')}}">
   <link rel="stylesheet" href="{{asset('css/paginate.css')}}">
   <link rel="stylesheet" href="{{asset('css/change.css')}}">
@@ -15,9 +15,7 @@
   <header>
     <h1>Otome Attendance Management</h1>
     <ul>
-      <li><a href="{{ route('management') }}">トップ</a></li>
-      <li><a href="{{ route('show_atte') }}">勤務時間編集</a></li>
-      <li><a href="{{ route('show_reward') }}">勤務時間集計</a></li>
+      <li><a href="{{ route('management') }}">トップへ</a></li>
       <li>
         <form method="post" action="{{ route('logout') }}">
           @csrf
@@ -40,14 +38,15 @@
           </select>
         </div>
         <div class="belong">所属
-        <select name="belong">
+          <select name="belong">
             <option value="">所属</option>
             <option value="乙女ハウス">乙女ハウス</option>
             <option value="あんじゅえーる">あんじゅえーる</option>
             <option value="ふぁみーゆ">ふぁみーゆ</option>
-        </select></div>
+          </select>
+        </div>
         <div class="day">日付<input type="date" name="date_start"><span>
-          〜</span><input type="date" name="date_end"></div>
+            〜</span><input type="date" name="date_end"></div>
         <button type="submit" class="search-button">検索</button>
       </form>
     </div>
@@ -78,7 +77,7 @@
     {{ $rests->links() }}
   </main>
   <footer>
-    <p>Atte,inc.</p>
+    
   </footer>
 </body>
 

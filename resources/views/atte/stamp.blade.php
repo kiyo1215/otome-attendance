@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Atte</title>
+    <title>Otome Attendance</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv=" X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
@@ -12,7 +12,7 @@
 
 <body>
     <header>
-        <h1>Atte</h1>
+        <h1>Otome Attendance</h1>
         <ul>
             <li>
                 <form method="post" action="{{ route('logout') }}">
@@ -24,7 +24,7 @@
     </header>
 
     <main>
-        <h2>{{ Auth::user()->name }}さんお疲れ様です！</h2>
+        <h2>{{ Auth::user()->name }}さん、お疲れ様です！</h2>
         @if(session('message'))
           <div class="session">
             {{session('message')}}
@@ -54,7 +54,7 @@
     </main>
 
     <footer>
-        <p>Atte,inc.</p>
+        
     </footer>
 </body>
 

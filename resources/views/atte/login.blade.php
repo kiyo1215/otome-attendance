@@ -12,7 +12,7 @@
 
 <body>
     <header>
-        <h1>Atte</h1>
+        <h1>Otome Attendance</h1>
     </header>
 
     <main>
@@ -40,7 +40,7 @@
     </main>
 
     <footer>
-        <p>Atte,inc.</p>
+       
     </footer>
 </body>
 

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>My Site</title>
+  <title>Otome Attendance Manegement</title>
   <link rel="stylesheet" href="{{asset('css/reset.css')}}">
   <link rel="stylesheet" href="{{asset('css/paginate.css')}}">
   <link rel="stylesheet" href="{{asset('css/reward.css')}}">
@@ -15,9 +15,7 @@
   <header>
     <h1>Otome Attendance Management</h1>
     <ul>
-      <li><a href="{{ route('management') }}">トップ</a></li>
-      <li><a href="{{ route('show_atte') }}">勤務時間編集</a></li>
-      <li><a href="{{ route('show_rest') }}">休憩時間編集</a></li>
+      <li><a href="{{ route('management') }}">トップへ</a></li>
       <li>
         <form method="post" action="{{ route('logout') }}">
           @csrf
@@ -175,31 +173,34 @@
           <td>
             @php
             if($attendance->week === '金' || $attendance->week === '土'){
-            if($start_second < 68400 && ($end_second> 79200 || $end_second < 28800)){ echo (sprintf("%02d:%02d:%02d", 03, 00, 00)); } if($start_second> 68400 && $start_second <= 79200 && $end_second> 79200){
-                  $time2 = 79200 - $start_second;
-                  $time2_hours = floor($time2 / 3600);
-                  $time2_minutes = floor(($time2 / 60) % 60);
-                  $time2_seconds = $time2 % 60;
-                  echo (sprintf("%02d:%02d:%02d", $time2_hours, $time2_minutes, $time2_seconds));
-                  }
+            if($start_second < 68400 && ($end_second> 79200 || $end_second < 28800)){ 
+              echo (sprintf("%02d:%02d:%02d", 03, 00, 00)); 
+              } 
+            if($start_second> 68400 && $start_second <= 79200 && $end_second> 79200){
+              $time2 = 79200 - $start_second;
+              $time2_hours = floor($time2 / 3600);
+              $time2_minutes = floor(($time2 / 60) % 60);
+              $time2_seconds = $time2 % 60;
+              echo (sprintf("%02d:%02d:%02d", $time2_hours, $time2_minutes, $time2_seconds));
+              }
 
-                  if($start_second > 68400 && $end_second <= 79200 && $end_second> 28800){
-                    $time3 = $end_second - $start_second;
-                    $time3_hours = floor($time3 / 3600);
-                    $time3_minutes = floor(($time3 / 60) % 60);
-                    $time3_seconds = $time3 % 60;
-                    echo (sprintf("%02d:%02d:%02d", $time3_hours, $time3_minutes, $time3_seconds));
-                    }
+            if($start_second > 68400 && $end_second <= 79200 && $end_second> 28800){
+              $time3 = $end_second - $start_second;
+              $time3_hours = floor($time3 / 3600);
+              $time3_minutes = floor(($time3 / 60) % 60);
+              $time3_seconds = $time3 % 60;
+              echo (sprintf("%02d:%02d:%02d", $time3_hours, $time3_minutes, $time3_seconds));
+              }
 
-                    if($start_second < 68400 && $end_second <=79200 && $end_second> 68400){
-                      $time4 = $end_second - 68400;
-                      $time4_hours = floor($time4 / 3600);
-                      $time4_minutes = floor(($time4 / 60) % 60);
-                      $time4_seconds = $time4 % 60;
-                      echo (sprintf("%02d:%02d:%02d", $time4_hours, $time4_minutes, $time4_seconds));
-                      }
-                      }
-                      @endphp
+            if($start_second < 68400 && $end_second <=79200 && $end_second> 68400){
+              $time4 = $end_second - 68400;
+              $time4_hours = floor($time4 / 3600);
+              $time4_minutes = floor(($time4 / 60) % 60);
+              $time4_seconds = $time4 % 60;
+              echo (sprintf("%02d:%02d:%02d", $time4_hours, $time4_minutes, $time4_seconds));
+              }
+              }
+            @endphp
           </td>
           <td>
             @php
@@ -237,7 +238,7 @@
                 $time8_seconds=$time8 % 60; 
                 echo (sprintf("%02d:%02d:%02d", $time8_hours, $time8_minutes, $time8_seconds));
                 } 
-              if($start_second> 79200 && $end_second > 28800){
+              if($start_second > 79200 && $end_second > 28800){
                 $time9 = 108000 - $start_second;
                 $time9_hours = floor($time9 / 3600);
                 $time9_minutes = floor(($time9 / 60) % 60);
@@ -262,7 +263,7 @@
     {{ $attendances->links() }}
   </main>
   <footer>
-    <p>Atte,inc.</p>
+    
   </footer>
 </body>
 

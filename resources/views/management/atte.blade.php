@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>My Site</title>
+  <title>Otome Attendance Manegement</title>
   <link rel="stylesheet" href="{{asset('css/reset.css')}}">
   <link rel="stylesheet" href="{{asset('css/paginate.css')}}">
   <link rel="stylesheet" href="{{asset('css/change.css')}}">
@@ -15,9 +15,7 @@
   <header>
     <h1>Otome Attendance Manegement</h1>
     <ul>
-      <li><a href="{{ route('management') }}">トップ</a></li>
-      <li><a href="{{ route('show_rest') }}">休憩時間編集</a></li>
-      <li><a href="{{ route('show_reward') }}">勤務時間集計</a></li>
+      <li><a href="{{ route('management') }}">トップへ</a></li>
       <li>
         <form method="post" action="{{ route('logout') }}">
           @csrf
@@ -71,7 +69,7 @@
     {{ $attendances->links() }}
   </main>
   <footer>
-    <p>Atte,inc.</p>
+    
   </footer>
 </body>
 
