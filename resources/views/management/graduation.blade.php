@@ -41,7 +41,7 @@
           <input type="name" name="name" placeholder="名前" value="{{ old('name') }}">
         </div>
         <div>
-          <select name="belong">
+          <select name="belong" class="belong">
             <option value="">所属</option>
             <option value="乙女ハウス">乙女ハウス</option>
             <option value="あんじゅえーる">あんじゅえーる</option>
