@@ -536,7 +536,16 @@ class ManagementController extends Controller
         ]);
         return back()->with('create', '登録しました');
     }
+    // $rests = Rest::whereHas('attendance', function ($query) use ($request) {
+    //             $query->where('date', '<=', $request->date_end)->whereHas('user', function ($query2) use ($request) {
+    //                     $query2->where('belong', $request->belong);
+    //                 });
+    //         })->latest()->get();
     public function delete(Request $request){
+        Rest::whereHas('attendance', function($query) use ($request) {
+            $query->where('user_id', $request->id);
+        })->delete();
+        Attendance::where('user_id', $request->id)->delete();
         User::where('id', $request->id)->delete();
         return back()->with('delete', '卒業しました');
     }
