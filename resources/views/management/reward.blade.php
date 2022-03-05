@@ -133,13 +133,6 @@
               $time5_seconds = $time5 % 60;
               echo (sprintf("%02d:%02d:%02d", $time5_hours, $time5_minutes, $time5_seconds));
               }
-              <!-- if($start_second <= 79200 && $end_second < 43200 ){ 
-                $time6 = 7200 + $end_second; 
-                $time6_hours = floor($time6 / 3600); 
-                $time6_minutes = floor(($time6 / 60) % 60); 
-                $time6_seconds = $time6 % 60; 
-                echo (sprintf("%02d:%02d:%02d", $time6_hours, $time6_minutes, $time6_seconds)); 
-                }  -->
               if($start_second <=79200 && $end_second>= 28800 && $end_second < 43200){ 
                 echo (sprintf("%02d:%02d:%02d", 10, 00, 00)); 
                 } 
