@@ -71,6 +71,8 @@ margin-bottom: 20px;
 }
 .belong {
   margin-bottom: 20px;
+  background-color: white;
+  color: black;
   width: 185px;
   height: 30px;
 }
