@@ -82,7 +82,7 @@
               $time0_seconds = $time0 % 60; 
               echo (sprintf("%02d:%02d:%02d", $time0_hours, $time0_minutes, $time0_seconds)); } 
               
-              if(3600 <= $start_second && $start_second < 68400 && ($end_second > 68400 || $end_second < 43200)){
+              if(36000 <= $start_second && $start_second < 68400 && ($end_second > 68400 || $end_second < 43200)){
               $time1 = 68400 - $start_second;
               $time1_hours = floor($time1 / 3600);
               $time1_minutes = floor(($time1 / 60) % 60);
@@ -133,16 +133,19 @@
               $time5_seconds = $time5 % 60;
               echo (sprintf("%02d:%02d:%02d", $time5_hours, $time5_minutes, $time5_seconds));
               }
-              if($start_second <= 79200 && $end_second < 28800){ 
-                $time6=7200 + $end_second; $time6_hours=floor($time6 / 3600); 
-                $time6_minutes=floor(($time6 / 60) % 60); 
-                $time6_seconds=$time6 % 60; 
+              <!-- if($start_second <= 79200 && $end_second < 43200 ){ 
+                $time6 = 7200 + $end_second; 
+                $time6_hours = floor($time6 / 3600); 
+                $time6_minutes = floor(($time6 / 60) % 60); 
+                $time6_seconds = $time6 % 60; 
                 echo (sprintf("%02d:%02d:%02d", $time6_hours, $time6_minutes, $time6_seconds)); 
-                } 
+                }  -->
               if($start_second <=79200 && $end_second>= 28800 && $end_second < 43200){ 
-                echo (sprintf("%02d:%02d:%02d", 10, 00, 00)); } 
-              if(($start_second> 79200 && $end_second <= 86400 && $end_second> 79200) |($start_second <= 28800 && $end_second <=28800)){ 
-                $time7=$end_second - $start_second; $time7_hours=floor($time7 / 3600);
+                echo (sprintf("%02d:%02d:%02d", 10, 00, 00)); 
+                } 
+              if(($start_second > 79200 && $end_second <= 86400 && $end_second> 79200) |($start_second <= 28800 && $end_second <=28800)){ 
+                $time7=$end_second - $start_second; 
+                $time7_hours=floor($time7 / 3600);
                 $time7_minutes=floor(($time7 / 60) % 60); 
                 $time7_seconds=$time7 % 60; 
                 echo (sprintf("%02d:%02d:%02d", $time7_hours, $time7_minutes, $time7_seconds)); 
