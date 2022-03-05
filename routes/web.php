@@ -26,9 +26,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/reward/csv', [ManagementController::class, 'show_csv'])->name('show_csv');
     Route::post('/reward/attecsv', [ManagementController::class, 'atte_csv'])->name('atte_csv');
     Route::post('/reward/restcsv', [ManagementController::class, 'rest_csv'])->name('rest_csv');
-    Route::post('/create', [ManagementController::class, 'create'])->name('create');
     Route::post('/graduation/dalete', [ManagementController::class, 'delete'])->name('delete');
 });
-Route::get('/graduation', [ManagementController::class, 'graduation'])->name('graduation');
 
 require __DIR__.'/auth.php';
+Route::get('/graduation', [ManagementController::class, 'graduation'])->name('graduation');
+Route::post('/create', [ManagementController::class, 'create'])->name('create');
