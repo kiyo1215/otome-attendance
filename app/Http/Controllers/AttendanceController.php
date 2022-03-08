@@ -63,8 +63,9 @@ class AttendanceController extends Controller
         $today = Carbon::today();
         if($now >= '00:00:00' && $now <= '11:00:00'){
             $attendance = Attendance::where('user_id', Auth::id())->where('date', $daybefore->format('Y-m-d'))->first();
+        } else {
+            $attendance = Attendance::where('user_id', Auth::id())->where('date', $today)->first();
         }
-        $attendance = Attendance::where('user_id', Auth::id())->where('date', $today)->first();
         $rest = Rest::where('attendance_id', $attendance->id)->first();
         
         if(empty($rest)){
