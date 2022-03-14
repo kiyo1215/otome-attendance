@@ -31,7 +31,7 @@
         @csrf
         <div>名前
           <select name="user_id">
-            <option disabled value="">全員</option>
+            <option value="">全員</option>
             @foreach($users as $user)
             <option value="{{ $user->id }}">{{ $user->name }}</option>
             @endforeach

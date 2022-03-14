@@ -40,7 +40,7 @@
         </div>
         <div class="belong">所属
           <select name="belong">
-            <option disabled value="">全て</option>
+            <option value="">全て</option>
             <option value="乙女ハウス">乙女ハウス</option>
             <option value="あんじゅえーる">あんじゅえーる</option>
             <option value="ふぁみーゆ">ふぁみーゆ</option>
@@ -64,7 +64,7 @@
       </div>
       <div class="belong">所属
         <select name="belong">
-          <option disabled value="">全て</option>
+          <option value="">全て</option>
           <option value="乙女ハウス">乙女ハウス</option>
           <option value="あんじゅえーる">あんじゅえーる</option>
           <option value="ふぁみーゆ">ふぁみーゆ</option>
