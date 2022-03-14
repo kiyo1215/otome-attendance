@@ -42,7 +42,7 @@
         </div>
         <div>
           <select name="belong" class="belong">
-            <option value="">所属</option>
+            <option disabled value="">所属</option>
             <option value="乙女ハウス">乙女ハウス</option>
             <option value="あんじゅえーる">あんじゅえーる</option>
             <option value="ふぁみーゆ">ふぁみーゆ</option>
