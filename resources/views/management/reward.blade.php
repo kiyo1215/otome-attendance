@@ -71,7 +71,7 @@
         @endphp
         <tr>
           <td>{{ $attendance->user->name }}<br>{{ $attendance->user->belong }}</td>
-          <td>{{ $attendance->date}}<br>({{ $attendance->week }})</td>
+          <td>{{ $attendance->date}} ({{ $attendance->week }})</td>
           <!-- 全日　〜19時 -->
           <td class="time">
             @php
@@ -151,10 +151,10 @@
                 echo (sprintf("%02d:%02d:%02d", $time8_hours, $time8_minutes, $time8_seconds)); 
                 } 
               if($start_second> 79200 && $end_second > 28800 && $end_second < 43200){ 
-                $time9=108000 - $start_second; 
-                $time9_hours=floor($time9 / 3600); 
-                $time9_minutes=floor(($time9 / 60) % 60)  
-                $time9_seconds=$time9 % 60; 
+                $time9 = 108000 - $start_second; 
+                $time9_hours = floor($time9 / 3600); 
+                $time9_minutes = floor(($time9 / 60) % 60);
+                $time9_seconds = $time9 % 60; 
                 echo (sprintf("%02d:%02d:%02d", $time9_hours, $time9_minutes, $time9_seconds)); 
                 } 
               if($start_second <=28800 && $end_second>= 28800){
