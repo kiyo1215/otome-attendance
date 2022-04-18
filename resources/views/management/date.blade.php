@@ -55,7 +55,7 @@
         @foreach($attendances as $attendance)
         <tr>
           <td>{{ $attendance->user->name }}</td>
-          <td>{{ $attendance->date}}
+          <td>{{ $attendance->date}}</td>
           <td>{{ $attendance->start_time }}</td>
           <td>{{ $attendance->end_time }}</td>
           <td>
