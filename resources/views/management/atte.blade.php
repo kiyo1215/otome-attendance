@@ -68,9 +68,6 @@
     </div>
     {{ $attendances->links() }}
   </main>
-  <footer>
-
-  </footer>
 </body>
 
 </html>

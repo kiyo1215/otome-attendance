@@ -518,7 +518,7 @@ class ManagementController extends Controller
         return response()->stream($callback, 200, $headers); //ここで実行
     }
     public function graduation(){
-        $users = User::all();
+        $users = User::paginate(10);
         return view('management.graduation', compact('users'));
     }
     public function create(Request $request){
@@ -536,11 +536,6 @@ class ManagementController extends Controller
         ]);
         return back()->with('create', '登録しました');
     }
-    // $rests = Rest::whereHas('attendance', function ($query) use ($request) {
-    //             $query->where('date', '<=', $request->date_end)->whereHas('user', function ($query2) use ($request) {
-    //                     $query2->where('belong', $request->belong);
-    //                 });
-    //         })->latest()->get();
     public function delete(Request $request){
         Rest::whereHas('attendance', function($query) use ($request) {
             $query->where('user_id', $request->id);

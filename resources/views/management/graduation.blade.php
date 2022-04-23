@@ -72,6 +72,7 @@
       </form>
       @endforeach
     </div>
+    {{ $users->links() }}
     <p>※卒業すると勤怠データも削除されてしまいます。予めCSVダウンロードをしておくことをお勧めします。</p>
   </main>
 </body>

@@ -26,10 +26,10 @@
   </header>
   <main>
     　<ul>
-      <li><a href="{{ route('show_atte') }}">勤務時間編集</a></li>
-      <li><a href="{{ route('show_rest') }}">休憩時間編集</a></li>
-      <li><a href="{{ route('show_reward') }}">勤務時間集計</a></li>
-      <li><a href="{{ route('graduation') }}">キャスト編集</a></li>
+      <li><a href="{{ route('show_atte') }}" class="nav">勤務時間編集</a></li>
+      <li><a href="{{ route('show_rest') }}" class="nav">休憩時間編集</a></li>
+      <li><a href="{{ route('show_reward') }}" class="nav">勤務時間集計</a></li>
+      <li><a href="{{ route('graduation') }}" class="nav">キャスト編集</a></li>
     </ul>
   </main>
 </body>
