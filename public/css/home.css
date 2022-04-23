@@ -1,26 +1,27 @@
 header {
-  height: 10vh;
-  padding-left: 50px;
-  padding-right: 50px;
-  display: flex;
-  justify-content: space-between;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 20px;
 }
 
 h1 {
   font-size: 30px;
   line-height: 10vh;
+  text-align: center;
 }
 
 header ul {
   display: flex;
+  margin: 0 auto;
+  padding-left: 0;
 }
 
 header li {
   list-style: none;
-  padding-left: 40px;
-  line-height: 10vh;
 }
-
+header li:first-child {
+  margin-right: 50px;
+}
 header a {
   text-decoration: none;
   font-size: 12px;
@@ -42,7 +43,7 @@ header a {
 main {
   height: 85vh;
   background-color: #eee;
-  padding: 30px 100px 0;
+  padding: 30px 30px 0;
 }
 
 main ul {

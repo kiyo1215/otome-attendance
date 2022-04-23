@@ -256,9 +256,6 @@
     <a href="{{ route('show_csv')}}" class="csv">CSVダウンロード</a>
     {{ $attendances->links() }}
   </main>
-  <footer>
-
-  </footer>
 </body>
 
 </html>
