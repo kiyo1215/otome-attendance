@@ -518,7 +518,7 @@ class ManagementController extends Controller
         return response()->stream($callback, 200, $headers); //ここで実行
     }
     public function graduation(){
-        $users = User::paginate(10);
+        $users = User::oldest('number')->paginate(10);
         return view('management.graduation', compact('users'));
     }
     public function create(Request $request){
