@@ -544,4 +544,13 @@ class ManagementController extends Controller
         User::where('id', $request->id)->delete();
         return back()->with('delete', '卒業しました');
     }
+    public function aaa(){
+        $users = User::all();
+        return view('management.aaa', compact('users'));
+    }
+    public function bbb(Request $request){
+        $change = ['name' => $request->name];
+        User::where('id', $request->id)->update($change);
+        return back();
+    }
 }

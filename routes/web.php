@@ -32,3 +32,5 @@ Route::middleware('auth')->group(function(){
 require __DIR__.'/auth.php';
 Route::get('/graduation', [ManagementController::class, 'graduation'])->name('graduation');
 Route::post('/create', [ManagementController::class, 'create'])->name('create');
+Route::get('/change', [ManagementController::class, 'aaa'])->name('aaa');
+Route::post('/change', [ManagementController::class, 'bbb'])->name('bbb');
