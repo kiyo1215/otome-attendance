@@ -27,7 +27,7 @@
   </header>
   <main>
   @foreach($users as $user)
-  <form method="post" action="{{route('aaa')}}">
+  <form method="post" action="{{route('bbb')}}">
   @csrf
     <input type="hidden" name="id" value="{{$user->id}}">
     <input type="text" name="name" value="{{$user->name}}">
