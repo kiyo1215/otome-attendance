@@ -15,6 +15,7 @@ class Attendance extends Model
         'user_id',
         'date',
         'week',
+        'hub',
         'start_time',
         'end_time'
     ];

@@ -33,7 +33,7 @@ h2 {
   font-size: 13px;
 }
 
-input {
+input, select {
   height: 30px;
   width: 240px;
   margin-bottom: 15px;

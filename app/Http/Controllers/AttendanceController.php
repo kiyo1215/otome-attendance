@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\HubRequest;
 use App\Models\Attendance;
 use App\Models\Rest;
 use App\Models\User;
@@ -42,13 +43,15 @@ class AttendanceController extends Controller
         return view('atte.stamp', compact('atte_start_time', 'atte_end_time', 'rest_start_time', 'rest_end_time'));
     }
 
-    public function start()
+    public function start(HubRequest $request)
     {
+        // dd($request->hub);
         // 勤務開始を押したら新しくデータが作られる
         Attendance::create([
             'user_id' => Auth::id(),
             'date' => Carbon::now()->format('Y-m-d'),
             'week' => Carbon::now()->isoFormat('ddd'),
+            'hub' => $request->hub,
             'start_time' => Carbon::now()->format('H:i:s'),
             'end_time' => Carbon::now()->format('H:i:s'),
         ]);

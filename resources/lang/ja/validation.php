@@ -157,7 +157,8 @@ return [
         'name' => '名前',
         'belong' => '所属',
         'number' => 'キャストID',
-        'password'=> 'パスワード'
+        'password'=> 'パスワード',
+        'hub' => '出勤店舗'
     ],
 
 ];

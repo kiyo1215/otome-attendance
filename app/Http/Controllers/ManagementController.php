@@ -278,6 +278,7 @@ class ManagementController extends Controller
                     '所属',
                     '日付',
                     '曜日',
+                    '出勤店舗',
                     '勤務開始時間',
                     '勤務終了時間',
                 ];
@@ -343,6 +344,7 @@ class ManagementController extends Controller
                     $row->user->belong,
                     $row->date,
                     $row->week,
+                    $row->hub,
                     $row->start_time,
                     $row->end_time,
                 ];
