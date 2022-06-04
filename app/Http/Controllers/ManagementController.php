@@ -371,6 +371,7 @@ class ManagementController extends Controller
             $columns = [ //1行目の情報
                 '名前',
                 '所属',
+                '日付',
                 '休憩開始時間',
                 '休憩終了時間',
             ];
@@ -508,6 +509,7 @@ class ManagementController extends Controller
                 $csv = [
                     $row->attendance->user->name,
                     $row->attendance->user->belong,
+                    $row->attendance->date,
                     $row->start_time,
                     $row->end_time,
                 ];
