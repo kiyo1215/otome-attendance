@@ -26,6 +26,7 @@
     </ul>
   </header>
   <main>
+  <div class="user">
   @foreach($users as $user)
   <form method="post" action="{{route('bbb')}}">
   @csrf
@@ -34,7 +35,18 @@
     <button type="submit">変更</button>
   </form>
   @endforeach
+  @foreach($users as $user)
+  <p>{{$user->name}}</p>
+  <p>{{$user->number}}</p>
+  @endforeach
+  </div>
   </main>
 </body>
 
 </html>
+
+<style>
+.user {
+  display: flex;
+}
+</style>
