@@ -24,7 +24,6 @@
     </header>
 
     <main>
-        <p class="time">{{$time}}</p>
         <h2>{{ Auth::user()->name }}さん、お疲れ様です！</h2>
         @if(session('message'))
         <div class="session">
