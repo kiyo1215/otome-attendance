@@ -10,8 +10,9 @@ Route::middleware('auth')->group(function(){
     
     Route::post('/attendance/start', [AttendanceController::class, 'start'])->name('start');
     Route::post('/attendance/end', [AttendanceController::class, 'end'])->name('end');
-    Route::post('/rest/start', [Restcontroller::class, 'start'])->name('start');
-    Route::post('/rest/end', [Restcontroller::class, 'end'])->name('end');
+
+    Route::post('/rest/start', [RestController::class, 'start'])->name('start');
+    Route::post('/rest/end', [RestController::class, 'end'])->name('end');
 
     Route::get('/management', [ManagementController::class, 'management'])->name('management');
     // Route::get('/management', [ManagementController::class, 'date'])->name('date');
