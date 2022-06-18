@@ -18,7 +18,7 @@ class AttendanceController extends Controller
         $atte_end_time = null;
         $rest_start_time = null;
         $rest_end_time = null;
-
+        $time = Carbon::now()-> format('Y年m月d日 H:i:s');
         //自分の本日の勤怠があるかのチェック、dateとuser_idで絞り込み
         $attendance = Attendance::where('user_id', Auth::id())->where('date', Carbon::today())->first();
         if (empty($attendance)) {
@@ -40,7 +40,7 @@ class AttendanceController extends Controller
             $rest_end_time = $rest->end_time;
         };
         //それらの情報を画面に受け渡す
-        return view('atte.stamp', compact('atte_start_time', 'atte_end_time', 'rest_start_time', 'rest_end_time'));
+        return view('atte.stamp', compact('atte_start_time', 'atte_end_time', 'rest_start_time', 'rest_end_time', 'time'));
     }
 
     public function start(HubRequest $request)
