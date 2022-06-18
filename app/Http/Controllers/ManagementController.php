@@ -288,28 +288,28 @@ class ManagementController extends Controller
 
             if ($request->belong === null) {
                 if ($request->user_id !== null && $request->date_start === null && $request->date_end === null) {
-                    $attendances = Attendance::where('user_id', $request->user_id)->latest()->get();
+                    $attendances = Attendance::where('user_id', $request->user_id)->get();
                 }
                 if ($request->user_id === null && $request->date_start !== null && $request->date_end === null) {
-                    $attendances = Attendance::wherebetween('date', [$request->date_start, $today])->latest()->get();
+                    $attendances = Attendance::wherebetween('date', [$request->date_start, $today])->get();
                 }
                 if ($request->user_id !== null && $request->date_start !== null && $request->date_end !== null) {
-                    $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $request->date_end])->latest()->get();
+                    $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $request->date_end])->get();
                 }
                 if ($request->user_id !== null && $request->date_start !== null && $request->date_end === null) {
-                    $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $today])->latest()->get();
+                    $attendances = Attendance::where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $today])->get();
                 }
                 if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null) {
-                    $attendances = Attendance::wherebetween('date', [$request->date_start, $request->date_end])->latest()->get();
+                    $attendances = Attendance::wherebetween('date', [$request->date_start, $request->date_end])->get();
                 }
                 if ($request->user_id === null && $request->date_start === null && $request->date_end === null) {
-                    $attendances = Attendance::latest()->get();
+                    $attendances = Attendance::all();
                 }
                 if ($request->user_id !== null && $request->date_start === null && $request->date_end !== null) {
-                    $attendances = Attendance::where('user_id', $request->user_id)->where('date', '<=', $request->date_end)->latest()->get();
+                    $attendances = Attendance::where('user_id', $request->user_id)->where('date', '<=', $request->date_end)->get();
                 }
                 if ($request->user_id === null && $request->date_start === null && $request->date_end !== null) {
-                    $attendances = Attendance::where('date', '<=', $request->date_end)->latest()->get();
+                    $attendances = Attendance::where('date', '<=', $request->date_end)->get();
                 }
             }  //データベースからデータ取得
             if ($request->belong !== null) {
@@ -317,25 +317,25 @@ class ManagementController extends Controller
                 ) {
                     $attendances = Attendance::whereHas('user', function ($query) use ($request) {
                         $query->where('belong', $request->belong);
-                    })->wherebetween('date', [$request->date_start, $today])->latest()->get();
+                    })->wherebetween('date', [$request->date_start, $today])->get();
                 }
                 if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null
                 ) {
                     $attendances = Attendance::whereHas('user', function ($query) use ($request) {
                         $query->where('belong', $request->belong);
-                    })->wherebetween('date', [$request->date_start, $request->date_end])->latest()->get();
+                    })->wherebetween('date', [$request->date_start, $request->date_end])->get();
                 }
                 if ($request->user_id === null && $request->date_start === null && $request->date_end === null
                 ) {
                     $attendances = Attendance::whereHas('user', function ($query) use ($request) {
                         $query->where('belong', $request->belong);
-                    })->latest()->get();
+                    })->get();
                 }
                 if ($request->user_id === null && $request->date_start === null && $request->date_end !== null
                 ) {
                     $attendances = Attendance::whereHas('user', function ($query) use ($request) {
                         $query->where('belong', $request->belong);
-                    })->where('date', '<=', $request->date_end)->latest()->get();
+                    })->where('date', '<=', $request->date_end)->get();
                 }
             }
             foreach ($attendances as $row) {  //データを1行ずつ回す
@@ -383,68 +383,69 @@ class ManagementController extends Controller
                 if ($request->user_id !== null && $request->date_start === null && $request->date_end === null) {
                     $rests = Rest::whereHas('attendance', function ($query) use ($request) {
                         $query->where('user_id', $request->user_id);
-                    })->latest()->get();
+                    })->get();
                 }
                 if ($request->user_id === null && $request->date_start !== null && $request->date_end === null) {
                     $rests = Rest::whereHas('attendance', function ($query) use ($request, $today) {
                         $query->wherebetween('date', [$request->date_start, $today]);
-                    })->latest()->get();
+                    })->get();
                 }
                 if ($request->user_id !== null && $request->date_start !== null && $request->date_end !== null) {
                     $rests = Rest::whereHas('attendance', function ($query) use ($request, $today) {
                         $query->where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $request->date_end]);
-                    })->latest()->get();
+                    })->get();
                 }
                 if ($request->user_id !== null && $request->date_start !== null && $request->date_end === null) {
                     $rests = Rest::whereHas('attendance', function ($query) use ($request, $today) {
                         $query->where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $today]);
-                    })->latest()->get();
+                    })->get();
                 }
                 if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null) {
                     $rests = Rest::whereHas('attendance', function ($query) use ($request, $today) {
                         $query->wherebetween('date', [$request->date_start, $request->date_end]);
-                    })->latest()->get();
+                    })->get();
                 }
                 if ($request->user_id === null && $request->date_start === null && $request->date_end === null) {
-                    $rests = Rest::latest()->get();
+                    $rests = Rest::all();
                 }
                 if ($request->user_id !== null && $request->date_start === null && $request->date_end !== null) {
                     $rests = Rest::whereHas('attendance', function ($query) use ($request, $today) {
                         $query->where('user_id', $request->user_id)->where('date', '<=', $request->date_end);
-                    })->latest()->get();
+                    })->get();
                 }
                 if ($request->user_id === null && $request->date_start === null && $request->date_end !== null) {
                     $rests = Rest::whereHas('attendance', function ($query) use ($request, $today) {
                         $query->where('date', '<=', $request->date_end);
-                    })->latest()->get();
+                    })->get();
                 }
-            }  //データベースからデータ取得
+            }  
+            //データベースからデータ取得
             if($request->belong !== null){
                 if ($request->user_id === null && $request->date_start !== null && $request->date_end === null) {
                     $rests = Attendance::whereHas('user', function ($query) use ($request) {
                         $query->where('belong', $request->belong);
-                    })->wherebetween('date', [$request->date_start, $today])->latest()->get();
+                    })->wherebetween('date', [$request->date_start, $today])->get();
                 }
                 if (
                     $request->user_id === null && $request->date_start !== null && $request->date_end !== null
                 ) {
                     $rests = Attendance::whereHas('user', function ($query) use ($request) {
                         $query->where('belong', $request->belong);
-                    })->wherebetween('date', [$request->date_start, $request->date_end])->latest()->get();
+                    })->wherebetween('date', [$request->date_start, $request->date_end])->get();
                 }
                 if (
                     $request->user_id === null && $request->date_start === null && $request->date_end === null
                 ) {
                     $rests = Attendance::whereHas('user', function ($query) use ($request) {
                         $query->where('belong', $request->belong);
-                    })->latest()->get();
+                    })->get();
                 }
                 if (
                     $request->user_id === null && $request->date_start === null && $request->date_end !== null
                 ) {
                     $rests = Attendance::whereHas('user', function ($query) use ($request) {
                         $query->where('belong', $request->belong);
-                    })->where('date', '<=', $request->date_end)->latest()->get();
+                    })->where('date', '<=', $request->date_end)->get();
                 }
             }
         if($request->belong !== null){
@@ -453,56 +454,56 @@ class ManagementController extends Controller
                 $query->where('user_id', $request->user_id)->whereHas('user', function($query2) use ($request){
                     $query2->where('belong', $request->belong);
                 });
-            })->latest()->get();
+            })->get();
         }
         if ($request->user_id === null && $request->date_start !== null && $request->date_end === null) {
             $rests = Rest::whereHas('attendance', function ($query) use ($request, $today) {
                 $query->wherebetween('date', [$request->date_start, $today])->whereHas('user', function ($query2) use ($request) {
                         $query2->where('belong', $request->belong);
                     });
-            })->latest()->get();
+            })->get();
         }
         if ($request->user_id !== null && $request->date_start !== null && $request->date_end !== null) {
             $rests = Rest::whereHas('attendance', function ($query) use ($request) {
                 $query->where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $request->date_end])->whereHas('user', function ($query2) use ($request) {
                         $query2->where('belong', $request->belong);
                     });
-            })->latest()->get();
+            })->get();
         }
         if ($request->user_id !== null && $request->date_start !== null && $request->date_end === null) {
             $rests = Rest::whereHas('attendance', function ($query) use ($request, $today) {
                 $query->where('user_id', $request->user_id)->wherebetween('date', [$request->date_start, $today])->whereHas('user', function ($query2) use ($request) {
                         $query2->where('belong', $request->belong);
                     });
-            })->latest()->get();
+            })->get();
         }
         if ($request->user_id === null && $request->date_start !== null && $request->date_end !== null) {
             $rests = Rest::whereHas('attendance', function ($query) use ($request) {
                 $query->wherebetween('date', [$request->date_start, $request->date_end])->whereHas('user', function ($query2) use ($request) {
                         $query2->where('belong', $request->belong);
                     });
-            })->latest()->get();
+            })->get();
         }
         if ($request->user_id === null && $request->date_start === null && $request->date_end === null) {
             $rests = Rest::whereHas('attendance', function ($query) use ($request) {
                 $query->whereHas('user', function ($query2) use ($request) {
                         $query2->where('belong', $request->belong);
                 });
-                    })->latest()->get();
+                    })->get();
         }
         if ($request->user_id !== null && $request->date_start === null && $request->date_end !== null) {
             $rests = Rest::whereHas('attendance', function ($query) use ($request) {
                 $query->where('user_id', $request->user_id)->where('date', '<=', $request->date_end)->whereHas('user', function ($query2) use ($request) {
                         $query2->where('belong', $request->belong);
                     });
-            })->latest()->get();
+            })->get();
         }
         if ($request->user_id === null && $request->date_start === null && $request->date_end !== null) {
             $rests = Rest::whereHas('attendance', function ($query) use ($request) {
                 $query->where('date', '<=', $request->date_end)->whereHas('user', function ($query2) use ($request) {
                         $query2->where('belong', $request->belong);
                     });
-            })->latest()->get();
+            })->get();
         }
     }
             foreach ($rests as $row) {  //データを1行ずつ回す
