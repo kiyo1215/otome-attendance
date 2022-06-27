@@ -258,6 +258,7 @@ class ManagementController extends Controller
     }
     public function atte_delete($id){
         Attendance::where('id', $id)->delete();
+        
         return back();
     }
     // Rest::whereHas('attendance', function($query) use ($request) {
