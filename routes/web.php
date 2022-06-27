@@ -20,7 +20,6 @@ Route::middleware('auth')->group(function(){
     Route::get('/atte', [ManagementController::class, 'show_atte'])->name('show_atte');
     Route::post('/atte/update', [ManagementController::class, 'change_atte'])->name('change_atte');
     Route::post('/atte/search', [ManagementController::class, 'atte_search'])->name('atte_search');
-    Route::get('/atte/delete/{id}', [ManagementController::class, 'atte_delete'])->name('atte_delete');
     Route::post('/atte/delete/{id}', [ManagementController::class, 'atte_delete'])->name('atte_delete');
 
     Route::get('/rest', [ManagementController::class, 'show_rest'])->name('show_rest');
