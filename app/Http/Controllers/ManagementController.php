@@ -256,6 +256,16 @@ class ManagementController extends Controller
         $attendances = Attendance::latest()->paginate(6);
         return view('management.reward', compact('users', 'attendances'));
     }
+    public function atte_delete($id){
+        Attendance::where('id', $id)->delete();
+        return back();
+    }
+    // Rest::whereHas('attendance', function($query) use ($request) {
+    //         $query->where('user_id', $request->id);
+    //     })->delete();
+    //     Attendance::where('user_id', $request->id)->delete();
+    //     User::where('id', $request->id)->delete();
+    //     return back()->with('delete', '卒業しました');
     public function show_csv(){
         $users = User::all();
         return view('management.csv', compact('users'));

@@ -45,11 +45,12 @@
     <div class="info">
       <table class="attendance">
         <tr>
-          <th>名前</th>
-          <th>日付</th>
-          <th>勤務開始</th>
-          <th>勤務終了</th>
-          <th></th>
+          <th class="w-20">名前</th>
+          <th class="w-20">日付</th>
+          <th class="w-20">勤務開始</th>
+          <th class="w-20">勤務終了</th>
+          <th class="w-10"></th>
+          <th class="w-10"></th>
         </tr>
         @foreach($attendances as $attendance)
         <form method="post" action="{{ route('change_atte') }}">
@@ -61,12 +62,19 @@
             <td><input type="text" name="atte_start_time" value="{{ $attendance->start_time }}"></td>
             <td><input type="text" name="atte_end_time" value="{{ $attendance->end_time }}"></td>
             <td><button type="submit">編集</button></td>
-          </tr>
+            <td>
+              <a href="/atte/delete/{{$attendance->id}}">削除</a>
+            </td>
         </form>
+        {{-- <form method="post" action="{{ route('atte_delete') }}">
+        @csrf
+        <input type="hidden" name="id" value="{{ $attendance->id }}">
+        <button type="submit">削除</button>
+        </form> --}}
         @endforeach
       </table>
     </div>
-    {{ $attendances->links() }}
+    <div class="page">{{ $attendances->links() }}</div>
   </main>
 </body>
 

@@ -45,7 +45,6 @@ class AttendanceController extends Controller
 
     public function start(HubRequest $request)
     {
-        // dd($request->hub);
         // 勤務開始を押したら新しくデータが作られる
         Attendance::create([
             'user_id' => Auth::id(),
@@ -64,33 +63,53 @@ class AttendanceController extends Controller
         $daybefore = new Carbon('yesterday');
         $now = Carbon::now()->format('H:i:s');
         $today = Carbon::today();
+
         if($now >= '00:00:00' && $now <= '11:00:00'){
             $attendance = Attendance::where('user_id', Auth::id())->where('date', $daybefore->format('Y-m-d'))->first();
+            $rest = Rest::where('attendance_id', $attendance->id)->first();
+            if (empty($rest)) {
+                if ($attendance === null) {
+                    return back()->with('message', '出勤打刻がありません');
+                } else {
+                    $param = [
+                        'end_time' => Carbon::now()->format('H:i:s')
+                    ];
+                    Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
+                    Rest::create([
+                        'user_id' => Auth::id(),
+                        'attendance_id' => $attendance->id,
+                        'start_time' => '00:00:00',
+                        'end_time' => '00:00:00',
+                    ]);
+                    return back()->with('message', '今日もありがとう、大好きだよ');
+                }
+            } else {
+                $param = [
+                    'end_time' => Carbon::now()->format('H:i:s'),
+                ];
+                Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
+                return back()->with('message', '今日もありがとう、大好きだよ');
+            }
         } else {
             $attendance = Attendance::where('user_id', Auth::id())->where('date', $today)->first();
-        }
-        $rest = Rest::where('attendance_id', $attendance->id)->first();
-        
-        if(empty($rest)){
-            $param = [
-                'end_time' => Carbon::now()->format('H:i:s')
-            ];
-            Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
-            Rest::create([
-                'user_id' => Auth::id(),
-                'attendance_id' => $attendance->id,
-                'start_time' => '00:00:00',
-                'end_time' => '00:00:00',
-            ]);
-        } else {
-            $param = [
-                'end_time' => Carbon::now()->format('H:i:s'),
-            ];
-            Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
-        }
-
-        return back()->with('message', '今日もありがとう、大好きだよ');
+            // $rest = Rest::where('attendance_id', $attendance->id)->first();
+                if($attendance === null){
+                    return back()->with('message', '出勤打刻がありません');
+                }else{
+                    $param = [
+                        'end_time' => Carbon::now()->format('H:i:s')
+                    ];
+                    Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
+                    // Rest::create([
+                    //     'user_id' => Auth::id(),
+                    //     'attendance_id' => $attendance->id,
+                    //     'start_time' => '00:00:00',
+                    //     'end_time' => '00:00:00',
+                    //     ]);
+                        return back()->with('message', '今日もありがとう、大好きだよ');
+                    }
     }
+}
 
     public function rest_start()
     {
