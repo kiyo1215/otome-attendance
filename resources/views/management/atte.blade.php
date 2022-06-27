@@ -43,6 +43,7 @@
       </form>
     </div>
     <div class="info">
+    <p>削除ボタン作成中ですが未完成です、触らないでください</p>
       <table class="attendance">
         <tr>
           <th class="w-20">名前</th>
