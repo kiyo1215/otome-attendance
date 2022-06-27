@@ -42,8 +42,8 @@
         <button type="submit" class="search-button">検索</button>
       </form>
     </div>
-    <div class="info">
     <p>削除ボタン作成中ですが未完成です、触らないでください</p>
+    <div class="info">
       <table class="attendance">
         <tr>
           <th class="w-20">名前</th>
