@@ -66,8 +66,8 @@ class AttendanceController extends Controller
 
         if($now >= '00:00:00' && $now <= '11:00:00'){
             $attendance = Attendance::where('user_id', Auth::id())->where('date', $daybefore->format('Y-m-d'))->first();
-            $rest = Rest::where('attendance_id', $attendance->id)->first();
-            if (empty($rest)) {
+            // $rest = Rest::where('attendance_id', $attendance->id)->first();
+            if (empty($attendance)) {
                 if ($attendance === null) {
                     return back()->with('message', '出勤打刻がありません');
                 } else {
