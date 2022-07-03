@@ -43,6 +43,11 @@
       </form>
     </div>
     <p>削除ボタン作成中ですが未完成です、触らないでください</p>
+      @if(session('msg'))
+      <div class="session">
+        {{session('msg')}}
+      </div>
+      @endif
     <div class="info">
       <table class="attendance">
         <tr>

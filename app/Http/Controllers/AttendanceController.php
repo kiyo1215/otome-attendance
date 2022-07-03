@@ -75,13 +75,6 @@ class AttendanceController extends Controller
                         'end_time' => Carbon::now()->format('H:i:s')
                     ];
                     Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
-                    Rest::create([
-                        'user_id' => Auth::id(),
-                        'attendance_id' => $attendance->id,
-                        'start_time' => '00:00:00',
-                        'end_time' => '00:00:00',
-                    ]);
-                    return back()->with('message', '今日もありがとう、大好きだよ');
                 }
             } else {
                 $param = [
@@ -100,12 +93,7 @@ class AttendanceController extends Controller
                         'end_time' => Carbon::now()->format('H:i:s')
                     ];
                     Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
-                    // Rest::create([
-                    //     'user_id' => Auth::id(),
-                    //     'attendance_id' => $attendance->id,
-                    //     'start_time' => '00:00:00',
-                    //     'end_time' => '00:00:00',
-                    //     ]);
+                    
                         return back()->with('message', '今日もありがとう、大好きだよ');
                     }
     }

@@ -99,7 +99,8 @@ class ManagementController extends Controller
         ];
         Attendance::where('id', $request->id)->update($atte);
         $attendances = Attendance::latest()->paginate(7);
-        return view('management.atte', compact('users', 'attendances'));
+        // return view('management.atte', compact('users', 'attendances'));
+        return back()->with('msg', '編集しました');
     }
     public function atte_search(Request $request)
     {
@@ -257,9 +258,10 @@ class ManagementController extends Controller
         return view('management.reward', compact('users', 'attendances'));
     }
     public function atte_delete($id){
+        Rest::where('attendance_id', $id)->delete();
         Attendance::where('id', $id)->delete();
         
-        return back();
+        return back()->with('msg', '削除しました');
     }
     // Rest::whereHas('attendance', function($query) use ($request) {
     //         $query->where('user_id', $request->id);

@@ -122,3 +122,8 @@ td button {
 .page {
   margin-top: 30px;
 }
+.session {
+  text-align: center;
+  color: red;
+  font-size: 18px;
+}
