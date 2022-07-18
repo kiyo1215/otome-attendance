@@ -32,10 +32,10 @@ Route::middleware('auth')->group(function(){
     Route::post('/reward/attecsv', [ManagementController::class, 'atte_csv'])->name('atte_csv');
     Route::post('/reward/restcsv', [ManagementController::class, 'rest_csv'])->name('rest_csv');
     Route::post('/graduation/dalete', [ManagementController::class, 'delete'])->name('delete');
+    Route::get('/graduation', [ManagementController::class, 'graduation'])->name('graduation');
+    Route::post('/create', [ManagementController::class, 'create'])->name('create');
+    Route::get('/change', [ManagementController::class, 'aaa'])->name('aaa');
+    Route::post('/change', [ManagementController::class, 'bbb'])->name('bbb');
 });
 
 require __DIR__.'/auth.php';
-Route::get('/graduation', [ManagementController::class, 'graduation'])->name('graduation');
-Route::post('/create', [ManagementController::class, 'create'])->name('create');
-Route::get('/change', [ManagementController::class, 'aaa'])->name('aaa');
-Route::post('/change', [ManagementController::class, 'bbb'])->name('bbb');

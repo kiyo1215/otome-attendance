@@ -42,7 +42,6 @@
         <button type="submit" class="search-button">検索</button>
       </form>
     </div>
-    <p>削除ボタン作成中ですが未完成です、触らないでください</p>
       @if(session('msg'))
       <div class="session">
         {{session('msg')}}
