@@ -54,10 +54,12 @@ class AttendanceController extends Controller
             'start_time' => Carbon::now()->format('H:i:s'),
             'end_time' => Carbon::now()->format('H:i:s'),
         ]);
-        
+        if (Auth::id() === 1) {
+            return back()->with('message', 'おかえりぃ(・∀・)');
+        }
         return back()->with('message', '勤務を開始しました');
     }
-
+    
     public function end()
     {
         $daybefore = new Carbon('yesterday');
@@ -81,21 +83,21 @@ class AttendanceController extends Controller
                     'end_time' => Carbon::now()->format('H:i:s'),
                 ];
                 Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
+                
                 return back()->with('message', '今日もありがとう、大好きだよ');
             }
         } else {
             $attendance = Attendance::where('user_id', Auth::id())->where('date', $today)->first();
             // $rest = Rest::where('attendance_id', $attendance->id)->first();
-                if($attendance === null){
-                    return back()->with('message', '出勤打刻がありません');
-                }else{
-                    $param = [
-                        'end_time' => Carbon::now()->format('H:i:s')
-                    ];
-                    Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
-                    
-                        return back()->with('message', '今日もありがとう、大好きだよ');
-                    }
+            if($attendance === null){
+                return back()->with('message', '出勤打刻がありません');
+            }else{
+                $param = [
+                    'end_time' => Carbon::now()->format('H:i:s')
+                ];
+                Attendance::where('user_id', Auth::id())->latest()->first()->update($param);
+                return back()->with('message', '今日もありがとう、大好きだよ');
+            }
     }
 }
 

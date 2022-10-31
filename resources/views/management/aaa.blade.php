@@ -38,6 +38,7 @@
   @foreach($users as $user)
   <p>{{$user->name}}</p>
   <p>{{$user->number}}</p>
+  <p>{{$user->id}}</p>
   @endforeach
   </div>
   </main>
@@ -46,7 +47,8 @@
 </html>
 
 <style>
-.user {
-  display: flex;
-}
+ .user p {
+   margin: 0;
+   padding: 0;
+ }
 </style>
