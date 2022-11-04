@@ -55,7 +55,7 @@ class AttendanceController extends Controller
             'end_time' => Carbon::now()->format('H:i:s'),
         ]);
         if (Auth::id() === 514) {
-            return back()->with('message', 'おかえりぃ(・∀・)');
+            return back()->with('message', 'おかえり！（・∀・）');
         }
         return back()->with('message', '勤務を開始しました');
     }
